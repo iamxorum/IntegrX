@@ -26,7 +26,7 @@ public class NumericIntegration {
 		return instance;
 	}
 
-	public double integrate(String function, double min, double max) {
+	public double integrate(String function, String min, String max) {
 		try {
 			engine.eval("integralResult = integral(@(x) " + function + ", " + min + ", " + max + ")");
 		} catch (InterruptedException ex) {
