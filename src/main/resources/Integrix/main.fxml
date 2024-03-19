@@ -12,22 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="655.0" prefWidth="1222.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="741.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
    <children>
-      <HBox layoutX="890.0" layoutY="-1.0" prefHeight="30.0" prefWidth="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="window-buttons" stylesheets="@css/fullstyle.css">
-               <graphic>
-                  <FontAwesomeIconView glyphName="INFO" />
-               </graphic>
-            </Button>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onCloseButtonClicked" prefHeight="30.0" prefWidth="30.0" styleClass="window-buttons" stylesheets="@css/fullstyle.css">
-               <graphic>
-                  <FontAwesomeIconView glyphName="CLOSE" />
-               </graphic>
-            </Button>
-         </children>
-      </HBox>
       <VBox prefHeight="500.0" prefWidth="256.0" style="-fx-background-color: #3C486B;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="105.0" prefWidth="225.0" style="-fx-background-color: #283348;">
@@ -42,7 +28,7 @@
             </Pane>
             <VBox prefHeight="397.0" prefWidth="260.0" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="fmDashboard" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Guide" textFill="#f9d949">
+                  <Button fx:id="fmDashboard" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Get Started" textFill="#f9d949">
                      <graphic>
                         <FontAwesomeIconView fill="#f9d949" glyphName="HOME" size="20" />
                      </graphic>
@@ -64,6 +50,17 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <Button fx:id="fmCalculate1" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Result" textFill="#f9d949">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#f9d949" glyphName="CHECK" size="20" />
+                     </graphic>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets />
@@ -74,28 +71,47 @@
             </VBox>
          </children>
       </VBox>
+      <AnchorPane layoutX="256.0" prefHeight="30.0" prefWidth="1025.0" style="-fx-background-color: #283348;" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox layoutX="966.0" layoutY="-1.0" prefHeight="30.0" prefWidth="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="window-buttons" stylesheets="@css/fullstyle.css">
+                     <graphic>
+                        <FontAwesomeIconView fill="#fafafa" glyphName="INFO" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onCloseButtonClicked" prefHeight="30.0" prefWidth="30.0" styleClass="window-buttons" stylesheets="@css/fullstyle.css">
+                     <graphic>
+                        <FontAwesomeIconView fill="#fafafa" glyphName="CLOSE" text="" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <Label alignment="CENTER" layoutX="167.0" layoutY="4.0" prefHeight="20.0" prefWidth="612.0" styleClass="window-title" stylesheets="@css/fullstyle.css" text="INTEGRX" textFill="#fafafa" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="167.0" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
       <AnchorPane layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
          <children>
-            <VBox alignment="CENTER" layoutX="41.0" layoutY="55.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="40.0">
+            <VBox alignment="CENTER" layoutX="41.0" layoutY="55.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <TextField maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Function" VBox.vgrow="ALWAYS">
+                  <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Function" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="10.0" top="5.0" />
                      </VBox.margin>
                   </TextField>
                   <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <TextField maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="min_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Intervals" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="int_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Intervals" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="max_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -106,32 +122,33 @@
             </VBox>
             <VBox alignment="CENTER" layoutX="177.0" layoutY="241.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="210.0">
                <children>
-                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" minWidth="437.0" prefHeight="84.0" prefWidth="958.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="300.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Trapezoidal" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="300.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_t" text="Rectangular" HBox.hgrow="ALWAYS">
+                        <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Trapezoidal" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </ToggleButton>
-                        <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="300.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Simpson" HBox.hgrow="ALWAYS">
+                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_t" text="Rectangular" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Simpson" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </ToggleButton>
                      </children>
                   </HBox>
-                  <Button alignment="CENTER" maxHeight="40.0" maxWidth="958.0" minHeight="26.0" minWidth="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="958.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculate" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" maxHeight="40.0" maxWidth="951.0" minHeight="26.0" minWidth="437.0" mnemonicParsing="false" onAction="#calculateAction" prefHeight="26.0" prefWidth="958.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculate" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </VBox.margin>
                   </Button>
                </children>
             </VBox>
+            <Label fx:id="real_integral" layoutX="40.0" layoutY="501.0" prefHeight="35.0" prefWidth="114.0" />
          </children>
       </AnchorPane>
    </children>
