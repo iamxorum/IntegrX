@@ -103,19 +103,36 @@
     -fx-padding: 10px;
 }
 
-.toggle_buttons{
-}
-
 .toggle_r, .toggle_t, .toggle_s {
-    -fx-background-color : #be2a2a;
-    -fx-text-fill: white;
+    -fx-background-color: #3C486B;
+    -fx-text-fill: #f9d949;
     -fx-font-family: 'Roboto';
 }
+
+.toggle_r:hover, .toggle_t:hover, .toggle_s:hover {
+    -fx-cursor: hand; /* Change cursor on hover */
+}
+
+.toggle_r:selected, .toggle_t:selected, .toggle_s:selected {
+    -fx-background-color: #f9d949;
+    -fx-text-fill: #3C486B;
+}
+
 
 .calculate {
-    -fx-background-color : #5b6da4;
+    -fx-background-color : #2e7b26;
     -fx-text-fill: white;
     -fx-font-family: 'Roboto';
+}
+
+.calculate:hover {
+    -fx-background-color : #3c9c35;
+    -fx-cursor: hand;
+}
+
+.calculate:pressed {
+    -fx-background-color : #4dbf4a;
+    -fx-cursor: hand;
 }
 
 .input_text{
