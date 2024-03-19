@@ -1,3 +1,8 @@
+@font-face {
+    -fx-font-family: 'Roboto';
+    src: url('RobotoRegular.ttf');
+}
+
 .button
 {
     -fx-background-color : #3C486B;
@@ -90,9 +95,34 @@
     -fx-background-color:transparent;
 }
 
-.chart-pie {
-    -fx-border-color: derive(-fx-pie-color, 1%);
-    -fx-border-width: 0px;
+.calculate_pane{
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2D75E8;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.toggle_buttons{
+}
+
+.toggle_r, .toggle_t, .toggle_s {
+    -fx-background-color : #be2a2a;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+}
+
+.calculate {
+    -fx-background-color : #5b6da4;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+}
+
+.input_text{
+    -fx-background-color: #fafafa;
+    -fx-border-color: #2D75E8;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
 }
 
 /* Define the striped pattern */
