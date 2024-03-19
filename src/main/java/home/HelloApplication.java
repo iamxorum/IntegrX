@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -31,7 +32,7 @@ public class HelloApplication extends Application {
 
 		stage.setTitle("IntegrX");
 		stage.setScene(scene);
-
+		stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/Integrix/maths.png")));
 		// Set the stage style to undecorated
 		stage.initStyle(StageStyle.UNDECORATED);
 
