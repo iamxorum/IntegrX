@@ -1,3 +1,8 @@
+@font-face {
+    -fx-font-family: 'Roboto';
+    src: url('RobotoRegular.ttf');
+}
+
 .button
 {
     -fx-background-color : #3C486B;
@@ -18,81 +23,49 @@
 }
 
 .window-title {
-    -fx-background-color: #cccccc; /* Title bar background color */
-    -fx-text-fill: #000000; /* Title bar text color */
+    -fx-text-fill: #fafafa; /* Title bar text color */
+    -fx-font-family: "Roboto";
 }
 
 .window-buttons {
-    -fx-background-color: #cccccc; /* Buttons background color */
-    -fx-border-radius: 0;
+    -fx-border-radius: 0; /* No border radius */
+    -fx-background-color: transparent; /* Transparent background */
 }
 
-.table-view .column-header,
-.table-view .column-header-background .filler {
-    -fx-cell-size : 20;
-    -fx-background-color:   #2D75E8;
-}
-.table-view .column-header .label{
-
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-alignment: CENTER_LEFT;
-}
-.table-view .cell{
-    -fx-cell-size: 30;
-    -fx-alignment: center-left;
-    -fx-text-fill: #000000;
-    -fx-alignment: CENTER_LEFT;
-}
-
-.table-row-cell:selected {
-    -fx-background-color:  rgb(127, 172, 243);
-}
-.table-row-cell:selected .text {
-    -fx-fill : white ;
-
-}
-/* scroll bar starts here */
-
-/* The increment and decrement button CSS class of scrollbar */
-.table-view .increment-button ,.table-view .decrement-button {
-    -fx-background-color:transparent;
-    -fx-background-radius: 2em;
-
-}
-
-/* The main scrollbar **track** CSS class  */
-.table-view .scroll-bar:horizontal .track,
-.table-view .scroll-bar:vertical .track{
-    -fx-background-color: transparent;
-    -fx-border-color:derive(  #2D75E8,80%);
-    -fx-background-radius: 2em;
-    -fx-border-radius:2em;
-}
-
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
-.table-view .scroll-bar:horizontal .thumb,
-.table-view .scroll-bar:vertical .thumb {
-    -fx-background-color:derive( #2D75E8,90%);
-    -fx-background-insets: 2, 0, 0;
-    -fx-background-radius: 2em;
-
-}
-
-/* chart properties */
-
-.chart {
+.calculate_pane{
     -fx-padding: 10px;
-    -fx-background-color: transparent;
-    -fx-legend-visible: false;
-}
-.chart-plot-background {
-    -fx-background-color:transparent;
 }
 
-.chart-pie {
-    -fx-border-color: derive(-fx-pie-color, 1%);
-    -fx-border-width: 0px;
+.toggle_r, .toggle_t, .toggle_s {
+    -fx-background-color: #3C486B;
+    -fx-text-fill: #f9d949;
+    -fx-font-family: 'Roboto';
+}
+
+.toggle_r:hover, .toggle_t:hover, .toggle_s:hover {
+    -fx-cursor: hand; /* Change cursor on hover */
+}
+
+.toggle_r:selected, .toggle_t:selected, .toggle_s:selected {
+    -fx-background-color: #f9d949;
+    -fx-text-fill: #3C486B;
+}
+
+
+.calculate {
+    -fx-background-color : #2e7b26;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+}
+
+.calculate:hover {
+    -fx-background-color : #3c9c35;
+    -fx-cursor: hand;
+}
+
+.calculate:pressed {
+    -fx-background-color : #4dbf4a;
+    -fx-cursor: hand;
 }
 
 /* Define the striped pattern */

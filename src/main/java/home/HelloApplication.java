@@ -51,13 +51,6 @@ public class HelloApplication extends Application {
 
 
 	public static void main(String[] args) {
-		NumericIntegration ni = null;
-		try {
-			ni = NumericIntegration.getInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		ni.integrate();
 		launch(args);
 	}
 }

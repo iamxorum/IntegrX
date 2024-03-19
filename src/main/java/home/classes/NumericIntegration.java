@@ -26,9 +26,9 @@ public class NumericIntegration {
 		return instance;
 	}
 
-	public double integrate() {
+	public double integrate(String function, double min, double max) {
 		try {
-			engine.eval("integralResult = integral(@(x) cos(x),1,100);");
+			engine.eval("integralResult = integral(@(x) " + function + ", " + min + ", " + max + ")");
 		} catch (InterruptedException ex) {
 			throw new RuntimeException(ex);
 		} catch (ExecutionException ex) {
@@ -42,7 +42,6 @@ public class NumericIntegration {
 		} catch (ExecutionException ex) {
 			throw new RuntimeException(ex);
 		}
-		System.out.println("The integral of cos(x) from 1 to 100 is: " + integralResult);
 		return integralResult;
 	}
 
