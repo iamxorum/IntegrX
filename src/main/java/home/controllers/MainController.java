@@ -49,6 +49,13 @@ public class MainController {
 			min = String.valueOf((1 + Math.sqrt(5)) / 2);
 		}
 
+		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty()) {
+			showAlert("Empty Fields", "All fields must be filled.");
+			return;
+		}
+		if (int_id.getText().isEmpty()) {
+			int_id.setText("0");
+		}
 		if ("Inf".equals(max) && !("-Inf".equals(min)) && !("Inf".equals(min)) && "-Inf".equals(max)) {
 			if (Double.parseDouble(min) >= Double.POSITIVE_INFINITY) {
 				showAlert("Invalid Range", "The minimum value must be less than positive infinity.");
@@ -93,14 +100,6 @@ public class MainController {
 			}
 		}
 
-		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty()) {
-			showAlert("Empty Fields", "All fields must be filled.");
-			return;
-		}
-
-		if (int_id.getText().isEmpty()) {
-			int_id.setText("0");
-		}
 		double result = 0; // Initialize the result variable
 		NumericIntegration ni = null;
 		try {
