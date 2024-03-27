@@ -9,6 +9,13 @@ import java.util.concurrent.ExecutionException;
 
 public class NumericIntegration {
 	private static NumericIntegration instance;
+
+	private static final String MATLAB_PLOT_SCRIPT =
+			"plot(sin(-10:0.1:10))\n" +
+					"xlabel('x')\n" +
+					"ylabel('sin(x)')\n" +
+					"title('Plot of sin(x)')\n" +
+					"saveas(gcf,'plot.png')"; // Save the plot as a PNG file
 	MatlabEngine engine;
 
 	// Private constructor to prevent instantiation from outside
@@ -28,6 +35,7 @@ public class NumericIntegration {
 
 	public double integrate(String function, String min, String max) {
 		try {
+			engine.eval(MATLAB_PLOT_SCRIPT);
 			engine.eval("integralResult = integral(@(x) " + function + ", " + min + ", " + max + ")");
 		} catch (InterruptedException ex) {
 			throw new RuntimeException(ex);

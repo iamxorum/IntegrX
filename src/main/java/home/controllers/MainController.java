@@ -4,6 +4,7 @@ import home.classes.NumericIntegration;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.Objects;
 
@@ -11,6 +12,10 @@ public class MainController {
 	@FXML private ToggleButton rectangularButton;
 	@FXML private ToggleButton trapezoidalButton;
 	@FXML private ToggleButton simpsonButton;
+	@FXML private ToggleButton get_started_btn;
+	@FXML private ToggleButton calculation_form_btn;
+	@FXML private ToggleButton result_btn;
+	@FXML private AnchorPane calculation_form;
 	@FXML private TextField func_id;
 	@FXML private TextField min_id;
 	@FXML private TextField max_id;
@@ -19,11 +24,42 @@ public class MainController {
 
 	@FXML
 	private void initialize() {
-		ToggleGroup toggleGroup = new ToggleGroup();
-		rectangularButton.setToggleGroup(toggleGroup);
-		trapezoidalButton.setToggleGroup(toggleGroup);
-		simpsonButton.setToggleGroup(toggleGroup);
+		ToggleGroup toggleGroup1 = new ToggleGroup();
+		rectangularButton.setToggleGroup(toggleGroup1);
+		trapezoidalButton.setToggleGroup(toggleGroup1);
+		simpsonButton.setToggleGroup(toggleGroup1);
+
+		ToggleGroup toggleGroup2 = new ToggleGroup();
+		get_started_btn.setToggleGroup(toggleGroup2);
+		calculation_form_btn.setToggleGroup(toggleGroup2);
+		result_btn.setToggleGroup(toggleGroup2);
+
+		// Implicitly toggle the get_started_btn
+		get_started_btn.setSelected(true);
+
+		// Call the method to handle the visibility of the AnchorPane
+		handleCalculationFormVisibility();
+
+		calculation_form_btn.setOnAction(event -> {
+			// Toggle the visibility of the AnchorPane when the button is clicked
+			handleCalculationFormVisibility();
+		});
+
+		// Add listener to toggleGroup2 selectedToggleProperty
+		toggleGroup2.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+			if (newToggle != null) {
+				// If a new ToggleButton is selected, hide the AnchorPane
+				calculation_form.setVisible(false);
+			}
+		});
 	}
+
+	private void handleCalculationFormVisibility() {
+		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
+		calculation_form.setVisible(calculation_form_btn.isSelected());
+	}
+
+
 
 	@FXML
 	protected void onCloseButtonClicked(ActionEvent event) {

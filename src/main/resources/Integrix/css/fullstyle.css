@@ -3,16 +3,16 @@
     src: url('RobotoRegular.ttf');
 }
 
-.button
+.lateral_btn
 {
     -fx-background-color : #3C486B;
 }
-.button:hover
+.lateral_btn:hover
 {
     -fx-background-color : #5b6da4;
     -fx-cursor: hand;
 }
-.button:pressed
+.lateral_btn:selected
 {
     -fx-background-color : #7c98e1;
     -fx-cursor: hand;

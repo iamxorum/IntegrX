@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="741.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="741.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
    <children>
       <VBox prefHeight="500.0" prefWidth="256.0" style="-fx-background-color: #3C486B;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,7 +22,7 @@
             </Pane>
             <VBox prefHeight="397.0" prefWidth="260.0" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="fmDashboard" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Get Started" textFill="#f9d949">
+                  <ToggleButton fx:id="get_started_btn" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" styleClass="lateral_btn" stylesheets="@css/fullstyle.css" text="Get Started" textFill="#f9d949">
                      <graphic>
                         <FontAwesomeIconView fill="#f9d949" glyphName="HOME" size="20" />
                      </graphic>
@@ -38,8 +32,8 @@
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </Button>
-                  <Button fx:id="fmCalculate" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Calculate" textFill="#f9d949">
+                  </ToggleButton>
+                  <ToggleButton fx:id="calculation_form_btn" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" styleClass="lateral_btn" stylesheets="@css/fullstyle.css" text="Calculate" textFill="#f9d949">
                      <graphic>
                         <FontAwesomeIconView fill="#f9d949" glyphName="CALCULATOR" size="20" />
                      </graphic>
@@ -49,8 +43,8 @@
                      <font>
                         <Font size="14.0" />
                      </font>
-                  </Button>
-                  <Button fx:id="fmCalculate1" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" stylesheets="@css/fullstyle.css" text="Result" textFill="#f9d949">
+                  </ToggleButton>
+                  <ToggleButton fx:id="result_btn" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" styleClass="lateral_btn" stylesheets="@css/fullstyle.css" text="Result" textFill="#f9d949">
                      <padding>
                         <Insets left="50.0" />
                      </padding>
@@ -60,7 +54,7 @@
                      <graphic>
                         <FontAwesomeIconView fill="#f9d949" glyphName="CHECK" size="20" />
                      </graphic>
-                  </Button>
+                  </ToggleButton>
                </children>
                <VBox.margin>
                   <Insets />
@@ -90,7 +84,7 @@
             <Label alignment="CENTER" layoutX="167.0" layoutY="4.0" prefHeight="20.0" prefWidth="612.0" styleClass="window-title" stylesheets="@css/fullstyle.css" text="INTEGRX" textFill="#fafafa" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="167.0" AnchorPane.topAnchor="5.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
+      <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
          <children>
             <VBox alignment="CENTER" layoutX="41.0" layoutY="55.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="40.0">
                <children>
