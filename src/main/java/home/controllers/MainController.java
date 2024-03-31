@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainController {
@@ -71,19 +73,24 @@ public class MainController {
 		String min = min_id.getText();
 		String max = max_id.getText();
 
-		if ("pi".equals(min)) {
-			min = String.valueOf(Math.PI);
-		} else if ("e".equals(min)) {
-			min = String.valueOf(Math.E);
-		} else if ("pi".equals(max)) {
-			max = String.valueOf(Math.PI);
-		} else if ("e".equals(max)) {
-			max = String.valueOf(Math.E);
-		} else if ("phi".equals(max)) {
-			max = String.valueOf((1 + Math.sqrt(5)) / 2);
-		} else if ("phi".equals(min)) {
-			min = String.valueOf((1 + Math.sqrt(5)) / 2);
+		// Define a map to store the conversions
+		Map<String, String> conversionMap = new HashMap<>();
+		conversionMap.put("pi", String.valueOf(Math.PI));
+		conversionMap.put("e", String.valueOf(Math.E));
+		conversionMap.put("-pi", String.valueOf(-Math.PI));
+		conversionMap.put("phi", String.valueOf((1 + Math.sqrt(5)) / 2));
+		conversionMap.put("-phi", String.valueOf(-(1 + Math.sqrt(5)) / 2));
+		conversionMap.put("Inf", "Inf");
+		conversionMap.put("-Inf", "-Inf");
+
+		// Update min and max if they match any key in the map
+		if (conversionMap.containsKey(min)) {
+			min = conversionMap.get(min);
 		}
+		if (conversionMap.containsKey(max)) {
+			max = conversionMap.get(max);
+		}
+
 
 		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty()) {
 			showAlert("Empty Fields", "All fields must be filled.");

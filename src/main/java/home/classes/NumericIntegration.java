@@ -10,12 +10,12 @@ import java.util.concurrent.ExecutionException;
 public class NumericIntegration {
 	private static NumericIntegration instance;
 
-	private static final String MATLAB_PLOT_SCRIPT =
-			"plot(sin(-10:0.1:10))\n" +
-					"xlabel('x')\n" +
-					"ylabel('sin(x)')\n" +
-					"title('Plot of sin(x)')\n" +
-					"saveas(gcf,'plot.png')"; // Save the plot as a PNG file
+	private static String MATLAB_PLOT_SKELETON =
+			"plot(skeleton)\n" +
+					"xlabel('Z')\n" +
+					"ylabel('function')\n" +
+					"title('Plot of function')\n" +
+					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')"; // Save the plot as a PNG file
 	MatlabEngine engine;
 
 	// Private constructor to prevent instantiation from outside
@@ -35,8 +35,14 @@ public class NumericIntegration {
 
 	public double integrate(String function, String min, String max) {
 		try {
-			engine.eval(MATLAB_PLOT_SCRIPT);
-			engine.eval("integralResult = integral(@(x) " + function + ", " + min + ", " + max + ")");
+			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", function)
+					.replace("z", min + ":0.1:" + max)
+					.replace("function", function)
+					.replace("Z", "z");
+			System.out.println(modifiedScript);
+			engine.eval(modifiedScript);
+			String integrationScript = "integralResult = integral(@(z) (" + function + "), " + min + ", " + max + ");";
+			engine.eval(integrationScript);
 		} catch (InterruptedException ex) {
 			throw new RuntimeException(ex);
 		} catch (ExecutionException ex) {
