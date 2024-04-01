@@ -32,6 +32,11 @@
     -fx-background-color: transparent; /* Transparent background */
 }
 
+.window-buttons:hover {
+    -fx-background-color: #747ec5; /* Yellow background on hover */
+    -fx-cursor: hand; /* Change cursor on hover */
+}
+
 .calculate_pane{
     -fx-padding: 10px;
 }

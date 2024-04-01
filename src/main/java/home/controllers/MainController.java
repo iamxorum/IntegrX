@@ -1,11 +1,23 @@
 package home.controllers;
 
+import com.mathworks.engine.MatlabExecutionException;
+import com.mathworks.engine.MatlabSyntaxException;
+import home.HelloApplication;
 import home.classes.NumericIntegration;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
 
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+
+import javax.swing.*;
+import javafx.scene.image.ImageView;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,11 +30,16 @@ public class MainController {
 	@FXML private ToggleButton calculation_form_btn;
 	@FXML private ToggleButton result_btn;
 	@FXML private AnchorPane calculation_form;
+	@FXML private AnchorPane result_window;
 	@FXML private TextField func_id;
 	@FXML private TextField min_id;
 	@FXML private TextField max_id;
 	@FXML private TextField int_id;
 	@FXML private Label real_integral;
+	@FXML ImageView latex_integral1;
+
+	private static String latexFunction = "";
+
 
 	@FXML
 	private void initialize() {
@@ -41,10 +58,16 @@ public class MainController {
 
 		// Call the method to handle the visibility of the AnchorPane
 		handleCalculationFormVisibility();
+		handleResultWindowVisibility();
 
 		calculation_form_btn.setOnAction(event -> {
 			// Toggle the visibility of the AnchorPane when the button is clicked
 			handleCalculationFormVisibility();
+		});
+
+		result_btn.setOnAction(event -> {
+			// Toggle the visibility of the AnchorPane when the button is clicked
+			handleResultWindowVisibility();
 		});
 
 		// Add listener to toggleGroup2 selectedToggleProperty
@@ -52,13 +75,24 @@ public class MainController {
 			if (newToggle != null) {
 				// If a new ToggleButton is selected, hide the AnchorPane
 				calculation_form.setVisible(false);
+				result_window.setVisible(false);
 			}
 		});
+	}
+
+	public static void setLatexFunction(String latexFunction) {
+		Objects.requireNonNull(latexFunction);
+		MainController.latexFunction = latexFunction;
 	}
 
 	private void handleCalculationFormVisibility() {
 		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
 		calculation_form.setVisible(calculation_form_btn.isSelected());
+	}
+
+	private void handleResultWindowVisibility() {
+		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
+		result_window.setVisible(result_btn.isSelected());
 	}
 
 
@@ -68,7 +102,7 @@ public class MainController {
 		System.exit(0);
 	}
 
-	public void calculateAction(ActionEvent actionEvent) {
+	public void calculateAction(ActionEvent actionEvent) throws MatlabExecutionException, MatlabSyntaxException {
 		String function = func_id.getText();
 		String min = min_id.getText();
 		String max = max_id.getText();
@@ -159,6 +193,13 @@ public class MainController {
 			result = calculateSimpson(function, min, max);
 		}*/
 		real_integral.setText(String.valueOf(result));
+		TeXFormula formula = new TeXFormula(latexFunction);
+		formula.createPNG(TeXConstants.STYLE_DISPLAY,
+				20,
+				"./src/main/resources/Integrix/plots/funct_latex.png",
+				Color.WHITE,
+				Color.BLACK);
+		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 	}
 
 	private void showAlert(String title, String message) {

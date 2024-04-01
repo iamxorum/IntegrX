@@ -7,6 +7,8 @@ import com.mathworks.engine.MatlabSyntaxException;
 
 import java.util.concurrent.ExecutionException;
 
+import static home.controllers.MainController.setLatexFunction;
+
 public class NumericIntegration {
 	private static NumericIntegration instance;
 
@@ -33,16 +35,30 @@ public class NumericIntegration {
 		return instance;
 	}
 
-	public double integrate(String function, String min, String max) {
+	public double integrate(String function, String min, String max) throws MatlabExecutionException, MatlabSyntaxException {
+		String latexExpr;
 		try {
 			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", function)
 					.replace("z", min + ":0.1:" + max)
 					.replace("function", function)
 					.replace("Z", "z");
-			System.out.println(modifiedScript);
 			engine.eval(modifiedScript);
-			String integrationScript = "integralResult = integral(@(z) (" + function + "), " + min + ", " + max + ");";
+			engine.eval("syms z");
+			String integral_expr = "(" + function + "), " + min + ", " + max;
+			String integrationScript = "integralResult = integral(@(z) " + integral_expr + ");";
 			engine.eval(integrationScript);
+
+			// Convert the result to LaTeX
+			String latexScript = "latexFunction = latex(" + function + ");";
+			engine.eval(latexScript);
+
+			// Retrieve the LaTeX expression
+			Object latexFunction = engine.getVariable("latexFunction");
+			latexExpr = "\\int_{" + min + "}^{" + max + "}" + latexFunction;
+
+			// Now you can use the LaTeX expression
+			System.out.println("Latex Expression: " + latexExpr);
+
 		} catch (InterruptedException ex) {
 			throw new RuntimeException(ex);
 		} catch (ExecutionException ex) {
@@ -51,6 +67,7 @@ public class NumericIntegration {
 		double integralResult;
 		try {
 			integralResult = engine.getVariable("integralResult");
+			setLatexFunction(latexExpr);
 		} catch (InterruptedException ex) {
 			throw new RuntimeException(ex);
 		} catch (ExecutionException ex) {
