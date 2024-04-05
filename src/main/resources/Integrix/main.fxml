@@ -93,7 +93,7 @@
       </AnchorPane>
       <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
          <children>
-            <VBox alignment="CENTER" layoutX="41.0" layoutY="55.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="40.0">
+            <VBox alignment="CENTER" layoutX="41.0" layoutY="55.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="40.0">
                <children>
                   <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Function" VBox.vgrow="ALWAYS">
                      <VBox.margin>
@@ -119,11 +119,12 @@
                         </TextField>
                      </children>
                   </HBox>
+                  <TextField fx:id="plot_interval_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Plot Interval {min:input:max}" />
                </children>
             </VBox>
-            <VBox alignment="CENTER" layoutX="177.0" layoutY="241.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="210.0">
+            <VBox alignment="CENTER" layoutX="177.0" layoutY="241.0" prefHeight="80.0" prefWidth="698.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="270.0">
                <children>
-                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" minWidth="437.0" prefHeight="84.0" prefWidth="958.0" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" minWidth="437.0" prefHeight="84.0" prefWidth="958.0" translateY="-1.0" VBox.vgrow="ALWAYS">
                      <children>
                         <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Trapezoidal" HBox.hgrow="ALWAYS">
                            <HBox.margin>

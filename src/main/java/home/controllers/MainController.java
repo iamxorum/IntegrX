@@ -31,6 +31,7 @@ public class MainController {
 	@FXML private ToggleButton result_btn;
 	@FXML private AnchorPane calculation_form;
 	@FXML private AnchorPane result_window;
+	@FXML private TextField plot_interval_id;
 	@FXML private TextField func_id;
 	@FXML private TextField min_id;
 	@FXML private TextField max_id;
@@ -106,6 +107,7 @@ public class MainController {
 		String function = func_id.getText();
 		String min = min_id.getText();
 		String max = max_id.getText();
+		String plot_interval = plot_interval_id.getText();
 
 		// Define a map to store the conversions
 		Map<String, String> conversionMap = new HashMap<>();
@@ -184,7 +186,7 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		result = ni.integrate(function, min, max);
+		result = ni.integrate(function, min, max, plot_interval);
 		/*if (rectangularButton.isSelected()) {
 			result = calculateRectangular(function, min, max);
 		} else if (trapezoidalButton.isSelected()) {
@@ -194,11 +196,12 @@ public class MainController {
 		}*/
 		real_integral.setText(String.valueOf(result));
 		TeXFormula formula = new TeXFormula(latexFunction);
+		Color smokeWhite = new Color(250, 250, 250);
 		formula.createPNG(TeXConstants.STYLE_DISPLAY,
-				20,
+				35,
 				"./src/main/resources/Integrix/plots/funct_latex.png",
-				Color.WHITE,
-				Color.BLACK);
+				smokeWhite,
+				Color.RED);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 	}
 

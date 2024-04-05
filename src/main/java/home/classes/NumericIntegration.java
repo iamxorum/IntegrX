@@ -13,7 +13,8 @@ public class NumericIntegration {
 	private static NumericIntegration instance;
 
 	private static String MATLAB_PLOT_SKELETON =
-			"plot(skeleton)\n" +
+			"fig = figure('Visible', 'off');\n" +
+					"plot(skeleton)\n" +
 					"xlabel('Z')\n" +
 					"ylabel('function')\n" +
 					"title('Plot of function')\n" +
@@ -35,11 +36,11 @@ public class NumericIntegration {
 		return instance;
 	}
 
-	public double integrate(String function, String min, String max) throws MatlabExecutionException, MatlabSyntaxException {
+	public double integrate(String function, String min, String max, String plot_interval) throws MatlabExecutionException, MatlabSyntaxException {
 		String latexExpr;
 		try {
-			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", function)
-					.replace("z", min + ":0.1:" + max)
+			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", min + ":" + plot_interval + ":" + max + "," + function)
+					.replace("z", min + ":" + plot_interval + ":" + max)
 					.replace("function", function)
 					.replace("Z", "z");
 			engine.eval(modifiedScript);
