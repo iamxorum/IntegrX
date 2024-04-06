@@ -56,6 +56,57 @@
     -fx-text-fill: #3C486B;
 }
 
+.result_plots {
+    -fx-alignment: center;
+    -fx-border-color: #3C486B;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+.title_result {
+    -fx-alignment: center;
+    -fx-font-family: 'Roboto';
+    -fx-font-size: 20px;
+    -fx-text-fill: #7c98e1;
+}
+
+.title_div{
+    -fx-alignment: top-center;
+}
+
+.matlab_integral {
+    -fx-background-color: #3C486B;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+.method_integral {
+    -fx-background-color: #3C486B;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+.error_integral {
+    -fx-background-color: #c7cc24;
+    -fx-text-fill: white;
+    -fx-font-family: 'Roboto';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
+.matlab_integral_lbl {
+    -fx-font-family: 'Roboto';
+    -fx-font-size: 24px;
+    -fx-text-fill: #fafafa;
+    -fx-alignment: center;
+}
 
 .calculate {
     -fx-background-color : #2e7b26;
@@ -77,3 +128,4 @@
 .root-bg {
     -fx-background-color: #fafafa;
 }
+

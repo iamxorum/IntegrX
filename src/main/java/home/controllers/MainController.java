@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
 
+import javafx.scene.text.Text;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
@@ -37,7 +38,11 @@ public class MainController {
 	@FXML private TextField max_id;
 	@FXML private TextField int_id;
 	@FXML private Label real_integral;
-	@FXML ImageView latex_integral1;
+	@FXML private Label method_integral;
+	@FXML private Label abs_err;
+	@FXML private ImageView latex_integral1;
+	@FXML private ImageView plot_function;
+	@FXML private Text method_result_name;
 
 	private static String latexFunction = "";
 
@@ -107,6 +112,7 @@ public class MainController {
 		String function = func_id.getText();
 		String min = min_id.getText();
 		String max = max_id.getText();
+		String interval = int_id.getText();
 		String plot_interval = plot_interval_id.getText();
 
 		// Define a map to store the conversions
@@ -187,14 +193,6 @@ public class MainController {
 			e.printStackTrace();
 		}
 		result = ni.integrate(function, min, max, plot_interval);
-		/*if (rectangularButton.isSelected()) {
-			result = calculateRectangular(function, min, max);
-		} else if (trapezoidalButton.isSelected()) {
-			result = calculateTrapezoidal(function, min, max);
-		} else if (simpsonButton.isSelected()) {
-			result = calculateSimpson(function, min, max);
-		}*/
-		real_integral.setText(String.valueOf(result));
 		TeXFormula formula = new TeXFormula(latexFunction);
 		Color smokeWhite = new Color(250, 250, 250);
 		formula.createPNG(TeXConstants.STYLE_DISPLAY,
@@ -203,6 +201,27 @@ public class MainController {
 				smokeWhite,
 				Color.RED);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
+		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
+		plot_function.preserveRatioProperty();
+		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2));
+		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2));
+		real_integral.setText(String.valueOf(result));
+		if (rectangularButton.isSelected()) {
+			result = ni.calculateRectangular(function, min, max, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("RECTANGULAR METHOD");
+		} /*else if (trapezoidalButton.isSelected()) {
+			result = ni.calculateTrapezoidal(function, min, max,interval);
+		} else if (simpsonButton.isSelected()) {
+			result = calculateSimpson(function, min, max, interval);
+		}*/
+		double absolute_error;
+		if (result > Double.parseDouble(real_integral.getText())) {
+			absolute_error = result - Double.parseDouble(real_integral.getText());
+		} else {
+			absolute_error = Double.parseDouble(real_integral.getText()) - result;
+		}
+		abs_err.setText(String.valueOf(absolute_error));
 	}
 
 	private void showAlert(String title, String message) {

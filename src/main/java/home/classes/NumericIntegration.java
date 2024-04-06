@@ -15,7 +15,7 @@ public class NumericIntegration {
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
 					"plot(skeleton)\n" +
-					"xlabel('Z')\n" +
+					"xlabel('z')\n" +
 					"ylabel('function')\n" +
 					"title('Plot of function')\n" +
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')"; // Save the plot as a PNG file
@@ -39,10 +39,9 @@ public class NumericIntegration {
 	public double integrate(String function, String min, String max, String plot_interval) throws MatlabExecutionException, MatlabSyntaxException {
 		String latexExpr;
 		try {
-			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", min + ":" + plot_interval + ":" + max + "," + function)
-					.replace("z", min + ":" + plot_interval + ":" + max)
-					.replace("function", function)
-					.replace("Z", "z");
+			engine.eval("z = " + min + ":" + plot_interval + ":" + max + ";");
+			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", "z," + function)
+					.replace("function", function);
 			engine.eval(modifiedScript);
 			engine.eval("syms z");
 			String integral_expr = "(" + function + "), " + min + ", " + max;
@@ -76,5 +75,29 @@ public class NumericIntegration {
 		}
 		return integralResult;
 	}
+
+	public double calculateRectangular(String function, String min, String max, String interval) throws MatlabExecutionException, MatlabSyntaxException {
+		try {
+			engine.eval("syms z");
+			String integral_expr = "(" + function + "), " + min + ", " + max;
+			String integrationScript = "f = @(z) " + integral_expr + "; a = " + min + "; b = " + max + "; h = " + interval + "; n = (b-a)/h;" +
+					"s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
+			engine.eval(integrationScript);
+		} catch (InterruptedException ex) {
+			throw new RuntimeException(ex);
+		} catch (ExecutionException ex) {
+			throw new RuntimeException(ex);
+		}
+		double integralResult;
+		try {
+			integralResult = engine.getVariable("integralResult");
+		} catch (InterruptedException ex) {
+			throw new RuntimeException(ex);
+		} catch (ExecutionException ex) {
+			throw new RuntimeException(ex);
+		}
+		return integralResult;
+	}
+
 
 }

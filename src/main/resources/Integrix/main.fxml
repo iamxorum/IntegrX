@@ -12,8 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="741.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="369.0" minWidth="669.0" prefHeight="741.0" prefWidth="1212.0" styleClass="root-bg" stylesheets="@css/fullstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
    <children>
       <VBox prefHeight="500.0" prefWidth="256.0" style="-fx-background-color: #3C486B;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -131,7 +132,7 @@
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
                         </ToggleButton>
-                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_t" text="Rectangular" HBox.hgrow="ALWAYS">
+                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Rectangular" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" top="5.0" />
                            </HBox.margin>
@@ -150,12 +151,91 @@
                   </Button>
                </children>
             </VBox>
-            <Label fx:id="real_integral" layoutX="40.0" layoutY="501.0" prefHeight="35.0" prefWidth="114.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="result_window" layoutX="367.0" layoutY="113.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
+      <AnchorPane fx:id="result_window" layoutX="320.0" layoutY="42.0" maxHeight="649.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="649.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
          <children>
-            <ImageView fx:id="latex_integral1" fitHeight="150.0" fitWidth="640.0" layoutX="96.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="398.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="33.0" />
+            <VBox layoutX="50.0" layoutY="30.0" prefHeight="620.0" prefWidth="752.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="RESULT">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox prefHeight="60.0" prefWidth="752.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <ImageView fx:id="latex_integral1" fitHeight="62.0" fitWidth="227.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="287.0" prefWidth="732.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <ImageView fx:id="plot_function" fitHeight="62.0" fitWidth="227.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox prefHeight="50.0" prefWidth="752.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Label fx:id="real_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="784.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Text fx:id="method_result_name" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox prefHeight="50.0" prefWidth="752.0" styleClass="method_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Label fx:id="method_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="784.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ERROR">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox prefHeight="50.0" prefWidth="752.0" styleClass="error_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Label fx:id="abs_err" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="784.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </children>
