@@ -1,6 +1,7 @@
 package home;
 
-import home.classes.NumericIntegration;
+import com.mathworks.engine.EngineException;
+import com.mathworks.engine.MatlabEngine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,17 +11,28 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class IntegrX extends Application {
+	private static MatlabEngine engine;
+
+	static {
+		try {
+			engine = MatlabEngine.startMatlab();
+		} catch (EngineException e) {
+			throw new RuntimeException(e);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	// Variables to store mouse cursor position
 	private double xOffset = 0;
 	private double yOffset = 0;
 
 	@Override
-	public void start(Stage stage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/Integrix/main.fxml"));
+	public void start(Stage stage) throws IOException, EngineException, InterruptedException {
+		FXMLLoader fxmlLoader = new FXMLLoader(IntegrX.class.getResource("/Integrix/main.fxml"));
 
 		Parent root = fxmlLoader.load();
 
@@ -34,7 +46,7 @@ public class HelloApplication extends Application {
 
 		stage.setTitle("IntegrX");
 		stage.setScene(scene);
-		stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/Integrix/maths.png")));
+		stage.getIcons().add(new Image(IntegrX.class.getResourceAsStream("/Integrix/maths.png")));
 		// Set the stage style to undecorated
 		stage.initStyle(StageStyle.UNDECORATED);
 
@@ -52,6 +64,13 @@ public class HelloApplication extends Application {
 		stage.show();
 	}
 
+	public static MatlabEngine getEngine() {
+		return engine;
+	}
+
+	public void setEngine(MatlabEngine engine) {
+		this.engine = engine;
+	}
 
 	public static void main(String[] args) {
 		launch(args);

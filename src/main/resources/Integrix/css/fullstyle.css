@@ -63,6 +63,14 @@
     -fx-border-radius: 5px;
 }
 
+.result_plots_2 {
+    -fx-alignment: center;
+    -fx-border-color: #3C486B;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
+}
+
 .title_result {
     -fx-alignment: center;
     -fx-font-family: 'Roboto';
@@ -75,7 +83,7 @@
 }
 
 .matlab_integral {
-    -fx-background-color: #3C486B;
+    -fx-background-color: #3c6b4b;
     -fx-text-fill: white;
     -fx-font-family: 'Roboto';
     -fx-border-radius: 5px;

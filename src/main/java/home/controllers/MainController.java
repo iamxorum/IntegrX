@@ -1,8 +1,9 @@
 package home.controllers;
 
+import com.mathworks.engine.MatlabEngine;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-import home.HelloApplication;
+import home.IntegrX;
 import home.classes.NumericIntegration;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +46,6 @@ public class MainController {
 	@FXML private Text method_result_name;
 
 	private static String latexFunction = "";
-
 
 	@FXML
 	private void initialize() {
@@ -196,15 +196,19 @@ public class MainController {
 		TeXFormula formula = new TeXFormula(latexFunction);
 		Color smokeWhite = new Color(250, 250, 250);
 		formula.createPNG(TeXConstants.STYLE_DISPLAY,
-				35,
+				100,
 				"./src/main/resources/Integrix/plots/funct_latex.png",
 				smokeWhite,
 				Color.RED);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
+		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
+		latex_integral1.preserveRatioProperty();
+		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
+		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
 		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
 		plot_function.preserveRatioProperty();
-		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2));
-		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2));
+		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
+		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
 		real_integral.setText(String.valueOf(result));
 		if (rectangularButton.isSelected()) {
 			result = ni.calculateRectangular(function, min, max, interval);

@@ -4,6 +4,7 @@ import com.mathworks.engine.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
+import home.IntegrX;
 
 import java.util.concurrent.ExecutionException;
 
@@ -15,15 +16,13 @@ public class NumericIntegration {
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
 					"plot(skeleton)\n" +
-					"xlabel('z')\n" +
-					"ylabel('function')\n" +
-					"title('Plot of function')\n" +
+					"xlabel('x')\n" +
+					"ylabel('y')\n" +
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')"; // Save the plot as a PNG file
-	MatlabEngine engine;
+	private MatlabEngine engine = IntegrX.getEngine();
 
-	// Private constructor to prevent instantiation from outside
-	private NumericIntegration() throws EngineException, InterruptedException {
-		engine = MatlabEngine.startMatlab();
+	// Private constructor to prevent instantiation of the class
+	private NumericIntegration() {
 	}
 
 	// Static method to get the single instance of the class
@@ -39,13 +38,13 @@ public class NumericIntegration {
 	public double integrate(String function, String min, String max, String plot_interval) throws MatlabExecutionException, MatlabSyntaxException {
 		String latexExpr;
 		try {
-			engine.eval("z = " + min + ":" + plot_interval + ":" + max + ";");
-			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", "z," + function)
-					.replace("function", function);
+			engine.eval("x = " + min + ":" + plot_interval + ":" + max + ";");
+			engine.eval("y = " + function + ";");
+			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", "x,y");
 			engine.eval(modifiedScript);
-			engine.eval("syms z");
+			engine.eval("syms x");
 			String integral_expr = "(" + function + "), " + min + ", " + max;
-			String integrationScript = "integralResult = integral(@(z) " + integral_expr + ");";
+			String integrationScript = "integralResult = integral(@(x) " + integral_expr + ");";
 			engine.eval(integrationScript);
 
 			// Convert the result to LaTeX
@@ -78,9 +77,9 @@ public class NumericIntegration {
 
 	public double calculateRectangular(String function, String min, String max, String interval) throws MatlabExecutionException, MatlabSyntaxException {
 		try {
-			engine.eval("syms z");
+			engine.eval("syms x");
 			String integral_expr = "(" + function + "), " + min + ", " + max;
-			String integrationScript = "f = @(z) " + integral_expr + "; a = " + min + "; b = " + max + "; h = " + interval + "; n = (b-a)/h;" +
+			String integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; h = " + interval + "; n = (b-a)/h;" +
 					"s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
 			engine.eval(integrationScript);
 		} catch (InterruptedException ex) {
