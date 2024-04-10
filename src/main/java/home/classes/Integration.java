@@ -1,17 +1,16 @@
 package home.classes;
 
-import com.mathworks.engine.*;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-import home.IntegrX;
 
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 import static home.controllers.MainController.setLatexFunction;
 
-public class NumericIntegration {
-	private static NumericIntegration instance;
+public class Integration implements home.interfaces.Integration {
+	private static Integration instance;
 
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
@@ -19,20 +18,29 @@ public class NumericIntegration {
 					"xlabel('x')\n" +
 					"ylabel('y')\n" +
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')"; // Save the plot as a PNG file
-	private MatlabEngine engine = IntegrX.getEngine();
 
 	// Private constructor to prevent instantiation of the class
-	private NumericIntegration() {
+	protected Integration() {
 	}
 
 	// Static method to get the single instance of the class
-	public static NumericIntegration getInstance() throws EngineException, InterruptedException {
+	public static Integration getInstance() throws EngineException, InterruptedException {
 		// If the instance is null, create a new instance
 		if (instance == null) {
-			instance = new NumericIntegration();
+			instance = new Integration();
 		}
 		// Return the single instance
 		return instance;
+	}
+
+	@Override
+	public double shrinkDecimal(double value) {
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(6);
+		if (value < Integration.THRESHOLD) {
+			df.setGroupingUsed(false);
+		}
+        return Double.parseDouble(df.format(value));
 	}
 
 	public double integrate(String function, String min, String max, String plot_interval) throws MatlabExecutionException, MatlabSyntaxException {
@@ -74,29 +82,5 @@ public class NumericIntegration {
 		}
 		return integralResult;
 	}
-
-	public double calculateRectangular(String function, String min, String max, String interval) throws MatlabExecutionException, MatlabSyntaxException {
-		try {
-			engine.eval("syms x");
-			String integral_expr = "(" + function + "), " + min + ", " + max;
-			String integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; h = " + interval + "; n = (b-a)/h;" +
-					"s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
-			engine.eval(integrationScript);
-		} catch (InterruptedException ex) {
-			throw new RuntimeException(ex);
-		} catch (ExecutionException ex) {
-			throw new RuntimeException(ex);
-		}
-		double integralResult;
-		try {
-			integralResult = engine.getVariable("integralResult");
-		} catch (InterruptedException ex) {
-			throw new RuntimeException(ex);
-		} catch (ExecutionException ex) {
-			throw new RuntimeException(ex);
-		}
-		return integralResult;
-	}
-
 
 }

@@ -164,16 +164,16 @@
                   </Text>
                   <VBox minHeight="90.0" prefHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
                      <children>
-                        <ImageView fx:id="latex_integral1" fitHeight="62.0" fitWidth="679.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                        <ImageView fx:id="latex_integral1" fitHeight="80.0" fitWidth="680.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </ImageView>
                      </children>
                   </VBox>
-                  <VBox maxHeight="270.0" minHeight="270.0" prefHeight="270.0" prefWidth="712.0" styleClass="result_plots_2" stylesheets="@css/fullstyle.css" VBox.vgrow="NEVER">
+                  <VBox maxHeight="270.0" minHeight="270.0" prefHeight="270.0" prefWidth="870.0" styleClass="result_plots_2" stylesheets="@css/fullstyle.css">
                      <children>
-                        <ImageView fx:id="plot_function" fitHeight="62.0" fitWidth="227.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                        <ImageView fx:id="plot_function" fitHeight="266.0" fitWidth="678.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -189,7 +189,7 @@
                <children>
                   <HBox prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL" wrappingWidth="329.744140625" HBox.hgrow="ALWAYS">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
@@ -202,26 +202,26 @@
                   </HBox>
                   <HBox prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD" wrappingWidth="311.744140625" HBox.hgrow="ALWAYS">
+                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
                         </Text>
                         <Label fx:id="method_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
                   </HBox>
                   <HBox prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ERROR" wrappingWidth="330.744140625" HBox.hgrow="ALWAYS">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
                         </Text>
                         <Label fx:id="abs_err" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
                      </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>

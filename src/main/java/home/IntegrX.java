@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class IntegrX extends Application {
 	private static MatlabEngine engine;
+	private double xOffset = 0;
+	private double yOffset = 0;
 
 	static {
 		try {
@@ -25,10 +27,6 @@ public class IntegrX extends Application {
 			throw new RuntimeException(e);
 		}
 	}
-
-	// Variables to store mouse cursor position
-	private double xOffset = 0;
-	private double yOffset = 0;
 
 	@Override
 	public void start(Stage stage) throws IOException, EngineException, InterruptedException {
@@ -67,11 +65,6 @@ public class IntegrX extends Application {
 	public static MatlabEngine getEngine() {
 		return engine;
 	}
-
-	public void setEngine(MatlabEngine engine) {
-		this.engine = engine;
-	}
-
 	public static void main(String[] args) {
 		launch(args);
 	}

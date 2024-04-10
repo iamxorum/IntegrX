@@ -1,10 +1,11 @@
 package home.controllers;
 
-import com.mathworks.engine.MatlabEngine;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-import home.IntegrX;
-import home.classes.NumericIntegration;
+import home.classes.Integration;
+import home.classes.RectangularIntegration;
+import home.classes.SimpsonIntegration;
+import home.classes.TrapezoidalIntegration;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,7 +18,6 @@ import javafx.scene.text.Text;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
-import javax.swing.*;
 import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.util.HashMap;
@@ -186,9 +186,15 @@ public class MainController {
 		}
 
 		double result = 0; // Initialize the result variable
-		NumericIntegration ni = null;
+		Integration ni = null;
+		RectangularIntegration ri = null;
+		TrapezoidalIntegration ti = null;
+		SimpsonIntegration si = null;
 		try {
-			ni = NumericIntegration.getInstance();
+			ni = Integration.getInstance();
+			ri = RectangularIntegration.getInstance();
+			ti = TrapezoidalIntegration.getInstance();
+			si = SimpsonIntegration.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -202,28 +208,30 @@ public class MainController {
 				Color.RED);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
-		latex_integral1.preserveRatioProperty();
 		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
 		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
 		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
-		plot_function.preserveRatioProperty();
 		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
 		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
 		real_integral.setText(String.valueOf(result));
 		if (rectangularButton.isSelected()) {
-			result = ni.calculateRectangular(function, min, max, interval);
+			result = ri.calculateRectangular(function, min, max, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("RECTANGULAR METHOD");
-		} /*else if (trapezoidalButton.isSelected()) {
-			result = ni.calculateTrapezoidal(function, min, max,interval);
 		} else if (simpsonButton.isSelected()) {
-			result = calculateSimpson(function, min, max, interval);
-		}*/
+			result = si.calculateSimpson(function, min, max, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("SIMPSON METHOD");
+		} else if (trapezoidalButton.isSelected()) {
+			result = ti.calculateTrapezoid(function, min, max, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("TRAPEZOID METHOD");
+		}
 		double absolute_error;
 		if (result > Double.parseDouble(real_integral.getText())) {
-			absolute_error = result - Double.parseDouble(real_integral.getText());
+			absolute_error = ni.shrinkDecimal(result - Double.parseDouble(real_integral.getText()));
 		} else {
-			absolute_error = Double.parseDouble(real_integral.getText()) - result;
+			absolute_error = ni.shrinkDecimal(Double.parseDouble(real_integral.getText()) - result);
 		}
 		abs_err.setText(String.valueOf(absolute_error));
 	}
