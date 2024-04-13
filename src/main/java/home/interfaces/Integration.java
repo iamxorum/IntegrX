@@ -1,12 +1,10 @@
 package home.interfaces;
 
 import com.mathworks.engine.MatlabEngine;
-import com.mathworks.engine.MatlabExecutionException;
-import com.mathworks.engine.MatlabSyntaxException;
-import home.IntegrX;
+import home.classes.Matlab_MultiThread;
 
 public interface Integration {
     double THRESHOLD = 0.000001;
-    MatlabEngine engine = IntegrX.getEngine();
+    MatlabEngine engine = Matlab_MultiThread.getEngine();
     double shrinkDecimal(double value);
 }

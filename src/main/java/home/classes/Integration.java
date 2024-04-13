@@ -3,7 +3,6 @@ package home.classes;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 

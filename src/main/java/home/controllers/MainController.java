@@ -13,11 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
-
 import javafx.scene.text.Text;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
-
 import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.util.HashMap;
@@ -100,8 +98,6 @@ public class MainController {
 		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
 		result_window.setVisible(result_btn.isSelected());
 	}
-
-
 
 	@FXML
 	protected void onCloseButtonClicked(ActionEvent event) {
@@ -210,9 +206,11 @@ public class MainController {
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
 		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
+		latex_integral1.setPreserveRatio(true);
 		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
 		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
 		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
+		plot_function.setPreserveRatio(true);
 		real_integral.setText(String.valueOf(result));
 		if (rectangularButton.isSelected()) {
 			result = ri.calculateRectangular(function, min, max, interval);
@@ -229,9 +227,9 @@ public class MainController {
 		}
 		double absolute_error;
 		if (result > Double.parseDouble(real_integral.getText())) {
-			absolute_error = ni.shrinkDecimal(result - Double.parseDouble(real_integral.getText()));
+			absolute_error = result - Double.parseDouble(real_integral.getText());
 		} else {
-			absolute_error = ni.shrinkDecimal(Double.parseDouble(real_integral.getText()) - result);
+			absolute_error = Double.parseDouble(real_integral.getText()) - result;
 		}
 		abs_err.setText(String.valueOf(absolute_error));
 	}
