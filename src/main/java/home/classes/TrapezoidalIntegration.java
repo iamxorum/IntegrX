@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class TrapezoidalIntegration extends Integration{
-    private static TrapezoidalIntegration instance;
+    private static TrapezoidalIntegration instance = null;
 
     // Private constructor to prevent instantiation of the class
     private TrapezoidalIntegration() {

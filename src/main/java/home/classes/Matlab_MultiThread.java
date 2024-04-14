@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Matlab_MultiThread extends Thread {
     private static MatlabEngine engine;
-    public static Matlab_MultiThread instance;
+    public static Matlab_MultiThread instance = null;
 
     public static Matlab_MultiThread getInstance() {
         if (instance == null) {

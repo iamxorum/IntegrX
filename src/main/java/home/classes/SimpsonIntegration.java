@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class SimpsonIntegration extends Integration {
-    private static SimpsonIntegration instance;
+    private static SimpsonIntegration instance = null;
 
     // Private constructor to prevent instantiation of the class
     private SimpsonIntegration() {

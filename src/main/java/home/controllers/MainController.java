@@ -3,10 +3,7 @@ package home.controllers;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
 import home.IntegrX;
-import home.classes.Integration;
-import home.classes.RectangularIntegration;
-import home.classes.SimpsonIntegration;
-import home.classes.TrapezoidalIntegration;
+import home.classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -138,62 +135,28 @@ public class MainController {
 		conversionMap.put("Inf", "Inf");
 		conversionMap.put("-Inf", "-Inf");
 
+		ErrorHandling errorHandling = null;
+		try {
+			errorHandling = ErrorHandling.getInstance();
+		} catch (Exception e) {
+			errorHandling.showAlert("Error", e.getMessage());
+			return;
+		}
+
+		errorHandling.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval);
+		errorHandling.handleRange(min, max);
+		if(errorHandling.handleRangeInf(min, max)) return;
+		if(!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected()) {
+			errorHandling.showAlert("Error", "Please select a method.");
+			return;
+		}
+
 		// Update min and max if they match any key in the map
 		if (conversionMap.containsKey(min)) {
 			min = conversionMap.get(min);
 		}
 		if (conversionMap.containsKey(max)) {
 			max = conversionMap.get(max);
-		}
-
-
-		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty() || int_id.getText().isEmpty() || abs_err_usr.isEmpty() || plot_interval_id.getText().isEmpty()) {
-			showAlert("EMPTY FIELDS", "All fields must be filled.");
-			return;
-		}
-
-		if ("Inf".equals(max) && !("-Inf".equals(min)) && !("Inf".equals(min)) && "-Inf".equals(max)) {
-			if (Double.parseDouble(min) >= Double.POSITIVE_INFINITY) {
-				showAlert("Invalid Range", "The minimum value must be less than positive infinity.");
-				return;
-			}
-		} else if ("-Inf".equals(min) && !("Inf".equals(max)) && !("-Inf".equals(max)) && "-Inf".equals(min)){
-			if (Double.parseDouble(max) <= Double.NEGATIVE_INFINITY) {
-				showAlert("Invalid Range", "The minimum value must be less than the maximum value.");
-				return;
-			}
-		} else if (!("Inf".equals(min)) && !("-Inf".equals(max)) && !("Inf".equals(max)) && !("-Inf".equals(min)) ){
-			if (Double.parseDouble(min) > Double.parseDouble(max)) {
-				showAlert("Invalid Range", "The minimum value must be less than the maximum value.");
-				return;
-			} else if (Double.parseDouble(min) == Double.parseDouble(max)) {
-				showAlert("Invalid Range", "The minimum value must be less than the maximum value.");
-				return;
-			}
-		} else if ("-Inf".equals(max)) {
-			showAlert("Invalid Range", "The maximum value must be higher than negative infinity.");
-			return;
-		} else if ("Inf".equals(min)) {
-			showAlert("Invalid Range", "The minimum value must be less than positive infinity.");
-			return;
-		} else if ("Inf".equals(min) && "Inf".equals(max)) {
-			showAlert("Invalid Range", "The minimum value must be less than the maximum value.");
-			return;
-		} else if ("-Inf".equals(min) && "-Inf".equals(max)) {
-			showAlert("Invalid Range", "The minimum value must be less than the maximum value.");
-			return;
-		} else if ("-Inf".equals(min) && "Inf".equals(max)) {
-			Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
-			confirmationDialog.setTitle("Wide Range Detected");
-			confirmationDialog.setHeaderText(null);
-			confirmationDialog.setContentText("The range is too wide. Do you want to continue?");
-
-			confirmationDialog.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-			ButtonType userChoice = confirmationDialog.showAndWait().orElse(ButtonType.NO);
-
-			if (userChoice == ButtonType.NO) {
-				return;
-			}
 		}
 
 		double result = 0; // Initialize the result variable
@@ -260,31 +223,5 @@ public class MainController {
 		result_window.setVisible(true);
 	}
 
-	private void showAlert(String title, String message) {
-		Alert alert = new Alert(Alert.AlertType.WARNING);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
 
-		// Apply CSS styles to the dialog pane
-		DialogPane dialogPane = alert.getDialogPane();
-
-		// Load the CSS file
-		alert.initStyle(StageStyle.UNDECORATED);
-		URL cssURL = IntegrX.class.getResource("/Integrix/css/fullstyle.css");  // Make sure path is correct
-		if (cssURL != null) {
-			dialogPane.getStylesheets().add(cssURL.toExternalForm());
-		} else {
-			System.err.println("Could not load stylesheet");
-		}
-
-		// Add a class to the dialog pane
-		dialogPane.getStyleClass().add("dialog-pane");
-
-		// Add a class to the content text
-		dialogPane.lookup(".content").getStyleClass().add("content-text");
-
-		// Show the alert
-		alert.showAndWait();
-	}
 }

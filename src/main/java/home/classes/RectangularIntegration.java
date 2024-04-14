@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class RectangularIntegration extends Integration {
-    private static RectangularIntegration instance;
+    private static RectangularIntegration instance = null;
 
     // Private constructor to prevent instantiation of the class
     private RectangularIntegration() {

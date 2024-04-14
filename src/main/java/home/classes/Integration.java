@@ -3,13 +3,16 @@ package home.classes;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
+import home.interfaces.Integration_Interface;
+
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
+
 import static home.controllers.MainController.setLatexFunction;
 
-public class Integration implements home.interfaces.Integration {
-	private static Integration instance;
+public class Integration implements Integration_Interface {
+	private static Integration instance = null;
 
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
