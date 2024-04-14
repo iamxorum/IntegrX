@@ -2,6 +2,7 @@ package home.controllers;
 
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
+import home.IntegrX;
 import home.classes.Integration;
 import home.classes.RectangularIntegration;
 import home.classes.SimpsonIntegration;
@@ -13,11 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.StageStyle;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import javafx.scene.image.ImageView;
+
 import java.awt.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -42,6 +47,8 @@ public class MainController {
 	@FXML private ImageView latex_integral1;
 	@FXML private ImageView plot_function;
 	@FXML private Text method_result_name;
+	@FXML private HBox error_div;
+	@FXML private TextField abs_err_input;
 
 	private static String latexFunction = "";
 
@@ -56,6 +63,9 @@ public class MainController {
 		get_started_btn.setToggleGroup(toggleGroup2);
 		calculation_form_btn.setToggleGroup(toggleGroup2);
 		result_btn.setToggleGroup(toggleGroup2);
+
+		result_btn.setVisible(false);
+		result_btn.setDisable(true);
 
 		// Implicitly toggle the get_started_btn
 		get_started_btn.setSelected(true);
@@ -80,6 +90,12 @@ public class MainController {
 				// If a new ToggleButton is selected, hide the AnchorPane
 				calculation_form.setVisible(false);
 				result_window.setVisible(false);
+			}
+		});
+		// Event listener to prevent un-toggling
+		toggleGroup2.selectedToggleProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if (isNowSelected == null) {
+				wasSelected.setSelected(true);
 			}
 		});
 	}
@@ -110,6 +126,7 @@ public class MainController {
 		String max = max_id.getText();
 		String interval = int_id.getText();
 		String plot_interval = plot_interval_id.getText();
+		String abs_err_usr = abs_err_input.getText();
 
 		// Define a map to store the conversions
 		Map<String, String> conversionMap = new HashMap<>();
@@ -130,13 +147,11 @@ public class MainController {
 		}
 
 
-		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty()) {
-			showAlert("Empty Fields", "All fields must be filled.");
+		if (function.isEmpty() || min_id.getText().isEmpty() || max_id.getText().isEmpty() || int_id.getText().isEmpty() || abs_err_usr.isEmpty() || plot_interval_id.getText().isEmpty()) {
+			showAlert("EMPTY FIELDS", "All fields must be filled.");
 			return;
 		}
-		if (int_id.getText().isEmpty()) {
-			int_id.setText("0");
-		}
+
 		if ("Inf".equals(max) && !("-Inf".equals(min)) && !("Inf".equals(min)) && "-Inf".equals(max)) {
 			if (Double.parseDouble(min) >= Double.POSITIVE_INFINITY) {
 				showAlert("Invalid Range", "The minimum value must be less than positive infinity.");
@@ -231,7 +246,18 @@ public class MainController {
 		} else {
 			absolute_error = Double.parseDouble(real_integral.getText()) - result;
 		}
+		if (absolute_error > Double.parseDouble(abs_err_usr)) {
+			error_div.setStyle("-fx-background-color: #cc2424");
+		} else {
+			error_div.setStyle("-fx-background-color: #318169");
+		}
 		abs_err.setText(String.valueOf(absolute_error));
+
+		//Toggle the result window button
+		result_btn.setVisible(true);
+		result_btn.setDisable(false);
+		result_btn.setSelected(true);
+		result_window.setVisible(true);
 	}
 
 	private void showAlert(String title, String message) {
@@ -239,6 +265,26 @@ public class MainController {
 		alert.setTitle(title);
 		alert.setHeaderText(null);
 		alert.setContentText(message);
+
+		// Apply CSS styles to the dialog pane
+		DialogPane dialogPane = alert.getDialogPane();
+
+		// Load the CSS file
+		alert.initStyle(StageStyle.UNDECORATED);
+		URL cssURL = IntegrX.class.getResource("/Integrix/css/fullstyle.css");  // Make sure path is correct
+		if (cssURL != null) {
+			dialogPane.getStylesheets().add(cssURL.toExternalForm());
+		} else {
+			System.err.println("Could not load stylesheet");
+		}
+
+		// Add a class to the dialog pane
+		dialogPane.getStyleClass().add("dialog-pane");
+
+		// Add a class to the content text
+		dialogPane.lookup(".content").getStyleClass().add("content-text");
+
+		// Show the alert
 		alert.showAndWait();
 	}
 }

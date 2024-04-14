@@ -30,17 +30,6 @@ public class IntegrX extends Application {
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 
-		// Set the event handlers for dragging the window
-		loadingComponent.setOnMousePressed(event -> {
-			xOffset = event.getSceneX();
-			yOffset = event.getSceneY();
-		});
-
-		loadingComponent.setOnMouseDragged(event -> {
-			stage.setX(event.getScreenX() - xOffset);
-			stage.setY(event.getScreenY() - yOffset);
-		});
-
 		// Start the thread to initialize MatlabEngine
 		Matlab_MultiThread multiThread = Matlab_MultiThread.getInstance();
 		multiThread.start();

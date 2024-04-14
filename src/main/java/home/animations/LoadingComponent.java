@@ -43,7 +43,7 @@ public class LoadingComponent extends StackPane {
 
         // Progress indicator
         ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setMaxSize(50, 50);
+        progressIndicator.setMaxSize(150, 300);
         progressIndicator.setProgress(-1); // Set to indeterminate
 
         // Apply rotation animation to progress indicator

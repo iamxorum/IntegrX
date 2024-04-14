@@ -100,15 +100,6 @@
     -fx-alignment: center;
 }
 
-.error_integral {
-    -fx-background-color: #c7cc24;
-    -fx-text-fill: white;
-    -fx-font-family: 'Roboto';
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-alignment: center;
-}
-
 .matlab_integral_lbl {
     -fx-font-family: 'Roboto';
     -fx-font-size: 24px;
@@ -130,6 +121,39 @@
 .calculate:pressed {
     -fx-background-color : #4dbf4a;
     -fx-cursor: hand;
+}
+
+.dialog-pane {
+    -fx-background-color: #3C486B;
+    -fx-font-size: 16px;
+    -fx-border-color: #fafafa;
+    -fx-border-width: 2px;
+}
+
+.dialog-pane .button {
+    -fx-background-color:
+            linear-gradient(#f9d949, #d3ff4e),
+            radial-gradient(center 50% -40%, radius 200%, #f9d949 45%, #d3ff4e 50%);
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color:
+            linear-gradient(#f9d949, #d3ff4e);
+}
+
+.dialog-pane .button:pressed {
+    -fx-background-color:
+            linear-gradient(#f9d949, #d3ff4e);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.dialog-pane .content-text {
+    -fx-text-fill: #fafafa; /* Red color */
+    -fx-font-family: "Roboto";
+    -fx-font-size: 16px; /* Font size */
 }
 
 /* Define the striped pattern */
