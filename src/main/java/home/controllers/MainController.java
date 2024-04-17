@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 public class MainController {
 	@FXML private ToggleButton rectangularButton;
@@ -45,10 +46,11 @@ public class MainController {
 	@FXML private ImageView plot_function;
 	@FXML private Text method_result_name;
 	@FXML private HBox error_div;
+	@FXML private HBox method_div;
+	@FXML private HBox integral_div;
 	@FXML private TextField abs_err_input;
-
-	private static String latexFunction = "";
-
+	@FXML private Label isDiv_Conv;
+	@FXML private Label isDiv_Conv2;
 	@FXML
 	private void initialize() {
 		ToggleGroup toggleGroup1 = new ToggleGroup();
@@ -60,6 +62,9 @@ public class MainController {
 		get_started_btn.setToggleGroup(toggleGroup2);
 		calculation_form_btn.setToggleGroup(toggleGroup2);
 		result_btn.setToggleGroup(toggleGroup2);
+
+		isDiv_Conv2.setVisible(false);
+		isDiv_Conv2.setDisable(true);
 
 		result_btn.setVisible(false);
 		result_btn.setDisable(true);
@@ -97,11 +102,6 @@ public class MainController {
 		});
 	}
 
-	public static void setLatexFunction(String latexFunction) {
-		Objects.requireNonNull(latexFunction);
-		MainController.latexFunction = latexFunction;
-	}
-
 	private void handleCalculationFormVisibility() {
 		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
 		calculation_form.setVisible(calculation_form_btn.isSelected());
@@ -117,7 +117,7 @@ public class MainController {
 		System.exit(0);
 	}
 
-	public void calculateAction(ActionEvent actionEvent) throws MatlabExecutionException, MatlabSyntaxException {
+	public void calculateAction(ActionEvent actionEvent) throws ExecutionException, InterruptedException {
 		String function = func_id.getText();
 		String min = min_id.getText();
 		String max = max_id.getText();
@@ -172,15 +172,19 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		result = ni.integrate(function, min, max, plot_interval);
-		TeXFormula formula = new TeXFormula(latexFunction);
-		Color smokeWhite = new Color(250, 250, 250);
-		formula.createPNG(TeXConstants.STYLE_DISPLAY,
-				100,
-				"./src/main/resources/Integrix/plots/funct_latex.png",
-				smokeWhite,
-				Color.RED);
-		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
+		String isDivergent = ni.isDivergent(function);
+		isDiv_Conv2.setVisible(true);
+		isDiv_Conv2.setDisable(false);
+		isDiv_Conv.setText(isDivergent);
+		isDiv_Conv2.setText(isDivergent);
+		if (isDivergent.equals("The function is divergent")) {
+			isDiv_Conv.setStyle("-fx-background-color: #cc2424");
+			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
+		} else {
+			isDiv_Conv.setStyle("-fx-background-color: #315981");
+			isDiv_Conv2.setStyle("-fx-background-color: #315981");
+		}
+		ni.plotting(function, min, max, plot_interval);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
 		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
@@ -189,6 +193,19 @@ public class MainController {
 		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
 		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
 		plot_function.setPreserveRatio(true);
+
+		try {
+			result = ni.integrate(function, min, max);
+		} catch (Exception e) {
+			integral_div.setVisible(false);
+			method_div.setVisible(false);
+			error_div.setVisible(false);
+			return;
+		}
+		integral_div.setVisible(true);
+		method_div.setVisible(true);
+		error_div.setVisible(true);
+
 		real_integral.setText(String.valueOf(result));
 		if (rectangularButton.isSelected()) {
 			result = ri.calculateRectangular(function, min, max, interval);
