@@ -21,15 +21,7 @@ public class Matlab_MultiThread extends Thread {
     public void run() {
         try {
             engine = MatlabEngine.startMatlab();
-            engine.eval("test = 1 + 1;");
-            engine.eval("clear;");
         } catch (EngineException | InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (MatlabExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (MatlabSyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
