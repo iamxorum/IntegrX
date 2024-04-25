@@ -171,6 +171,12 @@
 
 }
 
+.scrollpane_div {
+    -fx-alignment: center;
+    -fx-background-color: #fafafa;
+    -fx-border: 0;
+}
+
 /* Define the striped pattern */
 .root-bg {
     -fx-background-color: #fafafa;

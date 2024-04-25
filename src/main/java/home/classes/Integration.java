@@ -91,7 +91,46 @@ public class Integration implements Integration_Interface {
 		}
 	}
 
-	public double integrate(String function, String min, String max) throws MatlabExecutionException, MatlabSyntaxException {
+	public void diff_latex(String function) throws ExecutionException, InterruptedException {
+		String latexExpr_diff1;
+		String latexExpr_diff2;
+		try {
+			engine.eval("syms x");
+			engine.eval("df1 = diff(" + function + ", x);");
+			engine.eval("df2 = diff(df1, x);");
+
+			// Convert the result to LaTeX
+			String latexScript_diff1 = "latexFunction_diff1 = latex(df1);";
+			engine.eval(latexScript_diff1);
+			String latexScript_diff2 = "latexFunction_diff2 = latex(df2);";
+			engine.eval(latexScript_diff2);
+
+			// Retrieve the LaTeX expression
+			Object latexFunction = engine.getVariable("latexFunction_diff1");
+			latexExpr_diff1 = latexFunction.toString();
+			Object latexFunction2 = engine.getVariable("latexFunction_diff2");
+			latexExpr_diff2 = latexFunction2.toString();
+
+			TeXFormula formula = new TeXFormula(latexExpr_diff1);
+			Color smokeWhite = new Color(250, 250, 250);
+			formula.createPNG(TeXConstants.STYLE_DISPLAY,
+					100,
+					"./src/main/resources/Integrix/plots/latexExpr_diff1.png",
+					smokeWhite,
+					Color.RED);
+
+			TeXFormula formula2 = new TeXFormula(latexExpr_diff2);
+			formula2.createPNG(TeXConstants.STYLE_DISPLAY,
+					100,
+					"./src/main/resources/Integrix/plots/latexExpr_diff2.png",
+					smokeWhite,
+					Color.RED);
+		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+        public double integrate(String function, String min, String max) throws MatlabExecutionException, MatlabSyntaxException {
 		try {
 			engine.eval("syms x");
 			// Properly format the integration string to pass function, limits

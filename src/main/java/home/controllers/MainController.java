@@ -9,10 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.StageStyle;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
@@ -32,8 +37,10 @@ public class MainController {
 	@FXML private ToggleButton get_started_btn;
 	@FXML private ToggleButton calculation_form_btn;
 	@FXML private ToggleButton result_btn;
+	@FXML private ToggleButton properties_btn;
 	@FXML private AnchorPane calculation_form;
 	@FXML private AnchorPane result_window;
+	@FXML private AnchorPane properties_window;
 	@FXML private TextField plot_interval_id;
 	@FXML private TextField func_id;
 	@FXML private TextField min_id;
@@ -51,6 +58,11 @@ public class MainController {
 	@FXML private TextField abs_err_input;
 	@FXML private Label isDiv_Conv;
 	@FXML private Label isDiv_Conv2;
+	@FXML private Label isDiv_Conv3;
+	@FXML private ImageView latex_integral_prop;
+	@FXML private ImageView latexFunction_diff1;
+	@FXML private ImageView latexFunction_diff2;
+
 	@FXML
 	private void initialize() {
 		ToggleGroup toggleGroup1 = new ToggleGroup();
@@ -62,12 +74,15 @@ public class MainController {
 		get_started_btn.setToggleGroup(toggleGroup2);
 		calculation_form_btn.setToggleGroup(toggleGroup2);
 		result_btn.setToggleGroup(toggleGroup2);
+		properties_btn.setToggleGroup(toggleGroup2);
 
 		isDiv_Conv2.setVisible(false);
 		isDiv_Conv2.setDisable(true);
 
 		result_btn.setVisible(false);
 		result_btn.setDisable(true);
+		properties_btn.setVisible(false);
+		properties_btn.setDisable(true);
 
 		// Implicitly toggle the get_started_btn
 		get_started_btn.setSelected(true);
@@ -75,6 +90,7 @@ public class MainController {
 		// Call the method to handle the visibility of the AnchorPane
 		handleCalculationFormVisibility();
 		handleResultWindowVisibility();
+		handlePropertiesWindowVisibility();
 
 		calculation_form_btn.setOnAction(event -> {
 			// Toggle the visibility of the AnchorPane when the button is clicked
@@ -86,12 +102,18 @@ public class MainController {
 			handleResultWindowVisibility();
 		});
 
+		properties_btn.setOnAction(event -> {
+			// Toggle the visibility of the AnchorPane when the button is clicked
+			handlePropertiesWindowVisibility();
+		});
+
 		// Add listener to toggleGroup2 selectedToggleProperty
 		toggleGroup2.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
 			if (newToggle != null) {
 				// If a new ToggleButton is selected, hide the AnchorPane
 				calculation_form.setVisible(false);
 				result_window.setVisible(false);
+				properties_window.setVisible(false);
 			}
 		});
 		// Event listener to prevent un-toggling
@@ -110,6 +132,11 @@ public class MainController {
 	private void handleResultWindowVisibility() {
 		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
 		result_window.setVisible(result_btn.isSelected());
+	}
+
+	private void handlePropertiesWindowVisibility() {
+		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
+		properties_window.setVisible(properties_btn.isSelected());
 	}
 
 	@FXML
@@ -177,18 +204,34 @@ public class MainController {
 		isDiv_Conv2.setDisable(false);
 		isDiv_Conv.setText(isDivergent);
 		isDiv_Conv2.setText(isDivergent);
+		isDiv_Conv3.setText(isDivergent);
 		if (isDivergent.equals("The function is divergent")) {
 			isDiv_Conv.setStyle("-fx-background-color: #cc2424");
 			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
+			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
 		} else {
 			isDiv_Conv.setStyle("-fx-background-color: #315981");
 			isDiv_Conv2.setStyle("-fx-background-color: #315981");
+			isDiv_Conv3.setStyle("-fx-background-color: #315981");
 		}
 		ni.plotting(function, min, max, plot_interval);
+		ni.diff_latex(function);
 		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
 		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
 		latex_integral1.setPreserveRatio(true);
+		latex_integral_prop.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
+		latex_integral_prop.fitWidthProperty().bind(result_window.widthProperty().divide(7));
+		latex_integral_prop.fitHeightProperty().bind(result_window.heightProperty().divide(7));
+		latex_integral_prop.setPreserveRatio(true);
+		latexFunction_diff1.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff1.png"));
+		latexFunction_diff1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
+		latexFunction_diff1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
+		latexFunction_diff1.setPreserveRatio(true);
+		latexFunction_diff2.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff2.png"));
+		latexFunction_diff2.fitWidthProperty().bind(result_window.widthProperty().divide(7));
+		latexFunction_diff2.fitHeightProperty().bind(result_window.heightProperty().divide(7));
+		latexFunction_diff2.setPreserveRatio(true);
 		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
 		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
 		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
@@ -238,6 +281,8 @@ public class MainController {
 		result_btn.setDisable(false);
 		result_btn.setSelected(true);
 		result_window.setVisible(true);
+		properties_btn.setVisible(true);
+		properties_btn.setDisable(false);
 	}
 
 
