@@ -45,6 +45,7 @@
     -fx-background-color: #3C486B;
     -fx-text-fill: #f9d949;
     -fx-font-family: 'Roboto';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
 }
 
 .toggle_r:hover, .toggle_t:hover, .toggle_s:hover {
@@ -58,17 +59,12 @@
 
 .result_plots {
     -fx-alignment: center;
-    -fx-border-color: #3C486B;
-    -fx-border-width: 2px;
     -fx-border-radius: 5px;
 }
 
 .result_plots_2 {
     -fx-alignment: center;
-    -fx-border-color: #3C486B;
-    -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: white;
 }
 
 .title_result {
@@ -107,10 +103,34 @@
     -fx-alignment: center;
 }
 
+.div_func {
+    -fx-font-family: 'Roboto';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+}
+
 .calculate {
     -fx-background-color : #2e7b26;
     -fx-text-fill: white;
     -fx-font-family: 'Roboto';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.zoom {
+    -fx-background-color: #f9d949;
+    -fx-text-fill: #3C486B;
+    -fx-font-family: 'Roboto';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.zoom:hover {
+    -fx-cursor: hand; /* Change cursor on hover */
+}
+
+.zoom:pressed {
+    -fx-background-color: #3C486B;
+    -fx-text-fill: #f9d949;
 }
 
 .calculate:hover {

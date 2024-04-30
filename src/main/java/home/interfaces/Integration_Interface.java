@@ -13,4 +13,6 @@ public interface Integration_Interface {
     String isDivergent(String function) throws ExecutionException, InterruptedException;
 
     void plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException;
+
+    void method_plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException;
 }

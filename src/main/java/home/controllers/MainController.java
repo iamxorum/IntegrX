@@ -6,7 +6,9 @@ import home.IntegrX;
 import home.classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
@@ -49,8 +52,9 @@ public class MainController {
 	@FXML private Label real_integral;
 	@FXML private Label method_integral;
 	@FXML private Label abs_err;
-	@FXML private ImageView latex_integral1;
+	@FXML private ImageView latex_integral;
 	@FXML private ImageView plot_function;
+	@FXML private ImageView plot_function2;
 	@FXML private Text method_result_name;
 	@FXML private HBox error_div;
 	@FXML private HBox method_div;
@@ -62,6 +66,7 @@ public class MainController {
 	@FXML private ImageView latex_integral_prop;
 	@FXML private ImageView latexFunction_diff1;
 	@FXML private ImageView latexFunction_diff2;
+	@FXML private Button zoom;
 
 	@FXML
 	private void initialize() {
@@ -144,7 +149,49 @@ public class MainController {
 		System.exit(0);
 	}
 
-	public void calculateAction(ActionEvent actionEvent) throws ExecutionException, InterruptedException {
+	public void showLatexIntegralProp() {
+		Image image = latex_integral_prop.getImage(); // Assuming latex_integral_prop is accessible here
+		openImage(image);
+	}
+
+	public void showLatexFunctionDiff1() {
+		Image image = latexFunction_diff1.getImage(); // Assuming latex_integral_prop is accessible here
+		openImage(image);
+	}
+
+	public void showLatexFunctionDiff2() {
+		Image image = latexFunction_diff2.getImage(); // Assuming latex_integral_prop is accessible here
+		openImage(image);
+	}
+
+	public void showLatexIntegral() {
+		Image image = latex_integral.getImage(); // Assuming latex_integral_prop is accessible here
+		openImage(image);
+	}
+
+	public void showPlotFunction() {
+		Image image = plot_function.getImage(); // Assuming latex_integral_prop is accessible here
+		Image image2 = plot_function2.getImage(); // Assuming latex_integral_prop is accessible here
+		openImage(image);
+		openImage(image2);
+	}
+
+	public void openImage(Image image) {
+		// Open as a pop-up window
+		Stage stage = new Stage();
+		ImageView imageView = new ImageView();
+		imageView.setImage(image);
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setContent(imageView);
+		scrollPane.setPannable(true);
+		scrollPane.setFitToHeight(true);
+		scrollPane.setFitToWidth(true);
+		Scene scene = new Scene(scrollPane);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public void calculateAction() throws ExecutionException, InterruptedException {
 		String function = func_id.getText();
 		String min = min_id.getText();
 		String max = max_id.getText();
@@ -216,26 +263,11 @@ public class MainController {
 		}
 		ni.plotting(function, min, max, plot_interval);
 		ni.diff_latex(function);
-		latex_integral1.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
-		latex_integral1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
-		latex_integral1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
-		latex_integral1.setPreserveRatio(true);
+		latex_integral.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral_prop.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
-		latex_integral_prop.fitWidthProperty().bind(result_window.widthProperty().divide(7));
-		latex_integral_prop.fitHeightProperty().bind(result_window.heightProperty().divide(7));
-		latex_integral_prop.setPreserveRatio(true);
 		latexFunction_diff1.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff1.png"));
-		latexFunction_diff1.fitWidthProperty().bind(result_window.widthProperty().divide(7));
-		latexFunction_diff1.fitHeightProperty().bind(result_window.heightProperty().divide(7));
-		latexFunction_diff1.setPreserveRatio(true);
 		latexFunction_diff2.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff2.png"));
-		latexFunction_diff2.fitWidthProperty().bind(result_window.widthProperty().divide(7));
-		latexFunction_diff2.fitHeightProperty().bind(result_window.heightProperty().divide(7));
-		latexFunction_diff2.setPreserveRatio(true);
 		plot_function.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_1s.png"));
-		plot_function.fitWidthProperty().bind(result_window.widthProperty().divide(2.8));
-		plot_function.fitHeightProperty().bind(result_window.heightProperty().divide(2.8));
-		plot_function.setPreserveRatio(true);
 
 		try {
 			result = ni.integrate(function, min, max);
@@ -252,17 +284,22 @@ public class MainController {
 		real_integral.setText(String.valueOf(result));
 		if (rectangularButton.isSelected()) {
 			result = ri.calculateRectangular(function, min, max, interval);
+			ni.setPlot_method(0);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("RECTANGULAR METHOD");
 		} else if (simpsonButton.isSelected()) {
+			ni.setPlot_method(1);
 			result = si.calculateSimpson(function, min, max, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("SIMPSON METHOD");
 		} else if (trapezoidalButton.isSelected()) {
+			ni.setPlot_method(2);
 			result = ti.calculateTrapezoid(function, min, max, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("TRAPEZOID METHOD");
 		}
+		ni.method_plotting(function, min, max, plot_interval);
+		plot_function2.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_2s.png"));
 		double absolute_error;
 		if (result > Double.parseDouble(real_integral.getText())) {
 			absolute_error = result - Double.parseDouble(real_integral.getText());

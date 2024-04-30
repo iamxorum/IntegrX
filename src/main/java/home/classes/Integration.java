@@ -14,12 +14,33 @@ import java.util.concurrent.ExecutionException;
 
 public class Integration implements Integration_Interface {
 	private static Integration instance = null;
+	private int plot_method = 0;
+
+	public int getPlot_method() {
+		return plot_method;
+	}
+
+	public void setPlot_method(int plot_method) {
+		this.plot_method = plot_method;
+	}
+
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
 					"plot(skeleton)\n" +
 					"xlabel('x')\n" +
 					"ylabel('y')\n" +
-					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')"; // Save the plot as a PNG file
+					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')";
+
+	private static String MATLAB_PLOT_SKELETON_METHOD =
+			"fig = figure('Visible', 'off');\n" +
+					"hold on;\n" +
+					"plot(x, y, 'LineWidth', 2, 'Color', [0 0.4470 0.7410]);\n" +  // Function line in blue
+					"xlabel('x');\n" +
+					"ylabel('y');\n" +
+					"%s" +  // Placeholder for the area plotting commands
+					"title('Integration Visualization');\n" +
+					"hold off;\n" +
+					"saveas(gcf, './src/main/resources/Integrix/plots/funct_plot_2s.png');\n";
 
 	// Private constructor to prevent instantiation of the class
 	protected Integration() {
@@ -59,6 +80,34 @@ public class Integration implements Integration_Interface {
 		} else {
 			return "The function is convergent";
 		}
+	}
+
+	@Override
+	public void method_plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException {
+		String area_plotting_code = "";
+		engine.eval("x = " + min + ":" + plot_interval + ":" + max + ";");
+		engine.eval("y = " + function + ";");
+
+		switch (plot_method) {
+			case 0:  // Rectangular
+				area_plotting_code = "for i = 1:length(x)-1\n" +
+						"   patch([x(i), x(i+1), x(i+1), x(i)], [y(i), y(i), 0, 0], 'blue', 'EdgeColor', 'blue');\n" +
+						"end;\n";
+				break;
+			case 1:  // Simpson's Rule Visualization
+				area_plotting_code = "for i = 1:2:length(x)-2\n" +
+						"   patch([x(i), x(i+1), x(i+2), x(i+2), x(i)], [y(i+1), y(i+1), 0, 0, y(i+1)], 'red', 'EdgeColor', 'red');\n" +
+						"end;\n";
+				break;
+			case 2:  // Trapezoidal
+				area_plotting_code = "for i = 1:length(x)-1\n" +
+						"   patch([x(i), x(i+1), x(i+1), x(i)], [y(i), y(i+1), y(i+1), y(i)], 'green', 'EdgeColor', 'green');\n" +
+						"end;\n";
+				break;
+		}
+
+		String plottingScript = String.format(MATLAB_PLOT_SKELETON_METHOD, area_plotting_code);
+		engine.eval(plottingScript);
 	}
 
 	@Override
