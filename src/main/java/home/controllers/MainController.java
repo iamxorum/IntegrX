@@ -60,7 +60,6 @@ public class MainController {
 	@FXML private HBox method_div;
 	@FXML private HBox integral_div;
 	@FXML private TextField abs_err_input;
-	@FXML private Label isDiv_Conv;
 	@FXML private Label isDiv_Conv2;
 	@FXML private Label isDiv_Conv3;
 	@FXML private ImageView latex_integral_prop;
@@ -249,15 +248,12 @@ public class MainController {
 		String isDivergent = ni.isDivergent(function);
 		isDiv_Conv2.setVisible(true);
 		isDiv_Conv2.setDisable(false);
-		isDiv_Conv.setText(isDivergent);
 		isDiv_Conv2.setText(isDivergent);
 		isDiv_Conv3.setText(isDivergent);
 		if (isDivergent.equals("The function is divergent")) {
-			isDiv_Conv.setStyle("-fx-background-color: #cc2424");
 			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
 			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
 		} else {
-			isDiv_Conv.setStyle("-fx-background-color: #315981");
 			isDiv_Conv2.setStyle("-fx-background-color: #315981");
 			isDiv_Conv3.setStyle("-fx-background-color: #315981");
 		}
@@ -298,7 +294,7 @@ public class MainController {
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("TRAPEZOID METHOD");
 		}
-		ni.method_plotting(function, min, max, plot_interval);
+		ni.method_plotting(function, min, max, plot_interval, interval);
 		plot_function2.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_2s.png"));
 		double absolute_error;
 		if (result > Double.parseDouble(real_integral.getText())) {

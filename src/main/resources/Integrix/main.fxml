@@ -367,11 +367,6 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label fx:id="isDiv_Conv" prefHeight="44.0" prefWidth="399.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
                </children>
             </VBox>
          </children>

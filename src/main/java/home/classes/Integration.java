@@ -26,7 +26,7 @@ public class Integration implements Integration_Interface {
 
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
-					"plot(skeleton)\n" +
+					"plot(x,y)\n" +
 					"xlabel('x')\n" +
 					"ylabel('y')\n" +
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')";
@@ -34,7 +34,7 @@ public class Integration implements Integration_Interface {
 	private static String MATLAB_PLOT_SKELETON_METHOD =
 			"fig = figure('Visible', 'off');\n" +
 					"hold on;\n" +
-					"plot(x, y, 'LineWidth', 2, 'Color', [0 0.4470 0.7410]);\n" +  // Function line in blue
+					"plot(x, y, 'Color', [0 0.4470 0.7410]);\n" +  // Function line in blue
 					"xlabel('x');\n" +
 					"ylabel('y');\n" +
 					"%s" +  // Placeholder for the area plotting commands
@@ -83,26 +83,71 @@ public class Integration implements Integration_Interface {
 	}
 
 	@Override
-	public void method_plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException {
+	public void method_plotting(String function, String min, String max, String plot_interval, String interval) throws ExecutionException, InterruptedException {
+		engine.eval("clear;");
 		String area_plotting_code = "";
-		engine.eval("x = " + min + ":" + plot_interval + ":" + max + ";");
+		engine.eval("x = " + min + ":((" + max + "-" + min + ")/" + interval + ")" + ":" + max + ";");
 		engine.eval("y = " + function + ";");
 
 		switch (plot_method) {
 			case 0:  // Rectangular
-				area_plotting_code = "for i = 1:length(x)-1\n" +
-						"   patch([x(i), x(i+1), x(i+1), x(i)], [y(i), y(i), 0, 0], 'blue', 'EdgeColor', 'blue');\n" +
-						"end;\n";
+				area_plotting_code = "loop = 1;\n" +
+						"% Loop until loop is less than the length of x minus 1\n" +
+						"while loop <= length(x)-1\n" +
+						"    % Calculate width\n" +
+						"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+						"    % Calculate height\n" +
+						"    height = y(loop);\n" +
+						"    % Define vertices of the rectangle\n" +
+						"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
+						"    y_coords = [0, 0, height, height];\n" +
+						"    % Create a polyshape representing the rectangle\n" +
+						"    rect_poly = polyshape(x_coords, y_coords);\n" +
+						"    % Plot the rectangle\n" +
+						"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
+						"    hold on;\n" +
+						"    % Increment loop counter\n" +
+						"    loop = loop + 1;\n" +
+						"end;\n" +
+						"hold off;\n";
 				break;
-			case 1:  // Simpson's Rule Visualization
-				area_plotting_code = "for i = 1:2:length(x)-2\n" +
-						"   patch([x(i), x(i+1), x(i+2), x(i+2), x(i)], [y(i+1), y(i+1), 0, 0, y(i+1)], 'red', 'EdgeColor', 'red');\n" +
-						"end;\n";
+			case 1:  // Simpson's
+				area_plotting_code = "loop = 1;\n" +
+						"% Plot the vertical lines for Simpson's segments\n" +
+						"while loop <= length(x)-2\n" +
+						"    x_segment = [x(loop), x(loop), x(loop+1), x(loop+1)];\n" +
+						"    y_segment = [0, y(loop), y(loop+1), 0];\n" +
+						"    plot(x_segment, y_segment, 'Color', [0 0.4470 0.7410]);\n" +
+						"    hold on;\n" +
+						"    loop = loop + 2;\n" +
+						"end;\n" +
+						"% Plot the last vertical line if there's an odd number of points\n" +
+						"if mod(length(x), 2) == 0\n" +
+						"    plot([x(end), x(end)], [0, y(end)], 'Color', [0 0.4470 0.7410]);\n" +
+						"end;\n" +
+						"% Plot the horizontal line at y=0\n" +
+						"plot([x(1), x(end)], [0, 0], 'Color', [0 0.4470 0.7410]);\n" +
+						"hold off;\n";
 				break;
 			case 2:  // Trapezoidal
-				area_plotting_code = "for i = 1:length(x)-1\n" +
-						"   patch([x(i), x(i+1), x(i+1), x(i)], [y(i), y(i+1), y(i+1), y(i)], 'green', 'EdgeColor', 'green');\n" +
-						"end;\n";
+				area_plotting_code = "loop = 1;\n" +
+						"% Loop until loop is less than the length of x minus 1\n" +
+						"while loop <= length(x)-1\n" +
+						"    % Calculate width\n" +
+						"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+						"    % Calculate heights of the left and right points\n" +
+						"    height_left = y(loop);\n" +
+						"    height_right = y(loop+1);\n" +
+						"    % Define vertices of the trapezoid\n" +
+						"    x_coords = [x(loop), x(loop+1), x(loop+1), x(loop)];\n" +
+						"    y_coords = [0, 0, height_right, height_left];\n" +
+						"    % Plot trapezoid\n" +
+						"    plot(polyshape(x_coords, y_coords), 'FaceColor', [0 0.4470 0.7410]);\n" +
+						"    hold on;\n" +
+						"    % Increment loop counter\n" +
+						"    loop = loop + 1;\n" +
+						"end;\n" +
+						"hold off;\n";
 				break;
 		}
 
@@ -114,10 +159,10 @@ public class Integration implements Integration_Interface {
 	public void plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException {
 		String latexExpr;
 		try {
+			engine.eval("clear;");
 			engine.eval("x = " + min + ":" + plot_interval + ":" + max + ";");
 			engine.eval("y = " + function + ";");
-			String modifiedScript = MATLAB_PLOT_SKELETON.replace("skeleton", "x,y");
-			engine.eval(modifiedScript);
+			engine.eval(MATLAB_PLOT_SKELETON);
 			engine.eval("syms x");
 
 			// Convert the result to LaTeX
