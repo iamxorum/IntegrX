@@ -117,6 +117,24 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
 }
 
+.get_started_btn {
+    -fx-background-color : #f9d949;
+    -fx-text-fill: #3C486B;
+    -fx-font-family: 'Roboto';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.get_started_btn:hover {
+    -fx-cursor: hand; /* Change cursor on hover */
+    -fx-background-color: #3C486B;
+    -fx-text-fill: #f9d949;
+}
+
+.get_started_btn:pressed {
+    -fx-background-color: #f9d949;
+    -fx-text-fill: #3C486B;
+}
+
 .zoom {
     -fx-background-color: #f9d949;
     -fx-text-fill: #3C486B;
@@ -130,7 +148,7 @@
 
 .zoom:pressed {
     -fx-background-color: #3C486B;
-    -fx-text-fill: #f9d949;
+    -fx-text-fill: #ffeb99;
 }
 
 .calculate:hover {
@@ -158,6 +176,38 @@
     -fx-background-insets: 0;
     -fx-text-fill: black;
 }
+
+.welcome {
+    -fx-text-fill: #3C486B;
+    -fx-background-color: #fafafa;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 28px; /* Font size */
+    /* Set full width */
+    -fx-alignment: center;
+}
+
+.welcome2 {
+    -fx-text-fill: #3C486B;
+    -fx-background-color: #dedede;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 24px; /* Font size */
+    /* Set full width */
+    -fx-alignment: center;
+}
+
+.image_box {
+    -fx-alignment: center;
+}
+
+.welcome3 {
+    -fx-text-fill: #3C486B;
+    -fx-background-color: #fafafa;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 24px; /* Font size */
+    /* Set full width */
+    -fx-alignment: center;
+}
+
 
 .dialog-pane .button:hover {
     -fx-background-color:

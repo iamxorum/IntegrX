@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -367,6 +368,143 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="get_started" layoutX="255.0" layoutY="113.0" maxHeight="641.0" maxWidth="897.0" minHeight="300.0" minWidth="450.0" prefHeight="641.0" prefWidth="897.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <VBox layoutX="2.0" layoutY="10.0" prefHeight="711.0" prefWidth="965.0" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-9.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-10.0">
+               <children>
+                  <AnchorPane prefHeight="60.0" prefWidth="492.0" styleClass="welcome" stylesheets="@css/fullstyle.css" VBox.vgrow="NEVER">
+                     <children>
+                        <AnchorPane prefHeight="63.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="35.0" prefWidth="947.0" styleClass="welcome" stylesheets="@css/fullstyle.css" text="Welcome to IntegrX" textFill="#fafafa" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="178.0" prefWidth="956.0" styleClass="welcome2" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="181.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox prefHeight="181.0" prefWidth="956.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="143.0" prefWidth="567.0" styleClass="image_box" stylesheets="@css/fullstyle.css">
+                                       <children>
+                                          <Label prefHeight="143.0" prefWidth="399.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" text="Do you need to compute the area under a curve?" textFill="#727272" wrapText="true">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="160.0" prefWidth="481.0" styleClass="image_box" stylesheets="@css/fullstyle.css">
+                                       <children>
+                                          <ImageView fitHeight="155.0" fitWidth="217.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@get_started_ntegral.jpg" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="181.0" prefWidth="956.0" styleClass="welcome3" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="181.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox prefHeight="160.0" prefWidth="890.0" styleClass="welcome" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="160.0" prefWidth="441.0" styleClass="image_box" stylesheets="@css/fullstyle.css">
+                                       <children>
+                                          <ImageView fitHeight="134.0" fitWidth="142.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@java.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="131.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Matlab.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="178.0" prefWidth="486.0" styleClass="image_box" stylesheets="@css/fullstyle.css">
+                                       <children>
+                                          <Label prefHeight="160.0" prefWidth="431.0" styleClass="welcome3" stylesheets="@css/fullstyle.css" text="This Java-powered app, bolstered by Matlab, offers a comprehensive solution." textFill="#727272" wrapText="true">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="125.0" prefWidth="956.0" styleClass="welcome2" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="125.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox prefHeight="105.0" prefWidth="890.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label prefHeight="131.0" prefWidth="958.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" text="Using methods like Rectangular, Trapezoidal, and Simpson, alongside error analysis, it ensures accurate numerical integration." textFill="#727272" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="154.0" prefWidth="956.0" styleClass="welcome" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="155.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="124.0" prefWidth="956.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="58.0" prefWidth="956.0" styleClass="welcome" stylesheets="@css/fullstyle.css" text="Ready to simplify your mathematical tasks? Let's get started!" textFill="#fafafa" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="87.0" prefWidth="926.0">
+                                       <children>
+                                          <Button fx:id="start" alignment="CENTER" maxHeight="56.0" maxWidth="951.0" minHeight="26.0" minWidth="437.0" mnemonicParsing="false" onAction="#getStarted" prefHeight="56.0" prefWidth="926.0" styleClass="get_started_btn" stylesheets="@css/fullstyle.css" text="Get Started" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>

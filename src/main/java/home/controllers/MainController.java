@@ -38,12 +38,14 @@ public class MainController {
 	@FXML private ToggleButton trapezoidalButton;
 	@FXML private ToggleButton simpsonButton;
 	@FXML private ToggleButton get_started_btn;
+	@FXML private Button start;
 	@FXML private ToggleButton calculation_form_btn;
 	@FXML private ToggleButton result_btn;
 	@FXML private ToggleButton properties_btn;
 	@FXML private AnchorPane calculation_form;
 	@FXML private AnchorPane result_window;
 	@FXML private AnchorPane properties_window;
+	@FXML private AnchorPane get_started;
 	@FXML private TextField plot_interval_id;
 	@FXML private TextField func_id;
 	@FXML private TextField min_id;
@@ -83,10 +85,14 @@ public class MainController {
 		isDiv_Conv2.setVisible(false);
 		isDiv_Conv2.setDisable(true);
 
+		get_started.setDisable(false);
+		get_started.setVisible(true);
 		result_btn.setVisible(false);
 		result_btn.setDisable(true);
 		properties_btn.setVisible(false);
 		properties_btn.setDisable(true);
+		calculation_form_btn.setVisible(false);
+		calculation_form_btn.setDisable(true);
 
 		// Implicitly toggle the get_started_btn
 		get_started_btn.setSelected(true);
@@ -95,10 +101,16 @@ public class MainController {
 		handleCalculationFormVisibility();
 		handleResultWindowVisibility();
 		handlePropertiesWindowVisibility();
+		handleStartedWindowVisibility();
 
 		calculation_form_btn.setOnAction(event -> {
 			// Toggle the visibility of the AnchorPane when the button is clicked
 			handleCalculationFormVisibility();
+		});
+
+		get_started_btn.setOnAction(event -> {
+			// Toggle the visibility of the AnchorPane when the button is clicked
+			handleStartedWindowVisibility();
 		});
 
 		result_btn.setOnAction(event -> {
@@ -115,6 +127,7 @@ public class MainController {
 		toggleGroup2.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
 			if (newToggle != null) {
 				// If a new ToggleButton is selected, hide the AnchorPane
+				get_started.setVisible(false);
 				calculation_form.setVisible(false);
 				result_window.setVisible(false);
 				properties_window.setVisible(false);
@@ -131,6 +144,11 @@ public class MainController {
 	private void handleCalculationFormVisibility() {
 		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
 		calculation_form.setVisible(calculation_form_btn.isSelected());
+	}
+
+	private void handleStartedWindowVisibility() {
+		// Toggle the visibility of the AnchorPane based on the state of calculation_form_btn
+		get_started.setVisible(get_started_btn.isSelected());
 	}
 
 	private void handleResultWindowVisibility() {
@@ -188,6 +206,16 @@ public class MainController {
 		Scene scene = new Scene(scrollPane);
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	public void getStarted() {
+		get_started.setVisible(false);
+		calculation_form.setVisible(true);
+		calculation_form.setDisable(false);
+		calculation_form_btn.setVisible(true);
+		calculation_form_btn.setDisable(false);
+		calculation_form_btn.setSelected(true);
+		handleCalculationFormVisibility();
 	}
 
 	public void calculateAction() throws ExecutionException, InterruptedException {
