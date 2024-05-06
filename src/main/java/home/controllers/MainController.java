@@ -236,6 +236,14 @@ public class MainController {
 		conversionMap.put("Inf", "Inf");
 		conversionMap.put("-Inf", "-Inf");
 
+		// Update min and max if they match any key in the map
+		if (conversionMap.containsKey(min)) {
+			min = conversionMap.get(min);
+		}
+		if (conversionMap.containsKey(max)) {
+			max = conversionMap.get(max);
+		}
+
 		ErrorHandling errorHandling = null;
 		try {
 			errorHandling = ErrorHandling.getInstance();
@@ -244,20 +252,15 @@ public class MainController {
 			return;
 		}
 
-		errorHandling.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval);
-		errorHandling.handleRange(min, max);
-		if(errorHandling.handleRangeInf(min, max)) return;
+		if (errorHandling.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval)) {
+			return;
+		}
+		if (errorHandling.handleRange(min, max)) {
+			return;
+		}
 		if(!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected()) {
 			errorHandling.showAlert("Error", "Please select a method.");
 			return;
-		}
-
-		// Update min and max if they match any key in the map
-		if (conversionMap.containsKey(min)) {
-			min = conversionMap.get(min);
-		}
-		if (conversionMap.containsKey(max)) {
-			max = conversionMap.get(max);
 		}
 
 		double result = 0; // Initialize the result variable
