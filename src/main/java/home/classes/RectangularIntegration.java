@@ -3,30 +3,31 @@ package home.classes;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-
-import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class RectangularIntegration extends Integration {
     private static RectangularIntegration instance = null;
 
-    // Private constructor to prevent instantiation of the class
+    // Constructor privat pentru a preveni instanțierea clasei
     private RectangularIntegration() {
     }
 
-    // Static method to get the single instance of the class
+    // Metodă statică pentru a obține unica instanță a clasei
     public static RectangularIntegration getInstance() throws EngineException, InterruptedException {
-        // If the instance is null, create a new instance
+        // Dacă instanța este null, se creează o nouă instanță
         if (instance == null) {
             instance = new RectangularIntegration();
         }
-        // Return the single instance
+        // Se returnează unica instanță
         return instance;
     }
 
+    // Metodă pentru calculul integralei folosind metoda dreptunghiulară
     public double calculateRectangular(String function, String min, String max, String interval) throws MatlabExecutionException, MatlabSyntaxException {
         try {
+            // Se evaluează simbolul 'x' în motorul MATLAB
             engine.eval("syms x");
+            // Se definește expresia integrală și scriptul de integrare
             String integral_expr = "(" + function + "), " + min + ", " + max;
             String integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
                     "s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
@@ -38,6 +39,7 @@ public class RectangularIntegration extends Integration {
         }
         double integralResult;
         try {
+            // Se obține rezultatul integralii din motorul MATLAB
             integralResult = engine.getVariable("integralResult");
         } catch (InterruptedException ex) {
             throw new RuntimeException(ex);

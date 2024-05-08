@@ -15,30 +15,32 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class IntegrX extends Application {
+	// Variabile pentru stocarea offset-ului la mutarea ferestrei
 	private double xOffset = 0;
 	private double yOffset = 0;
 
 	@Override
 	public void start(Stage stage) {
+		// Crearea unui obiect LoadingComponent
 		LoadingComponent loadingComponent = new LoadingComponent();
 
-		// Create a scene with the loading component as the root node
+		// Crearea unei scene cu LoadingComponent ca nod radacina
 		Scene loadingScene = new Scene(loadingComponent, 500, 500);
 
-		// Set the loading screen as the initial scene
+		// Setarea scenei de incarcare ca scena initiala
 		stage.setScene(loadingScene);
-		stage.initStyle(StageStyle.UNDECORATED);
+		stage.initStyle(StageStyle.UNDECORATED); // Eliminarea decorului ferestrei
 		stage.show();
 
-		// Start the thread to initialize MatlabEngine
+		// Inceperea unui fir de executie pentru initializarea MatlabEngine
 		Matlab_MultiThread multiThread = Matlab_MultiThread.getInstance();
 		multiThread.start();
 
-		// Wait for the thread to finish initializing the engine
+		// Asteptarea finalizarii firului de executie pentru initializarea motorului
 		new Thread(() -> {
 			try {
 				multiThread.join();
-				// Once engine initialization is complete, load the main UI
+				// Odata ce initializarea motorului este completa, incarca interfata UI principala
 				Platform.runLater(() -> {
 					FXMLLoader fxmlLoader = new FXMLLoader(IntegrX.class.getResource("/Integrix/main.fxml"));
 
@@ -50,19 +52,19 @@ public class IntegrX extends Application {
 						return;
 					}
 
-					// Get the primary screen dimensions
+					// Obtinerea dimensiunilor ecranului principal
 					Screen screen = Screen.getPrimary();
 					double screenWidth = screen.getBounds().getWidth();
 					double screenHeight = screen.getBounds().getHeight();
 
-					// Create a Scene with full screen dimensions
+					// Crearea unei Scene cu dimensiuni de ecran complet
 					Scene scene = new Scene(root, 0.75 * screenWidth, 0.75 * screenHeight);
 
 					stage.setTitle("IntegrX");
 					stage.setScene(scene);
 					stage.getIcons().add(new Image(IntegrX.class.getResourceAsStream("/Integrix/maths.png")));
 
-					// Set the event handlers for dragging the window
+					// Setarea gestionarilor de evenimente pentru mutarea ferestrei
 					root.setOnMousePressed(event -> {
 						xOffset = event.getSceneX();
 						yOffset = event.getSceneY();
@@ -81,6 +83,7 @@ public class IntegrX extends Application {
 		}).start();
 	}
 
+	// Metoda principala a clasei, porneste aplicatia JavaFX
 	public static void main(String[] args) {
 		launch(args);
 	}

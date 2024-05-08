@@ -11,9 +11,11 @@ public class ErrorHandling {
 
     private static ErrorHandling instance = null;
 
+    // Constructorul este privat pentru a preveni instantierea obiectelor în afara clasei
     private ErrorHandling() {
     }
 
+    // Metodă statică pentru a obține o instanță a clasei ErrorHandling (Singleton pattern)
     public static ErrorHandling getInstance() {
         if (instance == null) {
             instance = new ErrorHandling();
@@ -21,37 +23,38 @@ public class ErrorHandling {
         return instance;
     }
 
+    // Metodă statică pentru a gestiona cazurile în care câmpurile sunt goale
     public static boolean handleEmptyFields(String... fields) {
-        // Check the first field for complex number
+        // Verificarea primului câmp pentru numere complexe
         if (fields[0].isEmpty()) {
-            showAlert("EMPTY FIELDS", "All fields must be filled.");
+            showAlert("Campuri goale", "Toate câmpurile trebuie completate.");
             return true;
         }
-        if (handleComplexNumber(fields[0])) {
+        if (handleComplexNumber(fields[0])) { // Verificarea primului câmp pentru a fi un număr complex
             return true;
         }
 
-        // Check the rest of the fields only for being empty
+        // Verificarea celorlalte câmpuri pentru a fi goale
         for (int i = 1; i < fields.length; i++) {
             if (fields[i].isEmpty()) {
-                showAlert("EMPTY FIELDS", "All fields must be filled.");
+                showAlert("Campuri goale", "Toate câmpurile trebuie completate.");
                 return true;
             }
         }
         return false;
     }
 
-
+    // Metodă statică pentru a gestiona cazurile în care intervalul este invalid
     public static Boolean handleRange(String min, String max) {
-        if (handleRangeInf(min, max)) {
-            return true;
-        }
-        
-        if (handleRangeEqual(min, max)) {
+        if (handleRangeInf(min, max)) { // Verificarea intervalului pentru a fi infinit
             return true;
         }
 
-        if (handleRangeInvalid(min, max)) {
+        if (handleRangeEqual(min, max)) { // Verificarea intervalului pentru a fi egal
+            return true;
+        }
+
+        if (handleRangeInvalid(min, max)) { // Verificarea intervalului pentru a fi invalid
             return true;
         }
         return false;
@@ -59,7 +62,7 @@ public class ErrorHandling {
 
     public static boolean handleRangeInvalid(String min, String max) {
         if (Double.parseDouble(min) > Double.parseDouble(max)) {
-            showAlert("Invalid Range", "Minimum value must be less than Maximum value.");
+            showAlert("Interval Invalid", "Minimul nu poate fi mai mare decât maximul.");
             return true;
         }
         return false;
@@ -67,58 +70,61 @@ public class ErrorHandling {
 
     public static boolean handleRangeEqual(String min, String max) {
         if (Double.parseDouble(min) == Double.parseDouble(max)) {
-            showAlert("Invalid Range", "Minimum value must be different from Maximum value.");
+            showAlert("Interval Invalid", "Minimul și maximul nu pot fi egale.");
             return true;
         }
         return false;
     }
 
     public static boolean handleRangeInf(String min, String max) {
+        // Verificarea dacă min sau max sunt infinit
         if ("-Inf".equals(min) || "Inf".equals(max) || "Inf".equals(min) || "-Inf".equals(max)){
-            showAlert("Invalid Range", "No Infinity values allowed.");
+            showAlert("Interval Invalid", "Intervalul nu poate fi infinit.");
             return true;
         }
         return false;
     }
 
     public static boolean handleComplexNumber(String... fields) {
+        // Verificarea dacă există numere complexe în câmpurile date
         for (String field : fields) {
             if (field.contains("i")) {
-                showAlert("Complex Number", "Complex numbers are not supported.");
+                showAlert("Numar Complex", "Numerele complexe nu sunt permise.");
                 return true;
             }
         }
         return false;
     }
 
-
     public static void showAlert(String title, String message) {
+        // Creează un nou dialog de avertizare cu tipul WARNING
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setTitle(title); // Setează titlul dialogului
+        alert.setHeaderText(null); // Nu se folosește antetul dialogului
+        alert.setContentText(message); // Setează mesajul de conținut al dialogului
 
-        // Apply CSS styles to the dialog pane
+        // Aplică stiluri CSS la panoul de dialog
         DialogPane dialogPane = alert.getDialogPane();
 
-        // Load the CSS file
+        // Inițializează stilul dialogului
         alert.initStyle(StageStyle.UNDECORATED);
-        URL cssURL = IntegrX.class.getResource("/Integrix/css/fullstyle.css");  // Make sure path is correct
+
+        // Încarcă fișierul CSS pentru stilizare
+        URL cssURL = IntegrX.class.getResource("/Integrix/css/fullstyle.css");  // Asigură-te că calea este corectă
         if (cssURL != null) {
             dialogPane.getStylesheets().add(cssURL.toExternalForm());
         } else {
-            System.err.println("Could not load stylesheet");
+            System.err.println("Nu s-a putut găsi fișierul CSS.");
         }
 
-        // Add a class to the dialog pane
+        // Adaugă o clasă la panoul dialogului
         dialogPane.getStyleClass().add("dialog-pane");
 
-        // Add a class to the content text
+        // Adaugă o clasă la textul conținutului
         dialogPane.lookup(".content").getStyleClass().add("content-text");
 
-        // Show the alert
+        // Afișează dialogul și așteaptă până când utilizatorul interacționează cu acesta
         alert.showAndWait();
     }
-
 }
 

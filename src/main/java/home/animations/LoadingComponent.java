@@ -17,7 +17,7 @@ import static javafx.scene.paint.Color.rgb;
 public class LoadingComponent extends StackPane {
 
     public LoadingComponent() {
-        // Title
+        // Titlul aplicației
         Label title = new Label("IntegrX");
         title.setTextFill(Color.WHITE);
         title.setFont(Font.font("Roboto", FontWeight.BOLD, 36));
@@ -25,6 +25,7 @@ public class LoadingComponent extends StackPane {
         StackPane.setAlignment(title, Pos.TOP_CENTER);
         StackPane.setMargin(title, new Insets(75, 0, 0, 0)); // Margin top
 
+        // Eticheta de încărcare
         Label loading = new Label("Loading...");
         loading.setTextFill(Color.WHITE);
         loading.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -32,38 +33,38 @@ public class LoadingComponent extends StackPane {
         StackPane.setAlignment(loading, Pos.BOTTOM_CENTER);
         StackPane.setMargin(loading, new Insets(0, 0, 60, 0)); // Margin Bottom
 
-        // Background circle
-        Circle backgroundCircle = new Circle(100, 100, 50, rgb(249, 217, 73));
+        // Cercul de fundal
+        Circle backgroundCircle = new Circle(100, 100, 50, rgb(249, 217, 73)); // Cercul galben de fundal
         backgroundCircle.setEffect(new DropShadow(10, Color.BLACK));
 
-        // Background component
+        // Componentul de fundal
         Pane backgroundComponent = new Pane();
         backgroundComponent.setPrefSize(200, 200);
         backgroundComponent.setStyle("-fx-background-color: linear-gradient(to bottom, rgb(49,59,87), rgb(9,13,19));");
 
-        // Progress indicator
+        // Indicatorul de progres
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setMaxSize(150, 300);
-        progressIndicator.setProgress(-1); // Set to indeterminate
+        progressIndicator.setProgress(-1); // Setare pe indeterminat
 
-        // Apply rotation animation to progress indicator
+        // Aplicarea unei animații de rotație la indicatorul de progres
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), progressIndicator);
         rotateTransition.setByAngle(360);
         rotateTransition.setCycleCount(Animation.INDEFINITE);
         rotateTransition.play();
 
-        // Apply fade in/out animation to loading component
+        // Aplicarea unei animații de fade in/out componentului de încărcare
         FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(0.5), this);
         fadeInTransition.setFromValue(0);
         fadeInTransition.setToValue(1);
         fadeInTransition.play();
 
-        // Stack elements in layers
+        // Plasarea elementelor în straturi pe StackPane
         StackPane.setAlignment(backgroundComponent, Pos.CENTER);
         StackPane.setAlignment(backgroundCircle, Pos.CENTER);
         StackPane.setAlignment(progressIndicator, Pos.CENTER);
 
-        // Add elements to the stack pane
+        // Adăugarea elementelor la StackPane
         getChildren().addAll(backgroundComponent, backgroundCircle, progressIndicator, title, loading);
     }
 }
