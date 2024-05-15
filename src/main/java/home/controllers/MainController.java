@@ -24,6 +24,12 @@ public class MainController {
 	// Buton pentru selectarea metodei de integrare: dreptunghiulară
 	@FXML private ToggleButton rectangularButton;
 
+	// Buton pentru selectarea metodei de integrare: dreptunghiulară
+	@FXML private ToggleButton rectangularButton_lft;
+
+	// Buton pentru selectarea metodei de integrare: dreptunghiulară
+	@FXML private ToggleButton rectangularButton_rgt;
+
 	// Buton pentru selectarea metodei de integrare: trapezoidală
 	@FXML private ToggleButton trapezoidalButton;
 
@@ -81,6 +87,9 @@ public class MainController {
 	// Etichetă pentru eroarea absolută
 	@FXML private Label abs_err;
 
+	// Etichetă pentru eroarea relativă
+	@FXML private Label rel_err;
+
 	// Imagine pentru reprezentarea integrala în format LaTeX
 	@FXML private ImageView latex_integral;
 
@@ -130,6 +139,8 @@ public class MainController {
 		rectangularButton.setToggleGroup(toggleGroup1);
 		trapezoidalButton.setToggleGroup(toggleGroup1);
 		simpsonButton.setToggleGroup(toggleGroup1);
+		rectangularButton_lft.setToggleGroup(toggleGroup1);
+		rectangularButton_rgt.setToggleGroup(toggleGroup1);
 
 		ToggleGroup toggleGroup2 = new ToggleGroup();
 		get_started_btn.setToggleGroup(toggleGroup2);
@@ -330,7 +341,7 @@ public class MainController {
 		}
 
 		// Verifică dacă a fost selectată o metodă de integrare
-		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected()) {
+		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected()){
 			errorHandling.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
 			return;
 		}
@@ -392,12 +403,22 @@ public class MainController {
 		// Afișează rezultatul integralii
 		real_integral.setText(String.valueOf(result));
 
+		int type = 0;
 		// Selectează și calculează integrala folosind metoda corespunzătoare
-		if (rectangularButton.isSelected()) {
-			result = ri.calculateRectangular(function, min, max, interval);
+		if (rectangularButton.isSelected() || rectangularButton_lft.isSelected() || rectangularButton_rgt.isSelected()){
+			if (rectangularButton.isSelected()) {
+				method_result_name.setText("METODA DREPTUNGHIULARĂ MIJLOC");
+				type = 0;
+			} else if (rectangularButton_lft.isSelected()) {
+				method_result_name.setText("METODA DREPTUNGHIULARĂ STÂNGĂ");
+				type = 1;
+			} else if (rectangularButton_rgt.isSelected()) {
+				method_result_name.setText("METODA DREPTUNGHIULARĂ DREAPTĂ");
+				type = 2;
+			}
+			result = ri.calculateRectangular(function, min, max, interval, type);
 			ni.setPlot_method(0);
 			method_integral.setText(String.valueOf(result));
-			method_result_name.setText("METODA DREPTUNGHIULARĂ");
 		} else if (simpsonButton.isSelected()) {
 			ni.setPlot_method(1);
 			result = si.calculateSimpson(function, min, max, interval);
@@ -411,7 +432,7 @@ public class MainController {
 		}
 
 		// Realizează afișarea graficului pentru metoda folosită
-		ni.method_plotting(function, min, max, plot_interval, interval);
+		ni.method_plotting(function, min, max, plot_interval, interval, type);
 		plot_function2.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_2s.png"));
 
 		// Calculează eroarea absolută și afișează
@@ -427,6 +448,8 @@ public class MainController {
 			error_div.setStyle("-fx-background-color: #318169");
 		}
 		abs_err.setText(String.valueOf(absolute_error));
+		// rel_err witrh respect to real integral (treated with absolute value)
+		rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
 
 		// Activează butonul pentru afișarea rezultatului și a ferestrei de proprietăți
 		result_btn.setVisible(true);

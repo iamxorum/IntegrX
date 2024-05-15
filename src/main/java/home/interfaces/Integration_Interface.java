@@ -22,6 +22,6 @@ public interface Integration_Interface {
     void plotting(String function, String min, String max, String plot_interval) throws ExecutionException, InterruptedException;
 
     // Metoda pentru realizarea unui grafic al metodei de integrare a unei functii
-    void method_plotting(String function, String min, String max, String plot_interval, String interval) throws ExecutionException, InterruptedException;
+    void method_plotting(String function, String min, String max, String plot_interval, String interval, int type) throws ExecutionException, InterruptedException;
 }
 

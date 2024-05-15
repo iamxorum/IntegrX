@@ -9,7 +9,7 @@ module integrix {
     requires jlatexmath;
     requires java.desktop;
 
-    opens home to javafx.fxml;
+	opens home to javafx.fxml;
 	exports home;
 	exports home.controllers;
 	opens home.controllers to javafx.fxml;

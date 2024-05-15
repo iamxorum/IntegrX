@@ -23,14 +23,29 @@ public class RectangularIntegration extends Integration {
     }
 
     // Metodă pentru calculul integralei folosind metoda dreptunghiulară
-    public double calculateRectangular(String function, String min, String max, String interval) throws MatlabExecutionException, MatlabSyntaxException {
+    public double calculateRectangular(String function, String min, String max, String interval, int type) throws MatlabExecutionException, MatlabSyntaxException {
         try {
             // Se evaluează simbolul 'x' în motorul MATLAB
             engine.eval("syms x");
             // Se definește expresia integrală și scriptul de integrare
             String integral_expr = "(" + function + "), " + min + ", " + max;
-            String integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
-                    "s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
+            String integrationScript = "";
+            if (type == 1) {
+                // Se calculează integrala folosind metoda dreptunghiulară stanga
+                integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
+                        "s = 0; for i = 0:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;";
+                engine.eval(integrationScript);
+            } else if (type == 0) {
+                // Se calculează integrala folosind metoda dreptunghiulară mijloc
+                integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
+                        "s = 0; for i = 0:n-1; xn = a + (i*h) + (h/2); s = s + f(xn); end; integralResult = h * s;";
+                engine.eval(integrationScript);
+            } else if (type == 2) {
+                // Se calculează integrala folosind metoda dreptunghiulară dreapta
+                integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
+                        "s = 0; for i = 0:n-1; xn = a + (i*h) + h; s = s + f(xn); end; integralResult = h * s;";
+                engine.eval(integrationScript);
+            }
             engine.eval(integrationScript);
         } catch (InterruptedException ex) {
             throw new RuntimeException(ex);

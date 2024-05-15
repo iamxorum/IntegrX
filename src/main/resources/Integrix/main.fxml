@@ -104,85 +104,6 @@
             <Label alignment="CENTER" layoutX="167.0" layoutY="4.0" prefHeight="20.0" prefWidth="612.0" styleClass="window-title" stylesheets="@css/fullstyle.css" text="INTEGRX" textFill="#fafafa" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="167.0" AnchorPane.topAnchor="5.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
-         <children>
-            <VBox alignment="CENTER" layoutX="70.0" layoutY="55.0" prefHeight="235.0" prefWidth="712.0" AnchorPane.bottomAnchor="301.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="45.0">
-               <children>
-                  <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Function" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <TextField fx:id="min_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="int_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Intervals" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="max_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="51.0" prefHeight="51.0" prefWidth="732.0">
-                     <children>
-                        <TextField fx:id="plot_interval_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Plot Interval {min:input:max}">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="abs_err_input" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Absolute error limit (ex. 0.00001)">
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="70.0" layoutY="290.0" prefHeight="215.0" prefWidth="712.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="280.0">
-               <children>
-                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="41.0" minWidth="437.0" prefHeight="41.0" prefWidth="712.0" translateY="-1.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Trapezoidal" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Rectangular" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </ToggleButton>
-                        <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="267.0" styleClass="toggle_s" text="Simpson" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </ToggleButton>
-                     </children>
-                  </HBox>
-                  <Button alignment="CENTER" maxHeight="40.0" maxWidth="951.0" minHeight="26.0" minWidth="437.0" mnemonicParsing="false" onAction="#calculateAction" prefHeight="26.0" prefWidth="752.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculate" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Label fx:id="isDiv_Conv2" prefHeight="44.0" prefWidth="399.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="properties_window" layoutX="330.0" layoutY="52.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
          <children>
             <VBox layoutX="70.0" layoutY="50.0" prefHeight="379.0" prefWidth="712.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="40.0">
@@ -273,101 +194,91 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="result_window" layoutX="320.0" layoutY="42.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
+      <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
          <children>
-            <VBox layoutX="80.0" layoutY="70.0" prefHeight="427.0" prefWidth="692.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="60.0">
+            <VBox alignment="CENTER" layoutX="70.0" layoutY="55.0" prefHeight="235.0" prefWidth="712.0" AnchorPane.bottomAnchor="301.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="45.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="RESULT">
+                  <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="947.0" promptText="Function" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0" top="5.0" />
                      </VBox.margin>
-                  </Text>
-                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                  </TextField>
+                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="latex_integral" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegral" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
+                        <TextField fx:id="min_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="int_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Intervals" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="max_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </TextField>
                      </children>
-                  </VBox>
-                  <VBox minHeight="260.0" prefHeight="260.0" prefWidth="692.0" styleClass="result_plots_2" stylesheets="@css/fullstyle.css">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="51.0" prefHeight="51.0" prefWidth="732.0">
                      <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="plot_function" fitHeight="219.0" fitWidth="247.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showPlotFunction" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                    <ImageView fx:id="plot_function2" fitHeight="219.0" fitWidth="264.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
+                        <TextField fx:id="plot_interval_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Plot Interval {min:input:max}">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="abs_err_input" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Absolute error limit (ex. 0.00001)">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </TextField>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
             </VBox>
-            <VBox layoutX="30.0" layoutY="475.0" prefHeight="215.0" prefWidth="792.0" styleClass="result_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="490.0">
+            <VBox alignment="CENTER" layoutX="70.0" layoutY="290.0" prefHeight="215.0" prefWidth="712.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="280.0">
                <children>
-                  <HBox fx:id="integral_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                  <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="41.0" minWidth="437.0" prefHeight="41.0" prefWidth="712.0" translateY="-1.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                        <ToggleButton fx:id="rectangularButton_lft" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Left Rectangular">
                            <HBox.margin>
-                              <Insets left="50.0" right="170.0" />
+                              <Insets right="5.0" top="5.0" />
                            </HBox.margin>
-                        </Text>
-                        <Label fx:id="real_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
+                        </ToggleButton>
+                        <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Mid Rectangular">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="rectangularButton_rgt" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Right Rectangular">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Trapezoidal">
+                           <HBox.margin>
+                              <Insets right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
+                        <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Simpson 1/3">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </ToggleButton>
                      </children>
+                  </HBox>
+                  <Button alignment="CENTER" maxHeight="40.0" maxWidth="951.0" minHeight="26.0" minWidth="437.0" mnemonicParsing="false" onAction="#calculateAction" prefHeight="26.0" prefWidth="752.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculate" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
-                  </HBox>
-                  <HBox fx:id="method_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
-                           <HBox.margin>
-                              <Insets left="50.0" right="170.0" />
-                           </HBox.margin>
-                        </Text>
-                        <Label fx:id="method_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
-                     </children>
-                  </HBox>
-                  <HBox fx:id="error_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
-                           <HBox.margin>
-                              <Insets left="50.0" right="170.0" />
-                           </HBox.margin>
-                        </Text>
-                        <Label fx:id="abs_err" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
-                     </children>
+                  </Button>
+                  <Label fx:id="isDiv_Conv2" prefHeight="44.0" prefWidth="399.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
-                  </HBox>
+                  </Label>
                </children>
             </VBox>
          </children>
@@ -505,6 +416,118 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="result_window" layoutX="320.0" layoutY="42.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
+         <children>
+            <VBox layoutX="80.0" layoutY="70.0" prefHeight="427.0" prefWidth="692.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="RESULT">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latex_integral" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegral" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <VBox minHeight="260.0" prefHeight="260.0" prefWidth="692.0" styleClass="result_plots_2" stylesheets="@css/fullstyle.css">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="plot_function" fitHeight="219.0" fitWidth="247.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showPlotFunction" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                    <ImageView fx:id="plot_function2" fitHeight="219.0" fitWidth="264.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox layoutX="30.0" layoutY="451.0" prefHeight="219.0" prefWidth="792.0" styleClass="result_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="441.0">
+               <children>
+                  <HBox fx:id="integral_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets left="50.0" right="170.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Label fx:id="real_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="method_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets left="50.0" right="170.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Label fx:id="method_integral" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="error_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ABSOLUTE ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets left="50.0" right="170.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Label fx:id="abs_err" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="error_div1" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="RELATIVE ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets left="50.0" right="170.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Label fx:id="rel_err" alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="768.0" styleClass="matlab_integral_lbl" stylesheets="@css/fullstyle.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
             </VBox>
          </children>

@@ -41,7 +41,6 @@ public class Integration implements Integration_Interface {
 					"xlabel('x');\n" +
 					"ylabel('y');\n" +
 					"%s" +  // Spațiu rezervat pentru comenzile de afișare a zonei
-					"title('Vizualizare Integrare');\n" +
 					"hold off;\n" +
 					"saveas(gcf, './src/main/resources/Integrix/plots/funct_plot_2s.png');\n";
 
@@ -96,7 +95,7 @@ public class Integration implements Integration_Interface {
 	}
 
 	@Override
-	public void method_plotting(String function, String min, String max, String plot_interval, String interval) throws ExecutionException, InterruptedException {
+	public void method_plotting(String function, String min, String max, String plot_interval, String interval, int type) throws ExecutionException, InterruptedException {
 		engine.eval("clear;"); // Șterge orice obiecte sau grafice existente în mediul de lucru MATLAB
 		String area_plotting_code = ""; // Inițializează șirul de caractere pentru codul de plasare a ariei sub grafic
 
@@ -107,42 +106,86 @@ public class Integration implements Integration_Interface {
 		// Selectarea metodei de plasare a ariei sub grafic
 		switch (plot_method) {
 			case 0:  // Metoda Rectangular
+				if (type == 0) {
+					area_plotting_code = "loop = 1;\n" +
+							"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
+							"while loop <= length(x)-1\n" +
+							"    % Calculează lățimea\n" +
+							"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+							"    % Calculează înălțimea\n" +
+							"    height = (y(loop) + y(loop + 1)) / 2;\n" +
+							"    % Definirea vârfurilor dreptunghiului\n" +
+							"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
+							"    y_coords = [0, 0, height, height];\n" +
+							"    % Creează un poligon reprezentând dreptunghiul\n" +
+							"    rect_poly = polyshape(x_coords, y_coords);\n" +
+							"    % Plasează dreptunghiul\n" +
+							"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
+							"    hold on;\n" +
+							"    % Incrementarea contorului buclei\n" +
+							"    loop = loop + 1;\n" +
+							"end;\n" +
+							"hold off;\n";
+				} else if (type == 1) {
+					area_plotting_code = "loop = 1;\n" +
+							"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
+							"while loop <= length(x)-1\n" +
+							"    % Calculează lățimea\n" +
+							"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+							"    % Calculează înălțimea\n" +
+							"    height = y(loop);\n" +
+							"    % Definirea vârfurilor dreptunghiului\n" +
+							"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
+							"    y_coords = [0, 0, height, height];\n" +
+							"    % Creează un poligon reprezentând dreptunghiul\n" +
+							"    rect_poly = polyshape(x_coords, y_coords);\n" +
+							"    % Plasează dreptunghiul\n" +
+							"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
+							"    hold on;\n" +
+							"    % Incrementarea contorului buclei\n" +
+							"    loop = loop + 1;\n" +
+							"end;\n" +
+							"hold off;\n";
+				} else if (type == 2){
+					area_plotting_code = "loop = 1;\n" +
+							"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
+							"while loop <= length(x)-1\n" +
+							"    % Calculează lățimea\n" +
+							"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+							"    % Calculează înălțimea\n" +
+							"    height = y(loop + 1);\n" +
+							"    % Definirea vârfurilor dreptunghiului\n" +
+							"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
+							"    y_coords = [0, 0, height, height];\n" +
+							"    % Creează un poligon reprezentând dreptunghiul\n" +
+							"    rect_poly = polyshape(x_coords, y_coords);\n" +
+							"    % Plasează dreptunghiul\n" +
+							"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
+							"    hold on;\n" +
+							"    % Incrementarea contorului buclei\n" +
+							"    loop = loop + 1;\n" +
+							"end;\n" +
+							"hold off;\n";
+				}
+				break;
+			case 1:  // Metoda Simpson's
 				area_plotting_code = "loop = 1;\n" +
 						"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
 						"while loop <= length(x)-1\n" +
 						"    % Calculează lățimea\n" +
 						"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
-						"    % Calculează înălțimea\n" +
-						"    height = y(loop);\n" +
-						"    % Definirea vârfurilor dreptunghiului\n" +
-						"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
-						"    y_coords = [0, 0, height, height];\n" +
-						"    % Creează un poligon reprezentând dreptunghiul\n" +
-						"    rect_poly = polyshape(x_coords, y_coords);\n" +
-						"    % Plasează dreptunghiul\n" +
-						"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
+						"    % Calculează înălțimile punctelor din stânga și din dreapta\n" +
+						"    height_left = y(loop);\n" +
+						"    height_right = y(loop+1);\n" +
+						"    % Definirea vârfurilor trapezului\n" +
+						"    x_coords = [x(loop), x(loop+1), x(loop+1), x(loop)];\n" +
+						"    y_coords = [0, 0, height_right, height_left];\n" +
+						"    % Plasează trapezul\n" +
+						"    plot(polyshape(x_coords, y_coords), 'FaceColor', [0 0.4470 0.7410]);\n" +
 						"    hold on;\n" +
 						"    % Incrementarea contorului buclei\n" +
 						"    loop = loop + 1;\n" +
 						"end;\n" +
-						"hold off;\n";
-				break;
-			case 1:  // Metoda Simpson's
-				area_plotting_code = "loop = 1;\n" +
-						"% Plasează liniile verticale pentru segmentele Simpson\n" +
-						"while loop <= length(x)-2\n" +
-						"    x_segment = [x(loop), x(loop), x(loop+1), x(loop+1)];\n" +
-						"    y_segment = [0, y(loop), y(loop+1), 0];\n" +
-						"    plot(x_segment, y_segment, 'Color', [0 0.4470 0.7410]);\n" +
-						"    hold on;\n" +
-						"    loop = loop + 2;\n" +
-						"end;\n" +
-						"% Plasează ultima linie verticală dacă există un număr impar de puncte\n" +
-						"if mod(length(x), 2) == 0\n" +
-						"    plot([x(end), x(end)], [0, y(end)], 'Color', [0 0.4470 0.7410]);\n" +
-						"end;\n" +
-						"% Plasează linia orizontală la y=0\n" +
-						"plot([x(1), x(end)], [0, 0], 'Color', [0 0.4470 0.7410]);\n" +
 						"hold off;\n";
 				break;
 			case 2:  // Metoda Trapezoidal
