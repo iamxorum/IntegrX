@@ -35,11 +35,6 @@ public class Integration implements Integration_Interface {
 
 	// Șablonul pentru graficul MATLAB cu metoda de integrare evidențiată
 	private static String MATLAB_PLOT_SKELETON_METHOD =
-			"fig = figure('Visible', 'off');\n" +
-					"hold on;\n" +
-					"plot(x, y, 'Color', [0 0.4470 0.7410]);\n" +  // Linie pentru funcție în albastru
-					"xlabel('x');\n" +
-					"ylabel('y');\n" +
 					"%s" +  // Spațiu rezervat pentru comenzile de afișare a zonei
 					"hold off;\n" +
 					"saveas(gcf, './src/main/resources/Integrix/plots/funct_plot_2s.png');\n";
@@ -98,6 +93,13 @@ public class Integration implements Integration_Interface {
 	public void method_plotting(String function, String min, String max, String plot_interval, String interval, int type) throws ExecutionException, InterruptedException {
 		engine.eval("clear;"); // Șterge orice obiecte sau grafice existente în mediul de lucru MATLAB
 		String area_plotting_code = ""; // Inițializează șirul de caractere pentru codul de plasare a ariei sub grafic
+		engine.eval("x = " + min + ":" + plot_interval + ":" + max + ";"); // Definirea punctelor x
+		engine.eval("y = " + function + ";");
+		engine.eval("fig = figure('Visible', 'off');"); // Creează o nouă figură
+		engine.eval("hold on;"); // Păstrează graficul pe aceeași figură
+		engine.eval("plot(x, y, 'Color', [1 0 0]);"); // Plasează graficul funcției
+		engine.eval("xlabel('x');"); // Eticheta axei x
+		engine.eval("ylabel('y');"); // Eticheta axei y
 
 		// Evaluarea expresiilor MATLAB pentru generarea punctelor x și y
 		engine.eval("x = " + min + ":((" + max + "-" + min + ")/" + interval + ")" + ":" + max + ";");
@@ -108,21 +110,23 @@ public class Integration implements Integration_Interface {
 			case 0:  // Metoda Rectangular
 				if (type == 0) {
 					area_plotting_code = "loop = 1;\n" +
-							"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
-							"while loop <= length(x)-1\n" +
-							"    % Calculează lățimea\n" +
-							"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
-							"    % Calculează înălțimea\n" +
-							"    height = (y(loop) + y(loop + 1)) / 2;\n" +
-							"    % Definirea vârfurilor dreptunghiului\n" +
+							"% Define the width of each rectangle\n" +
+							"width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
+							"% Loop through each interval\n" +
+							"while loop <= length(x) - 1\n" +
+							"    % Calculate the midpoint of the current interval\n" +
+							"    midpoint = (x(loop) + x(loop + 1)) / 2;\n" +
+							"    % Calculate the height of the rectangle at the midpoint\n" +
+							"    height = " + function.replace("x", "midpoint") + ";\n" +
+							"    % Define the vertices of the rectangle\n" +
 							"    x_coords = [x(loop), x(loop) + width, x(loop) + width, x(loop)];\n" +
 							"    y_coords = [0, 0, height, height];\n" +
-							"    % Creează un poligon reprezentând dreptunghiul\n" +
+							"    % Create a polygon representing the rectangle\n" +
 							"    rect_poly = polyshape(x_coords, y_coords);\n" +
-							"    % Plasează dreptunghiul\n" +
+							"    % Plot the rectangle\n" +
 							"    plot(rect_poly, 'FaceColor', [0 0.4470 0.7410]);\n" +
 							"    hold on;\n" +
-							"    % Incrementarea contorului buclei\n" +
+							"    % Increment the loop counter\n" +
 							"    loop = loop + 1;\n" +
 							"end;\n" +
 							"hold off;\n";
