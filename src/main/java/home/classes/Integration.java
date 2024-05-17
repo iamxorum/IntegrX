@@ -172,25 +172,25 @@ public class Integration implements Integration_Interface {
 							"hold off;\n";
 				}
 				break;
-			case 1:  // Metoda Simpson's
-				area_plotting_code = "loop = 1;\n" +
-						"% Execută bucla până când loop este mai mic decât lungimea lui x minus 1\n" +
-						"while loop <= length(x)-1\n" +
-						"    % Calculează lățimea\n" +
-						"    width = abs((" + max + " - " + min + ") / " + interval + ");\n" +
-						"    % Calculează înălțimile punctelor din stânga și din dreapta\n" +
-						"    height_left = y(loop);\n" +
-						"    height_right = y(loop+1);\n" +
-						"    % Definirea vârfurilor trapezului\n" +
-						"    x_coords = [x(loop), x(loop+1), x(loop+1), x(loop)];\n" +
-						"    y_coords = [0, 0, height_right, height_left];\n" +
-						"    % Plasează trapezul\n" +
-						"    plot(polyshape(x_coords, y_coords), 'FaceColor', [0 0.4470 0.7410]);\n" +
-						"    hold on;\n" +
-						"    % Incrementarea contorului buclei\n" +
-						"    loop = loop + 1;\n" +
-						"end;\n" +
-						"hold off;\n";
+			case 1:  // Metoda Simpson
+				area_plotting_code = "func = @(x) " + function + ";\n" +
+						"    a = " + min + ";\n" +
+						"    b = " + max + ";\n" +
+						"    h = (" + max + " - " + min + ") / " + interval + ";\n" +
+						"    x = a:h:b;\n" +
+						"    \n" +
+						"    y = func(x);\n" +
+						"    \n" +
+						"    integral_approx = h / 3 * (y(1) + 4 * sum(y(2:2:end-1)) + 2 * sum(y(3:2:end-2)) + y(end));\n" +
+						"    \n" +
+						"    xx = linspace(a, b, " + interval + ");\n" +
+						"    yy = func(xx);\n" +
+						"    area(xx, yy, 'FaceColor', [0 0.4470 0.7410]);\n" +
+						"    \n" +
+						"    xlabel('x');\n" +
+						"    ylabel('y');\n" +
+						"    grid on;\n" +
+						"    hold off;\n";
 				break;
 			case 2:  // Metoda Trapezoidal
 				area_plotting_code = "loop = 1;\n" +
