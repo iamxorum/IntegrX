@@ -174,22 +174,28 @@ public class Integration implements Integration_Interface {
 				break;
 			case 1:  // Metoda Simpson
 				area_plotting_code = "func = @(x) " + function + ";\n" +
+						"    x = linspace(" + min + ", " + max + ", " + interval + ");\n" +
 						"    a = " + min + ";\n" +
 						"    b = " + max + ";\n" +
-						"    h = (" + max + " - " + min + ") / " + interval + ";\n" +
-						"    x = a:h:b;\n" +
-						"    \n" +
-						"    y = func(x);\n" +
-						"    \n" +
-						"    integral_approx = h / 3 * (y(1) + 4 * sum(y(2:2:end-1)) + 2 * sum(y(3:2:end-2)) + y(end));\n" +
-						"    \n" +
-						"    xx = linspace(a, b, " + interval + ");\n" +
-						"    yy = func(xx);\n" +
-						"    area(xx, yy, 'FaceColor', [0 0.4470 0.7410]);\n" +
-						"    \n" +
-						"    xlabel('x');\n" +
-						"    ylabel('y');\n" +
-						"    grid on;\n" +
+						"    n = " + interval + ";\n" +
+						"    x_nodes = linspace(a, b, n+1);\n" +
+						"    y_nodes = func(x_nodes);\n" +
+						"    Int = 0;\n" +
+						"    for i = 1:n+1\n" +
+						"        L = @(x) 1;\n" +
+						"        for j = 1:n+1\n" +
+						"            if j ~= i\n" +
+						"                L = @(x) L(x) .* (x - x_nodes(j)) / (x_nodes(i) - x_nodes(j));\n" +
+						"            end\n" +
+						"        end\n" +
+						"        Int_L = integral(L, a, b);\n" +
+						"        Int = Int + y_nodes(i) * Int_L;\n" +
+						"    end\n" +
+						"    x_coords = linspace(a, b, 1000);\n" +
+						"    y_coords = arrayfun(@(x) func(x), x_coords);\n" +
+						"    plot(x_coords, y_coords, 'Color', [0 1 0]);\n" +
+						"    hold on;\n" +
+						"    scatter(x_nodes, y_nodes, 'r', 'filled', 'MarkerFaceColor', [0 0.4470 0.7410]);\n" +
 						"    hold off;\n";
 				break;
 			case 2:  // Metoda Trapezoidal
