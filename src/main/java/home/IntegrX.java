@@ -5,6 +5,7 @@ import home.classes.Matlab_MultiThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -18,6 +19,9 @@ public class IntegrX extends Application {
 	// Variabile pentru stocarea offset-ului la mutarea ferestrei
 	private double xOffset = 0;
 	private double yOffset = 0;
+	private static final int RESIZE_MARGIN = 10;
+	private boolean isResizing = false;
+	private Cursor cursorType = Cursor.DEFAULT;
 
 	@Override
 	public void start(Stage stage) {
@@ -64,16 +68,79 @@ public class IntegrX extends Application {
 					stage.setScene(scene);
 					stage.getIcons().add(new Image(IntegrX.class.getResourceAsStream("/Integrix/maths.png")));
 
-					// Setarea gestionarilor de evenimente pentru mutarea ferestrei
+					stage.setMinWidth(300);
+					stage.setMinHeight(200);
+					stage.setMaxWidth(screenWidth);
+					stage.setMaxHeight(screenHeight);
+
 					root.setOnMousePressed(event -> {
 						xOffset = event.getSceneX();
 						yOffset = event.getSceneY();
 					});
 
 					root.setOnMouseDragged(event -> {
-						stage.setX(event.getScreenX() - xOffset);
-						stage.setY(event.getScreenY() - yOffset);
+						if (cursorType != Cursor.DEFAULT) {
+							isResizing = true;
+						}
+
+						if (!isResizing) {
+							stage.setX(event.getScreenX() - xOffset);
+							stage.setY(event.getScreenY() - yOffset);
+						} else {
+							if (cursorType == Cursor.NW_RESIZE || cursorType == Cursor.N_RESIZE || cursorType == Cursor.NE_RESIZE) {
+								double newHeight = stage.getHeight() - (event.getScreenY() - stage.getY());
+								if (newHeight > stage.getMinHeight()) {
+									stage.setHeight(newHeight);
+									stage.setY(event.getScreenY());
+								}
+							}
+							if (cursorType == Cursor.NW_RESIZE || cursorType == Cursor.W_RESIZE || cursorType == Cursor.SW_RESIZE) {
+								double newWidth = stage.getWidth() - (event.getScreenX() - stage.getX());
+								if (newWidth > stage.getMinWidth()) {
+									stage.setWidth(newWidth);
+									stage.setX(event.getScreenX());
+								}
+							}
+							if (cursorType == Cursor.NE_RESIZE || cursorType == Cursor.E_RESIZE || cursorType == Cursor.SE_RESIZE) {
+								double newWidth = event.getScreenX() - stage.getX();
+								if (newWidth > stage.getMinWidth()) {
+									stage.setWidth(newWidth);
+								}
+							}
+							if (cursorType == Cursor.SE_RESIZE || cursorType == Cursor.S_RESIZE || cursorType == Cursor.SW_RESIZE) {
+								double newHeight = event.getScreenY() - stage.getY();
+								if (newHeight > stage.getMinHeight()) {
+									stage.setHeight(newHeight);
+								}
+							}
+						}
 					});
+
+					root.setOnMouseMoved(event -> {
+						if (event.getX() < RESIZE_MARGIN && event.getY() < RESIZE_MARGIN) {
+							cursorType = Cursor.NW_RESIZE;
+						} else if (event.getX() > stage.getWidth() - RESIZE_MARGIN && event.getY() < RESIZE_MARGIN) {
+							cursorType = Cursor.NE_RESIZE;
+						} else if (event.getX() < RESIZE_MARGIN && event.getY() > stage.getHeight() - RESIZE_MARGIN) {
+							cursorType = Cursor.SW_RESIZE;
+						} else if (event.getX() > stage.getWidth() - RESIZE_MARGIN && event.getY() > stage.getHeight() - RESIZE_MARGIN) {
+							cursorType = Cursor.SE_RESIZE;
+						} else if (event.getX() < RESIZE_MARGIN) {
+							cursorType = Cursor.W_RESIZE;
+						} else if (event.getX() > stage.getWidth() - RESIZE_MARGIN) {
+							cursorType = Cursor.E_RESIZE;
+						} else if (event.getY() < RESIZE_MARGIN) {
+							cursorType = Cursor.N_RESIZE;
+						} else if (event.getY() > stage.getHeight() - RESIZE_MARGIN) {
+							cursorType = Cursor.S_RESIZE;
+						} else {
+							cursorType = Cursor.DEFAULT;
+						}
+						root.setCursor(cursorType);
+					});
+
+					root.setOnMouseReleased(event -> isResizing = false);
+
 
 					stage.setScene(scene);
 				});

@@ -1,8 +1,10 @@
 package home.controllers;
 
+import com.mathworks.engine.MatlabEngine;
 import home.classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -15,6 +17,9 @@ import javafx.scene.text.Text;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -172,22 +177,22 @@ public class MainController {
 
 		// Adăugarea de acțiuni pentru butoanele de comutare
 		calculation_form_btn.setOnAction(event -> {
-			// Gestionarea vizibilității AnchorPane-ului când butonul este apăsat
+			animateButton(calculation_form_btn);
 			handleCalculationFormVisibility();
 		});
 
 		get_started_btn.setOnAction(event -> {
-			// Gestionarea vizibilității AnchorPane-ului când butonul este apăsat
+			animateButton(get_started_btn);
 			handleStartedWindowVisibility();
 		});
 
 		result_btn.setOnAction(event -> {
-			// Gestionarea vizibilității AnchorPane-ului când butonul este apăsat
+			animateButton(result_btn);
 			handleResultWindowVisibility();
 		});
 
 		properties_btn.setOnAction(event -> {
-			// Gestionarea vizibilității AnchorPane-ului când butonul este apăsat
+			animateButton(properties_btn);
 			handlePropertiesWindowVisibility();
 		});
 
@@ -210,24 +215,46 @@ public class MainController {
 		});
 	}
 
+	private void animateButton(ToggleButton button) {
+		ScaleTransition st = new ScaleTransition(Duration.millis(100), button);
+		st.setAutoReverse(true);
+		st.setCycleCount(2);
+		st.play();
+	}
+
+	private void animatePageChange(Node node) {
+		FadeTransition ft = new FadeTransition(Duration.millis(300), node);
+		ft.setFromValue(0.0);
+		ft.setToValue(1.0);
+		ft.play();
+	}
+
 	private void handleCalculationFormVisibility() {
-		// Comută vizibilitatea AnchorPane-ului în funcție de starea butonului calculation_form_btn
 		calculation_form.setVisible(calculation_form_btn.isSelected());
+		if (calculation_form_btn.isSelected()) {
+			animatePageChange(calculation_form);
+		}
 	}
 
 	private void handleStartedWindowVisibility() {
-		// Comută vizibilitatea AnchorPane-ului în funcție de starea butonului get_started_btn
 		get_started.setVisible(get_started_btn.isSelected());
+		if (get_started_btn.isSelected()) {
+			animatePageChange(get_started);
+		}
 	}
 
 	private void handleResultWindowVisibility() {
-		// Comută vizibilitatea AnchorPane-ului în funcție de starea butonului result_btn
 		result_window.setVisible(result_btn.isSelected());
+		if (result_btn.isSelected()) {
+			animatePageChange(result_window);
+		}
 	}
 
 	private void handlePropertiesWindowVisibility() {
-		// Comută vizibilitatea AnchorPane-ului în funcție de starea butonului properties_btn
 		properties_window.setVisible(properties_btn.isSelected());
+		if (properties_btn.isSelected()) {
+			animatePageChange(properties_window);
+		}
 	}
 
 	@FXML
@@ -260,12 +287,15 @@ public class MainController {
 		openImage(image);
 	}
 
-	public void showPlotFunction() {
-		// Metodă pentru afișarea imaginii graficului funcției
-		Image image = plot_function.getImage(); // Presupunând că plot_function este accesibil aici
-		Image image2 = plot_function2.getImage(); // Presupunând că plot_function2 este accesibil aici
-		openImage(image);
-		openImage(image2);
+	public void showPlotFunction() throws ExecutionException, InterruptedException {
+		Matlab_MultiThread multiThread = Matlab_MultiThread.getInstance();
+		MatlabEngine engine = multiThread.getEngine();
+
+		// Open the figure file
+		engine.eval("openfig('./src/main/resources/Integrix/plots/funct_plot_2s.fig');");
+
+		// Bring the figure to the front
+		engine.eval("figure(gcf);");
 	}
 
 	public void openImage(Image image) {
@@ -416,23 +446,22 @@ public class MainController {
 				method_result_name.setText("METODA DREPTUNGHIULARĂ DREAPTĂ");
 				type = 2;
 			}
-			result = ri.calculateRectangular(function, min, max, interval, type);
+			result = ri.calculateRectangular(function, min, max, plot_interval, interval, type);
 			ni.setPlot_method(0);
 			method_integral.setText(String.valueOf(result));
 		} else if (simpsonButton.isSelected()) {
 			ni.setPlot_method(1);
-			result = si.calculateSimpson(function, min, max, interval);
+			result = si.calculateSimpson(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA SIMPSON");
 		} else if (trapezoidalButton.isSelected()) {
 			ni.setPlot_method(2);
-			result = ti.calculateTrapezoid(function, min, max, interval);
+			result = ti.calculateTrapezoid(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA TRAPEZOID");
 		}
 
 		// Realizează afișarea graficului pentru metoda folosită
-		ni.method_plotting(function, min, max, plot_interval, interval, type);
 		plot_function2.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_plot_2s.png"));
 
 		// Calculează eroarea absolută și afișează
@@ -452,10 +481,11 @@ public class MainController {
 		rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
 
 		// Activează butonul pentru afișarea rezultatului și a ferestrei de proprietăți
+
 		result_btn.setVisible(true);
 		result_btn.setDisable(false);
 		result_btn.setSelected(true);
-		result_window.setVisible(true);
+		handleResultWindowVisibility();
 		properties_btn.setVisible(true);
 		properties_btn.setDisable(false);
 	}

@@ -37,6 +37,16 @@
     -fx-cursor: hand; /* Change cursor on hover */
 }
 
+.inpu_text{
+    -fx-background-color: #7d8dc8;
+    -fx-text-fill: #ffffff;
+    /* Change color placeholder */
+    -fx-prompt-text-fill: #f8f8f8;
+    -fx-font-family: 'Roboto';
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
 .calculate_pane{
     -fx-padding: 10px;
 }
@@ -178,8 +188,8 @@
 }
 
 .welcome {
-    -fx-text-fill: #3C486B;
-    -fx-background-color: #fafafa;
+    -fx-text-fill: #fafafa;
+    -fx-background-color: #1f2d40;
     -fx-font-family: "Roboto";
     -fx-font-size: 28px; /* Font size */
     /* Set full width */
@@ -187,8 +197,8 @@
 }
 
 .welcome2 {
-    -fx-text-fill: #3C486B;
-    -fx-background-color: #dedede;
+    -fx-text-fill: #fafafa;
+    -fx-background-color: #2e3550;
     -fx-font-family: "Roboto";
     -fx-font-size: 24px; /* Font size */
     /* Set full width */
@@ -200,8 +210,8 @@
 }
 
 .welcome3 {
-    -fx-text-fill: #3C486B;
-    -fx-background-color: #fafafa;
+    -fx-text-fill: #fafafa;
+    -fx-background-color: #1f2d40;
     -fx-font-family: "Roboto";
     -fx-font-size: 24px; /* Font size */
     /* Set full width */
@@ -249,6 +259,6 @@
 
 /* Define the striped pattern */
 .root-bg {
-    -fx-background-color: #fafafa;
+    -fx-background-color: #1f2d40;
 }
 
