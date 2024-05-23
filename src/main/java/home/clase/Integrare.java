@@ -1,9 +1,9 @@
-package home.classes;
+package home.clase;
 
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
-import home.interfaces.Integration_Interface;
+import home.interfete.Interfata_Integrare;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
@@ -11,8 +11,8 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
-public class Integration implements Integration_Interface {
-	private static Integration instance = null;
+public class Integrare implements Interfata_Integrare {
+	private static Integrare instance = null;
 	private int plot_method = 0;
 
 	// Metodă pentru a obține metoda de plotare
@@ -36,14 +36,14 @@ public class Integration implements Integration_Interface {
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')";
 
 	// Constructor privat pentru a preveni instanțierea clasei
-	protected Integration() {
+	protected Integrare() {
 	}
 
 	// Metodă statică pentru a obține unica instanță a clasei
-	public static Integration getInstance() throws EngineException, InterruptedException {
+	public static Integrare getInstance() throws EngineException, InterruptedException {
 		// Dacă instanța este null, se creează o nouă instanță
 		if (instance == null) {
-			instance = new Integration();
+			instance = new Integrare();
 		}
 		// Se returnează unica instanță
 		return instance;
@@ -54,7 +54,7 @@ public class Integration implements Integration_Interface {
 		DecimalFormat df = new DecimalFormat();
 		df.setMaximumFractionDigits(6);
 		// Verifică dacă valoarea este sub pragul de precizie
-		if (value < Integration.THRESHOLD) {
+		if (value < Integrare.THRESHOLD) {
 			df.setGroupingUsed(false);
 		}
 		// Returnează valoarea cu numărul de zecimale redus conform formaterului
@@ -105,12 +105,13 @@ public class Integration implements Integration_Interface {
 			latexExpr = "\\int_{" + min + "}^{" + max + "}" + latexFunction; // Construirea expresiei LaTeX pentru integrala definită
 
 			TeXFormula formula = new TeXFormula(latexExpr);
+			Color newBlue = new Color(31, 45, 64);
 			Color smokeWhite = new Color(250, 250, 250);
 			formula.createPNG(TeXConstants.STYLE_DISPLAY,
 					100,
 					"./src/main/resources/Integrix/plots/funct_latex.png", // Salvarea imaginii LaTeX
-					smokeWhite,
-					Color.RED);
+					newBlue,
+					smokeWhite);
 		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
 			throw new RuntimeException(ex);
 		}
@@ -138,19 +139,21 @@ public class Integration implements Integration_Interface {
 
 			// Construirea expresiilor LaTeX pentru derivate
 			TeXFormula formula = new TeXFormula(latexExpr_diff1);
+			// Definirea culorii de fundal pentru imaginea LaTeX cu #1f2d40
+			Color newBlue = new Color(31, 45, 64);
 			Color smokeWhite = new Color(250, 250, 250);
 			formula.createPNG(TeXConstants.STYLE_DISPLAY,
 					100,
 					"./src/main/resources/Integrix/plots/latexExpr_diff1.png", // Salvarea imaginii LaTeX pentru prima derivată
-					smokeWhite,
-					Color.RED);
+					newBlue,
+					smokeWhite);
 
 			TeXFormula formula2 = new TeXFormula(latexExpr_diff2);
 			formula2.createPNG(TeXConstants.STYLE_DISPLAY,
 					100,
 					"./src/main/resources/Integrix/plots/latexExpr_diff2.png", // Salvarea imaginii LaTeX pentru a doua derivată
-					smokeWhite,
-					Color.RED);
+					newBlue,
+					smokeWhite);
 		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
 			throw new RuntimeException(ex);
 		}

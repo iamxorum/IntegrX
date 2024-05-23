@@ -1,22 +1,22 @@
-package home.classes;
+package home.clase;
 
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabExecutionException;
 import com.mathworks.engine.MatlabSyntaxException;
 import java.util.concurrent.ExecutionException;
 
-public class RectangularIntegration extends Integration {
-    private static RectangularIntegration instance = null;
+public class IntegrareRectangulara extends Integrare {
+    private static IntegrareRectangulara instance = null;
 
     // Constructor privat pentru a preveni instanțierea clasei
-    private RectangularIntegration() {
+    private IntegrareRectangulara() {
     }
 
     // Metodă statică pentru a obține unica instanță a clasei
-    public static RectangularIntegration getInstance() throws EngineException, InterruptedException {
+    public static IntegrareRectangulara getInstance() throws EngineException, InterruptedException {
         // Dacă instanța este null, se creează o nouă instanță
         if (instance == null) {
-            instance = new RectangularIntegration();
+            instance = new IntegrareRectangulara();
         }
         // Se returnează unica instanță
         return instance;
@@ -47,7 +47,7 @@ public class RectangularIntegration extends Integration {
                         "hold on;" +
                         "x = " + min + ":" + plot_interval + ":" + max + "; y = " + function + ";" + // Generate x and y values for plotting
                         "plot(x, y, 'r', 'LineWidth', 1.5);" + // Plot the function in red
-                        "xlabel('x'); ylabel('y'); title('Left Rectangular Integration with Plot'); grid on;" +
+                        "xlabel('x'); ylabel('y'); title('Integrare prin metoda dreptunghiulara stanga'); grid on;" +
                         "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" + // Save the figure as .fig
                         "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
                 engine.eval(integrationScript);
@@ -68,7 +68,7 @@ public class RectangularIntegration extends Integration {
                         "hold on;" +
                         "x = " + min + ":" + plot_interval + ":" + max + "; y = " + function + ";" + // Generate x and y values for plotting
                         "plot(x, y, 'r', 'LineWidth', 1.5);" + // Plot the function in red
-                        "xlabel('x'); ylabel('y'); title('Midpoint Rectangular Integration with Plot'); grid on;" +
+                        "xlabel('x'); ylabel('y'); title('Integrare prin metoda dreptunghiulara mijloc'); grid on;" +
                         "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" + // Save the figure as .fig
                         "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
                 engine.eval(integrationScript);
@@ -89,7 +89,7 @@ public class RectangularIntegration extends Integration {
                         "hold on;" +
                         "x = " + min + ":" + plot_interval + ":" + max + "; y = " + function + ";" + // Generate x and y values for plotting
                         "plot(x, y, 'r', 'LineWidth', 1.5);" + // Plot the function in red
-                        "xlabel('x'); ylabel('y'); title('Right Rectangular Integration with Plot'); grid on;" +
+                        "xlabel('x'); ylabel('y'); title('Integrare prin metoda dreptunghiulara dreapta'); grid on;" +
                         "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" + // Save the figure as .fig
                         "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
                 engine.eval(integrationScript);

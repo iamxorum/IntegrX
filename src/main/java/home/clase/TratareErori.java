@@ -1,4 +1,4 @@
-package home.classes;
+package home.clase;
 
 import home.IntegrX;
 import javafx.scene.control.Alert;
@@ -7,18 +7,18 @@ import javafx.stage.StageStyle;
 
 import java.net.URL;
 
-public class ErrorHandling {
+public class TratareErori {
 
-    private static ErrorHandling instance = null;
+    private static TratareErori instance = null;
 
     // Constructorul este privat pentru a preveni instantierea obiectelor în afara clasei
-    private ErrorHandling() {
+    private TratareErori() {
     }
 
     // Metodă statică pentru a obține o instanță a clasei ErrorHandling (Singleton pattern)
-    public static ErrorHandling getInstance() {
+    public static TratareErori getInstance() {
         if (instance == null) {
-            instance = new ErrorHandling();
+            instance = new TratareErori();
         }
         return instance;
     }
@@ -88,8 +88,9 @@ public class ErrorHandling {
     public static boolean handleComplexNumber(String... fields) {
         // Verificarea dacă există numere complexe în câmpurile date
         for (String field : fields) {
-            if (field.contains("i")) {
-                showAlert("Numar Complex", "Numerele complexe nu sunt permise.");
+            // Numai daca e "i" separat, sa nu ia in calcul si "i" din "sin" spre exemplu (sa ia doar i-urile care au un spatii inainte si dupa)
+            if (field.contains(" i ") || field.contains("i ") || field.contains(" i")) {
+                showAlert("Numar Complex", "Numerele complexe nu sunt acceptate.");
                 return true;
             }
         }

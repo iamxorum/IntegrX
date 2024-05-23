@@ -1,11 +1,11 @@
-package home.interfaces;
+package home.interfete;
 
 import com.mathworks.engine.MatlabEngine;
-import home.classes.Matlab_MultiThread;
+import home.clase.Matlab_MultiThread;
 
 import java.util.concurrent.ExecutionException;
 
-public interface Integration_Interface {
+public interface Interfata_Integrare {
     // Constanta pentru pragul de eroare
     double THRESHOLD = 0.000001;
 

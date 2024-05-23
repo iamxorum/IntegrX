@@ -1,4 +1,4 @@
-package home.animations;
+package home.animatii;
 
 import javafx.animation.*;
 import javafx.geometry.Insets;
@@ -14,9 +14,9 @@ import javafx.util.Duration;
 
 import static javafx.scene.paint.Color.rgb;
 
-public class LoadingComponent extends StackPane {
+public class Incarcator extends StackPane {
 
-    public LoadingComponent() {
+    public Incarcator() {
         // Titlul aplicației
         Label title = new Label("IntegrX");
         title.setTextFill(Color.WHITE);

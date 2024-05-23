@@ -1,7 +1,7 @@
 package home;
 
-import home.animations.LoadingComponent;
-import home.classes.Matlab_MultiThread;
+import home.animatii.Incarcator;
+import home.clase.Matlab_MultiThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,10 +26,10 @@ public class IntegrX extends Application {
 	@Override
 	public void start(Stage stage) {
 		// Crearea unui obiect LoadingComponent
-		LoadingComponent loadingComponent = new LoadingComponent();
+		Incarcator incarcator = new Incarcator();
 
 		// Crearea unei scene cu LoadingComponent ca nod radacina
-		Scene loadingScene = new Scene(loadingComponent, 500, 500);
+		Scene loadingScene = new Scene(incarcator, 500, 500);
 
 		// Setarea scenei de incarcare ca scena initiala
 		stage.setScene(loadingScene);

@@ -11,6 +11,6 @@ module integrix {
 
 	opens home to javafx.fxml;
 	exports home;
-	exports home.controllers;
-	opens home.controllers to javafx.fxml;
+	exports home.controllere;
+	opens home.controllere to javafx.fxml;
 }

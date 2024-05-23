@@ -1,9 +1,10 @@
-package home.controllers;
+package home.controllere;
 
 import com.mathworks.engine.MatlabEngine;
-import home.classes.*;
+import home.clase.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -20,12 +22,11 @@ import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class MainController {
+public class ControllerPrincipal {
 	// Buton pentru selectarea metodei de integrare: dreptunghiulară
 	@FXML private ToggleButton rectangularButton;
 
@@ -136,6 +137,8 @@ public class MainController {
 
 	// Buton pentru a afisa imaginea cu integrala
 	@FXML private Button zoom;
+
+	@FXML private VBox sideDash;
 
 	@FXML
 	private void initialize() {
@@ -316,6 +319,8 @@ public class MainController {
 	public void getStarted() {
 		// Metodă pentru începerea programului
 		get_started.setVisible(false);
+		// delete get_started_btn from sideDash
+		sideDash.getChildren().remove(get_started_btn);
 		calculation_form.setVisible(true);
 		calculation_form.setDisable(false);
 		calculation_form_btn.setVisible(true);
@@ -351,42 +356,42 @@ public class MainController {
 			max = conversionMap.get(max);
 		}
 
-		ErrorHandling errorHandling = null;
+		TratareErori tratareErori = null;
 		try {
-			errorHandling = ErrorHandling.getInstance();
+			tratareErori = TratareErori.getInstance();
 		} catch (Exception e) {
 			// Afișează o alertă în caz de eroare
-			errorHandling.showAlert("Eroare", e.getMessage());
+			tratareErori.showAlert("Eroare", e.getMessage());
 			return;
 		}
 
 		// Tratează cazurile în care unul dintre câmpuri este gol
-		if (errorHandling.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval)) {
+		if (tratareErori.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval)) {
 			return;
 		}
 
 		// Verifică dacă intervalul de integrare este valid
-		if (errorHandling.handleRange(min, max)) {
+		if (tratareErori.handleRange(min, max)) {
 			return;
 		}
 
 		// Verifică dacă a fost selectată o metodă de integrare
 		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected()){
-			errorHandling.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
+			tratareErori.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
 			return;
 		}
 
 		double result = 0; // Inițializează variabila de rezultat
-		Integration ni = null;
-		RectangularIntegration ri = null;
-		TrapezoidalIntegration ti = null;
-		SimpsonIntegration si = null;
+		Integrare ni = null;
+		IntegrareRectangulara ri = null;
+		IntegrareTrapezoidala ti = null;
+		IntegrareSimpson si = null;
 		try {
 			// Inițializează obiectele pentru integrare
-			ni = Integration.getInstance();
-			ri = RectangularIntegration.getInstance();
-			ti = TrapezoidalIntegration.getInstance();
-			si = SimpsonIntegration.getInstance();
+			ni = Integrare.getInstance();
+			ri = IntegrareRectangulara.getInstance();
+			ti = IntegrareTrapezoidala.getInstance();
+			si = IntegrareSimpson.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -489,4 +494,5 @@ public class MainController {
 		properties_btn.setVisible(true);
 		properties_btn.setDisable(false);
 	}
+
 }
