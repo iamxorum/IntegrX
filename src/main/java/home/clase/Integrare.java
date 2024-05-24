@@ -13,17 +13,6 @@ import java.util.concurrent.ExecutionException;
 
 public class Integrare implements Interfata_Integrare {
 	private static Integrare instance = null;
-	private int plot_method = 0;
-
-	// Metodă pentru a obține metoda de plotare
-	public int getPlot_method() {
-		return plot_method;
-	}
-
-	// Metodă pentru a seta metoda de plotare
-	public void setPlot_method(int plot_method) {
-		this.plot_method = plot_method;
-	}
 
 	// Șablonul pentru graficul MATLAB simplu
 	private static String MATLAB_PLOT_SKELETON =

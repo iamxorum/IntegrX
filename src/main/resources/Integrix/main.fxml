@@ -480,6 +480,11 @@
                                     </ToggleButton>
                                     <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Simpson 1/3">
                                        <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="RK_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Runge-Kutta">
+                                       <HBox.margin>
                                           <Insets top="5.0" />
                                        </HBox.margin>
                                     </ToggleButton>

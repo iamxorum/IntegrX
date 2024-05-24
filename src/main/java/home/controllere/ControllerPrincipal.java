@@ -42,6 +42,8 @@ public class ControllerPrincipal {
 	// Buton pentru selectarea metodei de integrare: Simpson
 	@FXML private ToggleButton simpsonButton;
 
+	@FXML private ToggleButton RK_Button;
+
 	// Buton pentru începerea procesului
 	@FXML private ToggleButton get_started_btn;
 
@@ -149,6 +151,7 @@ public class ControllerPrincipal {
 		simpsonButton.setToggleGroup(toggleGroup1);
 		rectangularButton_lft.setToggleGroup(toggleGroup1);
 		rectangularButton_rgt.setToggleGroup(toggleGroup1);
+		RK_Button.setToggleGroup(toggleGroup1);
 
 		ToggleGroup toggleGroup2 = new ToggleGroup();
 		get_started_btn.setToggleGroup(toggleGroup2);
@@ -376,7 +379,7 @@ public class ControllerPrincipal {
 		}
 
 		// Verifică dacă a fost selectată o metodă de integrare
-		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected()){
+		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected()){
 			tratareErori.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
 			return;
 		}
@@ -386,12 +389,14 @@ public class ControllerPrincipal {
 		IntegrareRectangulara ri = null;
 		IntegrareTrapezoidala ti = null;
 		IntegrareSimpson si = null;
+		IntegrareRungeKutta rk = null;
 		try {
 			// Inițializează obiectele pentru integrare
 			ni = Integrare.getInstance();
 			ri = IntegrareRectangulara.getInstance();
 			ti = IntegrareTrapezoidala.getInstance();
 			si = IntegrareSimpson.getInstance();
+			rk = IntegrareRungeKutta.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -443,7 +448,6 @@ public class ControllerPrincipal {
 		if (rectangularButton.isSelected() || rectangularButton_lft.isSelected() || rectangularButton_rgt.isSelected()){
 			if (rectangularButton.isSelected()) {
 				method_result_name.setText("METODA DREPTUNGHIULARĂ MIJLOC");
-				type = 0;
 			} else if (rectangularButton_lft.isSelected()) {
 				method_result_name.setText("METODA DREPTUNGHIULARĂ STÂNGĂ");
 				type = 1;
@@ -452,18 +456,19 @@ public class ControllerPrincipal {
 				type = 2;
 			}
 			result = ri.calculateRectangular(function, min, max, plot_interval, interval, type);
-			ni.setPlot_method(0);
 			method_integral.setText(String.valueOf(result));
 		} else if (simpsonButton.isSelected()) {
-			ni.setPlot_method(1);
 			result = si.calculateSimpson(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA SIMPSON");
 		} else if (trapezoidalButton.isSelected()) {
-			ni.setPlot_method(2);
 			result = ti.calculateTrapezoid(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA TRAPEZOID");
+		} else if (RK_Button.isSelected()) {
+			result = rk.calculateRK(function, min, max, plot_interval, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("METODA RUNGE-KUTTA");
 		}
 
 		// Realizează afișarea graficului pentru metoda folosită

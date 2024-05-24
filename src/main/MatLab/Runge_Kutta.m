@@ -1,7 +1,7 @@
 % Initial conditions
 x0 = 0;
 y0 = 0;
-h = 1.5;
+h = 0.5;
 x_end = 10;
 
 % Time-stepping loop
@@ -52,5 +52,5 @@ end
 
 % Define the ODE dy/dx = cos(x)
 function dydx = f(x, y)
-    dydx = cos(x);
+    dydx = x.^3 - 2*x.^2 + 3*x - 4;
 end
