@@ -23,7 +23,7 @@ public class IntegrareSimpson extends Integrare {
     }
 
     // Metodă pentru calculul integralei folosind metoda lui Simpson
-    public double calculateSimpson(String function, String min, String max, String plot_interval, String segments) throws MatlabExecutionException, MatlabSyntaxException {
+    public double integrate(String function, String min, String max, String plot_interval, String segments) throws MatlabExecutionException, MatlabSyntaxException {
         try {
             // Se evaluează simbolul 'x' în motorul MATLAB
             engine.eval("syms x");
@@ -44,10 +44,9 @@ public class IntegrareSimpson extends Integrare {
                     "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" + // Save the figure as .fig
                     "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
             engine.eval(integrationScript);
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        } catch (ExecutionException ex) {
-            throw new RuntimeException(ex);
+        } catch (InterruptedException | ExecutionException ex) {
+            TratareErori tratareErori = TratareErori.getInstance();
+            tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
         }
         double integralResult;
         try {

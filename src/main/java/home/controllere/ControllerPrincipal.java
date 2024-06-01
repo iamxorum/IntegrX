@@ -378,6 +378,10 @@ public class ControllerPrincipal {
 			return;
 		}
 
+		if (tratareErori.handleSingleVariableFunction(function)) {
+			return;
+		}
+
 		// Verifică dacă a fost selectată o metodă de integrare
 		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected()){
 			tratareErori.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
@@ -390,6 +394,7 @@ public class ControllerPrincipal {
 		IntegrareTrapezoidala ti = null;
 		IntegrareSimpson si = null;
 		IntegrareRungeKutta rk = null;
+		// catch: stop the execution and show an alert with the error message from tratareErori instance if an exception occurs
 		try {
 			// Inițializează obiectele pentru integrare
 			ni = Integrare.getInstance();
@@ -398,26 +403,20 @@ public class ControllerPrincipal {
 			si = IntegrareSimpson.getInstance();
 			rk = IntegrareRungeKutta.getInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// Verifică dacă funcția este divergentă și actualizează vizibilitatea și stilul corespunzător
-		String isDivergent = ni.isDivergent(function);
-		isDiv_Conv2.setVisible(true);
-		isDiv_Conv2.setDisable(false);
-		isDiv_Conv2.setText(isDivergent);
-		isDiv_Conv3.setText(isDivergent);
-		if (isDivergent.equals("Funcția este divergentă")) {
-			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
-			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
-		} else {
-			isDiv_Conv2.setStyle("-fx-background-color: #315981");
-			isDiv_Conv3.setStyle("-fx-background-color: #315981");
+			// Afișează o alertă în caz de eroare
+			tratareErori.showAlert("Eroare", e.getMessage());
+			return;
 		}
 
 		// Realizează afișarea graficului și a derivatei funcției
-		ni.plotting(function, min, max, plot_interval);
-		ni.diff_latex(function);
+		try {
+			ni.plotting(function, min, max, plot_interval);
+			ni.diff_latex(function);
+		} catch (Exception e) {
+			// Afișează o alertă în caz de eroare
+			tratareErori.showAlert("Eroare", "A apărut o eroare la generarea graficului.\n" + e.getMessage());
+			return;
+		}
 		latex_integral.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral_prop.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latexFunction_diff1.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff1.png"));
@@ -435,6 +434,20 @@ public class ControllerPrincipal {
 			return;
 		}
 
+		// Verifică dacă funcția este divergentă și actualizează vizibilitatea și stilul corespunzător
+		String isDivergent = ni.isDivergent(function);
+		isDiv_Conv2.setVisible(true);
+		isDiv_Conv2.setDisable(false);
+		isDiv_Conv2.setText(isDivergent);
+		isDiv_Conv3.setText(isDivergent);
+		if (isDivergent.equals("Integrala este divergentă")) {
+			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
+			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
+		} else {
+			isDiv_Conv2.setStyle("-fx-background-color: #315981");
+			isDiv_Conv3.setStyle("-fx-background-color: #315981");
+		}
+
 		// Afisează diviziunile
 		integral_div.setVisible(true);
 		method_div.setVisible(true);
@@ -443,7 +456,7 @@ public class ControllerPrincipal {
 		// Afișează rezultatul integralii
 		real_integral.setText(String.valueOf(result));
 
-		int type = 0;
+		int type = 2; // 2 = mijloc, 1 = stanga, 0 = dreapta
 		// Selectează și calculează integrala folosind metoda corespunzătoare
 		if (rectangularButton.isSelected() || rectangularButton_lft.isSelected() || rectangularButton_rgt.isSelected()){
 			if (rectangularButton.isSelected()) {
@@ -453,20 +466,24 @@ public class ControllerPrincipal {
 				type = 1;
 			} else if (rectangularButton_rgt.isSelected()) {
 				method_result_name.setText("METODA DREPTUNGHIULARĂ DREAPTĂ");
-				type = 2;
+				type = 0;
 			}
-			result = ri.calculateRectangular(function, min, max, plot_interval, interval, type);
+			if(type == 2) {
+				result = ri.integrate(function, min, max, plot_interval, interval);
+			} else {
+				result = ri.integrate(function, min, max, plot_interval, interval, type);
+			}
 			method_integral.setText(String.valueOf(result));
 		} else if (simpsonButton.isSelected()) {
-			result = si.calculateSimpson(function, min, max, plot_interval, interval);
+			result = si.integrate(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA SIMPSON");
 		} else if (trapezoidalButton.isSelected()) {
-			result = ti.calculateTrapezoid(function, min, max, plot_interval, interval);
+			result = ti.integrate(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA TRAPEZOID");
 		} else if (RK_Button.isSelected()) {
-			result = rk.calculateRK(function, min, max, plot_interval, interval);
+			result = rk.integrate(function, min, max, plot_interval, interval);
 			method_integral.setText(String.valueOf(result));
 			method_result_name.setText("METODA RUNGE-KUTTA");
 		}

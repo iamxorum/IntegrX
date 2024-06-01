@@ -9,6 +9,7 @@ import java.net.URL;
 
 public class TratareErori {
 
+    // Atribut static pentru a stoca instanța clasei ErrorHandling
     private static TratareErori instance = null;
 
     // Constructorul este privat pentru a preveni instantierea obiectelor în afara clasei
@@ -60,6 +61,7 @@ public class TratareErori {
         return false;
     }
 
+    // Metodă statică pentru a gestiona cazurile în care minimul este mai mare decât maximul
     public static boolean handleRangeInvalid(String min, String max) {
         if (Double.parseDouble(min) > Double.parseDouble(max)) {
             showAlert("Interval Invalid", "Minimul nu poate fi mai mare decât maximul.");
@@ -68,6 +70,7 @@ public class TratareErori {
         return false;
     }
 
+    // Metodă statică pentru a gestiona cazurile în care minimul și maximul sunt egale
     public static boolean handleRangeEqual(String min, String max) {
         if (Double.parseDouble(min) == Double.parseDouble(max)) {
             showAlert("Interval Invalid", "Minimul și maximul nu pot fi egale.");
@@ -76,6 +79,7 @@ public class TratareErori {
         return false;
     }
 
+    // Metodă statică pentru a gestiona cazurile în care intervalul este infinit
     public static boolean handleRangeInf(String min, String max) {
         // Verificarea dacă min sau max sunt infinit
         if ("-Inf".equals(min) || "Inf".equals(max) || "Inf".equals(min) || "-Inf".equals(max)){
@@ -85,6 +89,17 @@ public class TratareErori {
         return false;
     }
 
+    // Metodă statică pentru a gestiona cazurile în care funcția conține mai mult de o variabilă
+    public static boolean handleSingleVariableFunction(String function) {
+        // Verificarea dacă funcția conține mai mult de o variabilă
+        if (function.contains("y") || function.contains("z")) {
+            showAlert("Funcție Invalidă", "Funcția trebuie să conțină o singură variabilă.");
+            return true;
+        }
+        return false;
+    }
+
+    // Metodă statică pentru a gestiona cazurile în care funcția conține numere complexe
     public static boolean handleComplexNumber(String... fields) {
         // Verificarea dacă există numere complexe în câmpurile date
         for (String field : fields) {
@@ -97,6 +112,7 @@ public class TratareErori {
         return false;
     }
 
+    // Metodă statică pentru a afișa un dialog de avertizare
     public static void showAlert(String title, String message) {
         // Creează un nou dialog de avertizare cu tipul WARNING
         Alert alert = new Alert(Alert.AlertType.WARNING);

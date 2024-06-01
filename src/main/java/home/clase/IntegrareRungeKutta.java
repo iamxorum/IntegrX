@@ -23,7 +23,8 @@ public class IntegrareRungeKutta extends Integrare {
     }
 
     // Metodă pentru calculul integralei folosind metoda trapezelor
-    public double calculateRK(String function, String min, String max, String plot_interval, String segments) throws MatlabExecutionException, MatlabSyntaxException {
+    //catch: afiseaza eroarea cu show alert de la tratare erori
+    public double integrate(String function, String min, String max, String plot_interval, String segments) {
         try {
             // Se evaluează simbolul 'x' în motorul MATLAB
             engine.eval("syms x");
@@ -60,19 +61,16 @@ public class IntegrareRungeKutta extends Integrare {
                     "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" +
                     "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');";
             engine.eval(integrationScript);
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        } catch (ExecutionException ex) {
-            throw new RuntimeException(ex);
+        } catch (InterruptedException | ExecutionException ex) {
+            TratareErori tratareErori = TratareErori.getInstance();
+            tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
         }
         double integralResult;
         try {
             // Se obține rezultatul integralii din motorul MATLAB
             integralResult = engine.getVariable("integralResult");
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        } catch (ExecutionException ex) {
-            throw new RuntimeException(ex);
+        } catch (InterruptedException | ExecutionException ex) {
+            throw new RuntimeException("Nu s-a reușit obținerea rezultatului integralei: " + ex.getMessage(), ex);
         }
         return integralResult;
     }
