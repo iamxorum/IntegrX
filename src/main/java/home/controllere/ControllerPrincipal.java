@@ -141,9 +141,19 @@ public class ControllerPrincipal {
 	// Imagine pentru derivata a doua a funcției în format LaTeX
 	@FXML private ImageView latexFunction_diff2;
 
+	// Imagine pentru reprezentarea polinomului Legendre în format LaTeX
+	@FXML private ImageView latexFunction_legendre;
+
 	// Buton pentru a afisa imaginea cu integrala
 	@FXML private Button zoom;
 
+	// Text pentru afișarea polinomului Legendre
+	@FXML private Text text_legendre;
+
+	// VBox pentru afișarea polinomului Legendre
+	@FXML private VBox vbox_legendre;
+
+	// Buton pentru a afișa dashboard-ul
 	@FXML private VBox sideDash;
 
 	@FXML
@@ -289,6 +299,12 @@ public class ControllerPrincipal {
 	public void showLatexFunctionDiff2() {
 		// Metodă pentru afișarea imaginii celei de-a doua derivate a funcției în format LaTeX
 		Image image = latexFunction_diff2.getImage(); // Presupunând că latex_integral_prop este accesibil aici
+		openImage(image);
+	}
+
+	public void showLatexFunctionLegendre() {
+		// Metodă pentru afișarea imaginii polinomului Legendre în format LaTeX
+		Image image = latexFunction_legendre.getImage(); // Presupunând că latexFunction_legendre este accesibil aici
 		openImage(image);
 	}
 
@@ -497,6 +513,8 @@ public class ControllerPrincipal {
 			if(type == 2) {
 				try {
 					result = ri.integrate(function, min, max, plot_interval, interval);
+					text_legendre.setVisible(false);
+					vbox_legendre.setVisible(false);
 				} catch (Exception e) {
 					// Tratează cazul în care apare o excepție și ascunde diviziunile
 					result_window.setVisible(false);
@@ -506,6 +524,8 @@ public class ControllerPrincipal {
 			} else {
 				try {
 					result = ri.integrate(function, min, max, plot_interval, interval, type);
+					text_legendre.setVisible(false);
+					vbox_legendre.setVisible(false);
 				} catch (Exception e) {
 					// Tratează cazul în care apare o excepție și ascunde diviziunile
 					result_window.setVisible(false);
@@ -519,6 +539,8 @@ public class ControllerPrincipal {
 				result = si.integrate(function, min, max, plot_interval, interval);
 				method_integral.setText(String.valueOf(result));
 				method_result_name.setText("METODA SIMPSON");
+				text_legendre.setVisible(false);
+				vbox_legendre.setVisible(false);
 			} catch (Exception e) {
 				// Tratează cazul în care apare o excepție și ascunde diviziunile
 				result_window.setVisible(false);
@@ -530,6 +552,8 @@ public class ControllerPrincipal {
 				result = ti.integrate(function, min, max, plot_interval, interval);
 				method_integral.setText(String.valueOf(result));
 				method_result_name.setText("METODA TRAPEZOIDALĂ");
+				text_legendre.setVisible(false);
+				vbox_legendre.setVisible(false);
 			} catch (Exception e) {
 				// Tratează cazul în care apare o excepție și ascunde diviziunile
 				result_window.setVisible(false);
@@ -541,6 +565,8 @@ public class ControllerPrincipal {
 				result = rk.integrate(function, min, max, plot_interval, interval);
 				method_integral.setText(String.valueOf(result));
 				method_result_name.setText("METODA RUNGE-KUTTA");
+				text_legendre.setVisible(false);
+				vbox_legendre.setVisible(false);
 			} catch (Exception e) {
 				// Tratează cazul în care apare o excepție și ascunde diviziunile
 				result_window.setVisible(false);
@@ -552,6 +578,9 @@ public class ControllerPrincipal {
 				result = qgl.integrate(function, min, max, plot_interval, interval);
 				method_integral.setText(String.valueOf(result));
 				method_result_name.setText("METODA QUADRATURE GAUSS-LEGENDRE");
+				text_legendre.setVisible(true);
+				vbox_legendre.setVisible(true);
+				latexFunction_legendre.setImage(new Image("file:./src/main/resources/Integrix/plots/legendre.png"));
 			} catch (Exception e) {
 				result_window.setVisible(false);
 				properties_window.setVisible(false);
