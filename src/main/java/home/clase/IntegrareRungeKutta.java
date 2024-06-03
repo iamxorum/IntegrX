@@ -30,36 +30,60 @@ public class IntegrareRungeKutta extends Integrare {
             engine.eval("syms x");
             // Se definește expresia integrală și scriptul de integrare
             String integral_expr = "(" + function + ")";
-            String integrationScript = "x0 = " + min + "; y0 = 0; x_end = " + max + "; segments = " + segments + ";" +
-                    "f = @(x, y) " + integral_expr + "; h = (x_end - x0) / segments;" +
-                    "x_values = x0; y_values = y0; x = x0; y = y0;" +
-                    "while x < x_end" +
-                    "    k1 = h * f(x, y);" +
-                    "    k2 = h * f(x + h / 2, y + k1 / 2);" +
-                    "    k3 = h * f(x + h / 2, y + k2 / 2);" +
-                    "    k4 = h * f(x + h, y + k3);" +
-                    "    y = y + (k1 + 2 * k2 + 2 * k3 + k4) / 6;" +
-                    "    x = x + h;" +
-                    "    x_values = [x_values, x];" +
-                    "    y_values = [y_values, y];" +
-                    "end;" +
-                    "fig = figure('Visible', 'off');" +
-                    "plot(x_values, y_values);" +
-                    "xlabel('x');" +
-                    "ylabel('y');" +
-                    "title('Solution of dy/dx = " + function + " using RK4');" +
-                    "grid on;" +
-                    "hold on;" +
-                    "x_fill = [x_values, fliplr(x_values)];" +
-                    "y_fill = [y_values, zeros(size(y_values))];" +
-                    "fill(x_fill, y_fill, 'yellow', 'FaceAlpha', 0.3);" +
-                    "integralResult = y;" +
-                    "hold on;" +
-                    "x = " + min + ":" + plot_interval + ":" + max + "; y = " + function + ";" + // Generate x and y values for plotting
-                    "plot(x, y, 'r', 'LineWidth', 1.5);" + // Plot the function in red
-                    "hold off;" +
-                    "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" +
-                    "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');";
+            // Inițializează scriptul de integrare
+            String integrationScript = "x0 = " + min + ";";
+            integrationScript += " y0 = 0;";
+            integrationScript += " x_end = " + max + ";";
+            integrationScript += " segments = " + segments + ";";
+
+            // Definește funcția pe care vrei să o integrezi
+            integrationScript += " f = @(x, y) " + integral_expr + ";";
+            integrationScript += " h = (x_end - x0) / segments;";
+
+            // Inițializează vectorii pentru stocarea valorilor calculate
+            integrationScript += " x_values = x0;";
+            integrationScript += " y_values = y0;";
+            integrationScript += " x = x0;";
+            integrationScript += " y = y0;";
+
+            // Bucle pentru calculul RK4
+            integrationScript += " while x < x_end";
+            integrationScript += "    k1 = h * f(x, y);";
+            integrationScript += "    k2 = h * f(x + h / 2, y + k1 / 2);";
+            integrationScript += "    k3 = h * f(x + h / 2, y + k2 / 2);";
+            integrationScript += "    k4 = h * f(x + h, y + k3);";
+            integrationScript += "    y = y + (k1 + 2 * k2 + 2 * k3 + k4) / 6;";
+            integrationScript += "    x = x + h;";
+            integrationScript += "    x_values = [x_values, x];";
+            integrationScript += "    y_values = [y_values, y];";
+            integrationScript += " end;";
+            // Crearea și configurarea figurii pentru plotare
+            integrationScript += " fig = figure('Visible', 'off');";
+            integrationScript += " plot(x_values, y_values);";
+            integrationScript += " xlabel('x');";
+            integrationScript += " ylabel('y');";
+            integrationScript += " title('Solution of dy/dx = " + function + " using RK4');";
+            integrationScript += " grid on;";
+            integrationScript += " hold on;";
+
+            // Adăugarea unei zone colorate
+            integrationScript += " x_fill = [x_values, fliplr(x_values)];";
+            integrationScript += " y_fill = [y_values, zeros(size(y_values))];";
+            integrationScript += " fill(x_fill, y_fill, 'yellow', 'FaceAlpha', 0.3);";
+            integrationScript += " integralResult = y;";
+            integrationScript += " hold on;";
+
+            // Plotare funcției inițiale
+            integrationScript += " x = " + min + ":" + plot_interval + ":" + max + ";";
+            integrationScript += " y = " + function + ";";
+            integrationScript += " plot(x, y, 'r', 'LineWidth', 1.5);";
+
+            // Finalizarea plotării
+            integrationScript += " hold off;";
+
+            // Salvarea graficului
+            integrationScript += " savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');";
+            integrationScript += " saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');";
             engine.eval(integrationScript);
         } catch (InterruptedException | ExecutionException ex) {
             throw new RuntimeException("Nu s-a reușit calculul integralei: " + ex.getMessage(), ex);

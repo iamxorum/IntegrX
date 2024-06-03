@@ -29,20 +29,51 @@ public class IntegrareSimpson extends Integrare {
             engine.eval("syms x");
             // Se definește expresia integrală și scriptul de integrare
             String integral_expr = "(" + function + "), " + min + ", " + max;
-            String integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + segments + "; h = (b-a)/n;" +
-                    "X = f(a) + f(b); Odd = 0; Even = 0; for i = 1:2:n-1; xi = a + (i*h); Odd = Odd + f(xi); end; for i = 2:2:n-2; xi = a + (i*h); Even = Even + f(xi); end; integralResult = (h/3)*(X + 4*Odd + 2*Even);" +
-                    "x = linspace(a, b, 1000); y = f(x); fig = figure('Visible', 'off'); plot(x, y, 'b'); hold on; " +
-                    "for i = 0:2:n-2; x_segment = linspace(a + i*h, a + (i+2)*h, 100); " +
-                    "y_segment = interp1([a + i*h, a + (i+1)*h, a + (i+2)*h], [f(a + i*h), f(a + (i+1)*h), f(a + (i+2)*h)], x_segment, 'pchip'); " +
-                    // plot the line segment blue
-                    "plot(x_segment, y_segment, 'b', 'LineWidth', 1.5); " +
-                    "patch([x_segment, fliplr(x_segment)], [zeros(size(y_segment)), fliplr(y_segment)], 'r', 'FaceAlpha', 0.3, 'EdgeColor', 'none'); end; " +
-                    "hold on;" +
-                    "x = " + min + ":" + plot_interval + ":" + max + "; y = " + function + ";" + // Generate x and y values for plotting
-                    "plot(x, y, 'r', 'LineWidth', 1.5);" + // Plot the function in red
-                    "hold off; title('Integrare prin metoda lui Simpson 1/3'); xlabel('x'); ylabel('y'); grid on;" +
-                    "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig');" + // Save the figure as .fig
-                    "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
+            // Definirea funcției de integrare și a intervalului de integrare
+            String integrationScript = "f = @(x) " + integral_expr + "; ";
+            integrationScript += "a = " + min + "; ";
+            integrationScript += "b = " + max + "; ";
+            integrationScript += "n = " + segments + "; ";
+            integrationScript += "h = (b-a)/n; ";
+
+            // Calcularea valorii integralei folosind metoda Simpson 1/3
+            integrationScript += "X = f(a) + f(b); ";
+            integrationScript += "Odd = 0; ";
+            integrationScript += "Even = 0; ";
+            integrationScript += "for i = 1:2:n-1; xi = a + (i*h); Odd = Odd + f(xi); end; ";
+            integrationScript += "for i = 2:2:n-2; xi = a + (i*h); Even = Even + f(xi); end; ";
+            integrationScript += "integralResult = (h/3)*(X + 4*Odd + 2*Even); ";
+
+            // Generarea și plotarea funcției
+            integrationScript += "x = linspace(a, b, 1000); ";
+            integrationScript += "y = f(x); ";
+            integrationScript += "fig = figure('Visible', 'off'); ";
+            integrationScript += "plot(x, y, 'b'); hold on; ";
+
+            // Plotarea segmentelor de interpolare pentru metoda Simpson 1/3
+            integrationScript += "for i = 0:2:n-2; ";
+            integrationScript += "x_segment = linspace(a + i*h, a + (i+2)*h, 100); ";
+            integrationScript += "y_segment = interp1([a + i*h, a + (i+1)*h, a + (i+2)*h], [f(a + i*h), f(a + (i+1)*h), f(a + (i+2)*h)], x_segment, 'pchip'); ";
+            integrationScript += "plot(x_segment, y_segment, 'b', 'LineWidth', 1.5); ";
+            integrationScript += "patch([x_segment, fliplr(x_segment)], [zeros(size(y_segment)), fliplr(y_segment)], 'r', 'FaceAlpha', 0.3, 'EdgeColor', 'none'); end; ";
+            integrationScript += "hold on; ";
+
+            // Plotarea funcției originale
+            integrationScript += "x = " + min + ":" + plot_interval + ":" + max + "; ";
+            integrationScript += "y = " + function + "; ";
+            integrationScript += "plot(x, y, 'r', 'LineWidth', 1.5); ";
+            integrationScript += "hold off; ";
+
+            // Adăugarea titlului și etichetelor
+            integrationScript += "title('Integrare prin metoda lui Simpson 1/3'); ";
+            integrationScript += "xlabel('x'); ";
+            integrationScript += "ylabel('y'); ";
+            integrationScript += "grid on; ";
+
+            // Salvarea figurii ca .fig și .png
+            integrationScript += "savefig(fig, './src/main/resources/Integrix/plots/funct_plot_2s.fig'); ";
+            integrationScript += "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png'); ";
+
             engine.eval(integrationScript);
         } catch (InterruptedException | ExecutionException ex) {
             throw new RuntimeException(ex);
