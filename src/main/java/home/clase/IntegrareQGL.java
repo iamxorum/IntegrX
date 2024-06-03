@@ -46,7 +46,15 @@ public class IntegrareQGL extends Integrare {
 
             integrationScript += "legendre_poly = poly2sym(p(n+1,:), x);";
             integrationScript += "legendre_latex = ['P_', num2str(n), '(x) = ', latex(legendre_poly)];";
-            // Obținerea expresiilor LaTeX din motorul MATLAB
+
+            integrationScript += "fig_legendre = figure('Visible', 'off');";
+            integrationScript += "fplot(legendre_poly, [-1, 1], 'b', 'LineWidth', 2);";
+            integrationScript += "xlabel('x'); ylabel('P_n(x)');";
+            integrationScript += "title(['Polinomul Legendre P_', num2str(n), '(x)']);";
+            integrationScript += "grid on;";
+            integrationScript += "savefig(fig_legendre, './src/main/resources/Integrix/plots/legendre_plot.fig');";
+            integrationScript += "saveas(fig_legendre, './src/main/resources/Integrix/plots/legendre_plot.png');";
+
             integrationScript += "x = roots(p(n+1,:));";
 
             integrationScript += "a = " + min + "; b = " + max + ";";

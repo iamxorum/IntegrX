@@ -302,10 +302,16 @@ public class ControllerPrincipal {
 		openImage(image);
 	}
 
-	public void showLatexFunctionLegendre() {
+	public void showLatexFunctionLegendre() throws ExecutionException, InterruptedException {
+		Matlab_MultiThread multiThread = Matlab_MultiThread.getInstance();
+		MatlabEngine engine = multiThread.getEngine();
 		// Metodă pentru afișarea imaginii polinomului Legendre în format LaTeX
 		Image image = latexFunction_legendre.getImage(); // Presupunând că latexFunction_legendre este accesibil aici
 		openImage(image);
+		// Open file:./src/main/resources/Integrix/plots/legendre_plot.fig
+		engine.eval("openfig('./src/main/resources/Integrix/plots/legendre_plot.fig');");
+		// Bring the figure to the front
+		engine.eval("figure(gcf);");
 	}
 
 	public void showLatexIntegral() {
