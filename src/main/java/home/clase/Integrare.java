@@ -38,29 +38,33 @@ public class Integrare implements Interfata_Integrare {
 
 	@Override
 	public String isDivergent(String function) throws ExecutionException, InterruptedException {
-		// Initializează simbolul 'x' în motorul MATLAB
-		engine.eval("syms x");
+		try{
+			// Initializează simbolul 'x' în motorul MATLAB
+			engine.eval("syms x");
 
-		// Elimină punctele din funcție pentru a evita erori de sintaxă
-		String cleanedFunction = function.replaceAll("\\.", "");
+			// Elimină punctele din funcție pentru a evita erori de sintaxă
+			String cleanedFunction = function.replaceAll("\\.", "");
 
-		// Evaluează funcția în motorul MATLAB
-		engine.eval("f = " + cleanedFunction + ";");
+			// Evaluează funcția în motorul MATLAB
+			engine.eval("f = " + cleanedFunction + ";");
 
-		// Calculează integrala funcției de la -inf la inf
-		engine.eval("result = int(f, x, -inf, inf);");
+			// Calculează integrala funcției de la -inf la inf
+			engine.eval("result = int(f, x, -inf, inf);");
 
-		// Verifică dacă integrala este divergentă
-		engine.eval("isDivergent = isinf(result);");
+			// Verifică dacă integrala este divergentă
+			engine.eval("isDivergent = isinf(result);");
 
-		// Obține rezultatul
-		Object isDivergent = engine.getVariable("isDivergent");
+			// Obține rezultatul
+			Object isDivergent = engine.getVariable("isDivergent");
 
-		// Returnează rezultatul ca string
-		if (isDivergent.toString().equals("true")) {
-			return "Integrala este divergentă";
-		} else {
-			return "Integrala este convergentă";
+			// Returnează rezultatul ca string
+			if (isDivergent.toString().equals("true")) {
+				return "Integrala este divergentă";
+			} else {
+				return "Integrala este convergentă";
+			}
+		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -151,8 +155,7 @@ public class Integrare implements Interfata_Integrare {
 			engine.eval(integrationScript);
 
 		} catch (InterruptedException | ExecutionException ex) {
-			TratareErori tratareErori = TratareErori.getInstance();
-			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
+			throw new RuntimeException("Nu s-a reușit calcularea integralei: " + ex.getMessage(), ex);
 		}
 
 		double integralResult;

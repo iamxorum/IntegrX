@@ -28,7 +28,6 @@ public class TratareErori {
     public static boolean handleEmptyFields(String... fields) {
         // Verificarea primului câmp pentru numere complexe
         if (fields[0].isEmpty()) {
-            showAlert("Campuri goale", "Toate câmpurile trebuie completate.");
             return true;
         }
         if (handleComplexNumber(fields[0])) { // Verificarea primului câmp pentru a fi un număr complex
@@ -64,7 +63,6 @@ public class TratareErori {
     // Metodă statică pentru a gestiona cazurile în care minimul este mai mare decât maximul
     public static boolean handleRangeInvalid(String min, String max) {
         if (Double.parseDouble(min) > Double.parseDouble(max)) {
-            showAlert("Interval Invalid", "Minimul nu poate fi mai mare decât maximul.");
             return true;
         }
         return false;
@@ -73,7 +71,6 @@ public class TratareErori {
     // Metodă statică pentru a gestiona cazurile în care minimul și maximul sunt egale
     public static boolean handleRangeEqual(String min, String max) {
         if (Double.parseDouble(min) == Double.parseDouble(max)) {
-            showAlert("Interval Invalid", "Minimul și maximul nu pot fi egale.");
             return true;
         }
         return false;

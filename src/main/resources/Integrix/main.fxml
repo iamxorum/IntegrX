@@ -204,104 +204,92 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
+      <AnchorPane fx:id="properties_window" layoutX="330.0" layoutY="52.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0">
+            <VBox layoutX="70.0" layoutY="50.0" prefHeight="379.0" prefWidth="712.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox minHeight="68.0" prefHeight="68.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
                      <children>
-                        <VBox alignment="CENTER" layoutY="21.0" prefHeight="260.0" prefWidth="1345.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
                            <children>
-                              <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="890.0" promptText="Functie" styleClass="inpu_text" stylesheets="@css/fullstyle.css" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <TextField fx:id="min_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
+                                    <ImageView fx:id="latex_integral_prop" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegralProp" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
                                        <HBox.margin>
-                                          <Insets top="5.0" />
+                                          <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="int_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Numar Intervale" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
-                                       <HBox.margin>
-                                          <Insets left="5.0" right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="max_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
-                                       <HBox.margin>
-                                          <Insets top="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="51.0" prefHeight="51.0" prefWidth="732.0">
-                                 <children>
-                                    <TextField fx:id="plot_interval_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Interval Plot {min:input:max}" styleClass="inpu_text" stylesheets="@css/fullstyle.css">
-                                       <HBox.margin>
-                                          <Insets right="30.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="abs_err_input" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Limita Eroare Absoluta (ex. 0.00001)" styleClass="inpu_text" stylesheets="@css/fullstyle.css">
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </TextField>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
                                  </children>
                               </HBox>
                            </children>
-                        </VBox>
-                        <VBox alignment="CENTER" layoutY="186.0" prefHeight="260.0" prefWidth="1345.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="186.0">
-                           <children>
-                              <HBox alignment="CENTER" maxHeight="99.0" maxWidth="951.0" minHeight="41.0" minWidth="437.0" prefHeight="99.0" prefWidth="910.0" translateY="-1.0" VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <ToggleButton fx:id="rectangularButton_lft" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Stang">
-                                       <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Mijloc">
-                                       <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="rectangularButton_rgt" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Drept">
-                                       <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Trapez">
-                                       <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Simpson 1/3">
-                                       <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                    <ToggleButton fx:id="RK_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Runge-Kutta">
-                                       <HBox.margin>
-                                          <Insets top="5.0" />
-                                       </HBox.margin>
-                                    </ToggleButton>
-                                 </children>
-                              </HBox>
-                              <Button alignment="CENTER" maxHeight="40.0" maxWidth="951.0" minHeight="40.0" minWidth="437.0" mnemonicParsing="false" onAction="#calculateAction" prefHeight="40.0" prefWidth="951.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculeaza" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Label fx:id="isDiv_Conv2" maxHeight="40.0" prefHeight="40.0" prefWidth="399.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" top="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
+                        </AnchorPane>
                      </children>
-                  </AnchorPane>
+                  </VBox>
+                  <VBox minHeight="55.0" prefHeight="55.0" prefWidth="692.0" styleClass="result_div" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Label fx:id="isDiv_Conv3" prefHeight="44.0" prefWidth="726.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 1">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latexFunction_diff1" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff1" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 2">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latexFunction_diff2" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff2" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>
@@ -418,92 +406,109 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="properties_window" layoutX="330.0" layoutY="52.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
+      <AnchorPane fx:id="calculation_form" layoutX="357.0" layoutY="103.0" maxHeight="450.0" maxWidth="700.0" minHeight="300.0" minWidth="450.0" prefHeight="358.0" prefWidth="1244.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="105.0">
          <children>
-            <VBox layoutX="70.0" layoutY="50.0" prefHeight="379.0" prefWidth="712.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="40.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0">
                <children>
-                  <VBox minHeight="68.0" prefHeight="68.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                        <VBox alignment="CENTER" layoutY="21.0" prefHeight="260.0" prefWidth="1345.0" AnchorPane.bottomAnchor="330.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TextField fx:id="func_id" maxHeight="35.0" maxWidth="951.0" minHeight="30.0" minWidth="470.0" prefHeight="35.0" prefWidth="890.0" promptText="Functie" styleClass="inpu_text" stylesheets="@css/fullstyle.css" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="60.0" prefHeight="84.0" prefWidth="687.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <ImageView fx:id="latex_integral_prop" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegralProp" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                    <TextField fx:id="min_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Min" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
+                                          <Insets top="5.0" />
                                        </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
+                                    </TextField>
+                                    <TextField fx:id="int_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Numar Intervale" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="max_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Max" styleClass="inpu_text" stylesheets="@css/fullstyle.css" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="84.0" maxWidth="951.0" minHeight="51.0" prefHeight="51.0" prefWidth="732.0">
+                                 <children>
+                                    <TextField fx:id="plot_interval_id" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Interval Plot {min:input:max}" styleClass="inpu_text" stylesheets="@css/fullstyle.css">
+                                       <HBox.margin>
+                                          <Insets right="30.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="abs_err_input" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="153.0" prefHeight="35.0" prefWidth="267.0" promptText="Limita Eroare Absoluta (ex. 0.00001)" styleClass="inpu_text" stylesheets="@css/fullstyle.css">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </TextField>
                                  </children>
                               </HBox>
                            </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-                  <VBox minHeight="55.0" prefHeight="55.0" prefWidth="692.0" styleClass="result_div" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <Label fx:id="isDiv_Conv3" prefHeight="44.0" prefWidth="726.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 1">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Text>
-                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                        </VBox>
+                        <VBox alignment="CENTER" layoutY="186.0" prefHeight="260.0" prefWidth="1345.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="186.0">
                            <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER" maxHeight="99.0" maxWidth="951.0" minHeight="41.0" minWidth="437.0" prefHeight="99.0" prefWidth="910.0" translateY="-1.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <ImageView fx:id="latexFunction_diff1" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff1" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                    <ToggleButton fx:id="rectangularButton_lft" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Stang">
                                        <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
+                                          <Insets right="5.0" top="5.0" />
                                        </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="rectangularButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Mijloc">
+                                       <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="rectangularButton_rgt" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Dreptunghi Drept">
+                                       <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="trapezoidalButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Trapez">
+                                       <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="simpsonButton" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Simpson 1/3">
+                                       <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="RK_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Runge-Kutta">
+                                       <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="QGL_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Gauss-Legendre">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
                                  </children>
                               </HBox>
+                              <Button alignment="CENTER" maxHeight="40.0" maxWidth="951.0" minHeight="40.0" minWidth="437.0" mnemonicParsing="false" onAction="#calculateAction" prefHeight="40.0" prefWidth="951.0" styleClass="calculate" stylesheets="@css/fullstyle.css" text="Calculeaza" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Label fx:id="isDiv_Conv2" maxHeight="40.0" prefHeight="40.0" prefWidth="399.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
                            </children>
-                        </AnchorPane>
+                        </VBox>
                      </children>
-                  </VBox>
-                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 2">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Text>
-                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="latexFunction_diff2" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff2" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>

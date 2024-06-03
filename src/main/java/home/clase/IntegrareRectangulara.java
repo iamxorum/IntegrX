@@ -51,8 +51,7 @@ public class IntegrareRectangulara extends Integrare {
                 "saveas(fig, './src/main/resources/Integrix/plots/funct_plot_2s.png');"; // Save the figure as .png
             engine.eval(integrationScript);
         } catch (InterruptedException | ExecutionException ex) {
-            TratareErori tratareErori = TratareErori.getInstance();
-            tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
+            throw new RuntimeException(ex);
         }
         double integralResult;
         try {
@@ -118,8 +117,7 @@ public class IntegrareRectangulara extends Integrare {
                 engine.eval(integrationScript);
             }
         } catch (InterruptedException | ExecutionException ex) {
-            TratareErori tratareErori = TratareErori.getInstance();
-            tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
+            throw new RuntimeException(ex);
         }
         double integralResult;
         try {

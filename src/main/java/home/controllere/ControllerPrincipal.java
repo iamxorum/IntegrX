@@ -42,7 +42,11 @@ public class ControllerPrincipal {
 	// Buton pentru selectarea metodei de integrare: Simpson
 	@FXML private ToggleButton simpsonButton;
 
+	// Buton pentru selectarea metodei de integrare: Runge-Kutta
 	@FXML private ToggleButton RK_Button;
+
+	// Buton pentru selectarea metodei de integrare: Quadrature Gauss-Legendre
+	@FXML private ToggleButton QGL_Button;
 
 	// Buton pentru începerea procesului
 	@FXML private ToggleButton get_started_btn;
@@ -152,6 +156,7 @@ public class ControllerPrincipal {
 		rectangularButton_lft.setToggleGroup(toggleGroup1);
 		rectangularButton_rgt.setToggleGroup(toggleGroup1);
 		RK_Button.setToggleGroup(toggleGroup1);
+		QGL_Button.setToggleGroup(toggleGroup1);
 
 		ToggleGroup toggleGroup2 = new ToggleGroup();
 		get_started_btn.setToggleGroup(toggleGroup2);
@@ -352,11 +357,18 @@ public class ControllerPrincipal {
 		conversionMap.put("-Inf", "-Inf");
 
 		// Actualizarea lui min și max dacă sunt egale cu o cheie din map
-		if (conversionMap.containsKey(min)) {
-			min = conversionMap.get(min);
-		}
-		if (conversionMap.containsKey(max)) {
-			max = conversionMap.get(max);
+		try {
+			if (conversionMap.containsKey(min)) {
+				min = conversionMap.get(min);
+			}
+			if (conversionMap.containsKey(max)) {
+				max = conversionMap.get(max);
+			}
+		} catch (Exception e) {
+			// Afișează o alertă în caz de eroare
+			TratareErori tratareErori = TratareErori.getInstance();
+			tratareErori.showAlert("Eroare la conversia valorilor pentru min și max", e.getMessage());
+			return;
 		}
 
 		TratareErori tratareErori = null;
@@ -364,26 +376,29 @@ public class ControllerPrincipal {
 			tratareErori = TratareErori.getInstance();
 		} catch (Exception e) {
 			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", e.getMessage());
+			tratareErori.showAlert("Eroare la inițializarea obiectului de tratare a erorilor", e.getMessage());
 			return;
 		}
 
 		// Tratează cazurile în care unul dintre câmpuri este gol
 		if (tratareErori.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval)) {
+			tratareErori.showAlert("Eroare", "Toate câmpurile trebuie completate.");
 			return;
 		}
 
 		// Verifică dacă intervalul de integrare este valid
 		if (tratareErori.handleRange(min, max)) {
+			tratareErori.showAlert("Eroare", "Intervalul de integrare este invalid.");
 			return;
 		}
 
 		if (tratareErori.handleSingleVariableFunction(function)) {
+			tratareErori.showAlert("Eroare", "Funcția trebuie să conțină o singură variabilă.");
 			return;
 		}
 
 		// Verifică dacă a fost selectată o metodă de integrare
-		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected()){
+		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected() && !QGL_Button.isSelected()){
 			tratareErori.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
 			return;
 		}
@@ -394,6 +409,7 @@ public class ControllerPrincipal {
 		IntegrareTrapezoidala ti = null;
 		IntegrareSimpson si = null;
 		IntegrareRungeKutta rk = null;
+		IntegrareQGL qgl = null;
 		// catch: stop the execution and show an alert with the error message from tratareErori instance if an exception occurs
 		try {
 			// Inițializează obiectele pentru integrare
@@ -402,9 +418,10 @@ public class ControllerPrincipal {
 			ti = IntegrareTrapezoidala.getInstance();
 			si = IntegrareSimpson.getInstance();
 			rk = IntegrareRungeKutta.getInstance();
+			qgl = IntegrareQGL.getInstance();
 		} catch (Exception e) {
 			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", e.getMessage());
+			tratareErori.showAlert("Nu s-a putut inițializa obiectele de integrare", e.getMessage());
 			return;
 		}
 
@@ -414,7 +431,7 @@ public class ControllerPrincipal {
 			ni.diff_latex(function);
 		} catch (Exception e) {
 			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", "A apărut o eroare la generarea graficului.\n" + e.getMessage());
+			tratareErori.showAlert("Eroare", "A apărut o eroare la generarea graficului/latexului.\n" + e.getMessage());
 			return;
 		}
 		latex_integral.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
@@ -427,15 +444,24 @@ public class ControllerPrincipal {
 			// Calculează integrala
 			result = ni.integrate(function, min, max);
 		} catch (Exception e) {
+			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + e.getMessage());
 			// Tratează cazul în care apare o excepție și ascunde diviziunile
-			integral_div.setVisible(false);
-			method_div.setVisible(false);
-			error_div.setVisible(false);
+			result_window.setVisible(false);
+			properties_window.setVisible(false);
 			return;
 		}
 
+		String isDivergent = "";
 		// Verifică dacă funcția este divergentă și actualizează vizibilitatea și stilul corespunzător
-		String isDivergent = ni.isDivergent(function);
+		try {
+			isDivergent = ni.isDivergent(function);
+		} catch (Exception e) {
+			// Tratează cazul în care apare o excepție și ascunde diviziunile
+			tratareErori.showAlert("Eroare", "A apărut o eroare la verificarea divergenței integralei.\n" + e.getMessage());
+			result_window.setVisible(false);
+			properties_window.setVisible(false);
+			return;
+		}
 		isDiv_Conv2.setVisible(true);
 		isDiv_Conv2.setDisable(false);
 		isDiv_Conv2.setText(isDivergent);
@@ -469,23 +495,68 @@ public class ControllerPrincipal {
 				type = 0;
 			}
 			if(type == 2) {
-				result = ri.integrate(function, min, max, plot_interval, interval);
+				try {
+					result = ri.integrate(function, min, max, plot_interval, interval);
+				} catch (Exception e) {
+					// Tratează cazul în care apare o excepție și ascunde diviziunile
+					result_window.setVisible(false);
+					properties_window.setVisible(false);
+					return;
+				}
 			} else {
-				result = ri.integrate(function, min, max, plot_interval, interval, type);
+				try {
+					result = ri.integrate(function, min, max, plot_interval, interval, type);
+				} catch (Exception e) {
+					// Tratează cazul în care apare o excepție și ascunde diviziunile
+					result_window.setVisible(false);
+					properties_window.setVisible(false);
+					return;
+				}
 			}
 			method_integral.setText(String.valueOf(result));
 		} else if (simpsonButton.isSelected()) {
-			result = si.integrate(function, min, max, plot_interval, interval);
-			method_integral.setText(String.valueOf(result));
-			method_result_name.setText("METODA SIMPSON");
+			try {
+				result = si.integrate(function, min, max, plot_interval, interval);
+				method_integral.setText(String.valueOf(result));
+				method_result_name.setText("METODA SIMPSON");
+			} catch (Exception e) {
+				// Tratează cazul în care apare o excepție și ascunde diviziunile
+				result_window.setVisible(false);
+				properties_window.setVisible(false);
+				return;
+			}
 		} else if (trapezoidalButton.isSelected()) {
-			result = ti.integrate(function, min, max, plot_interval, interval);
-			method_integral.setText(String.valueOf(result));
-			method_result_name.setText("METODA TRAPEZOID");
+			try {
+				result = ti.integrate(function, min, max, plot_interval, interval);
+				method_integral.setText(String.valueOf(result));
+				method_result_name.setText("METODA TRAPEZOIDALĂ");
+			} catch (Exception e) {
+				// Tratează cazul în care apare o excepție și ascunde diviziunile
+				result_window.setVisible(false);
+				properties_window.setVisible(false);
+				return;
+			}
 		} else if (RK_Button.isSelected()) {
-			result = rk.integrate(function, min, max, plot_interval, interval);
-			method_integral.setText(String.valueOf(result));
-			method_result_name.setText("METODA RUNGE-KUTTA");
+			try {
+				result = rk.integrate(function, min, max, plot_interval, interval);
+				method_integral.setText(String.valueOf(result));
+				method_result_name.setText("METODA RUNGE-KUTTA");
+			} catch (Exception e) {
+				// Tratează cazul în care apare o excepție și ascunde diviziunile
+				result_window.setVisible(false);
+				properties_window.setVisible(false);
+				return;
+			}
+		} else if (QGL_Button.isSelected()) {
+			try {
+				result = qgl.integrate(function, min, max, plot_interval, interval);
+				method_integral.setText(String.valueOf(result));
+				method_result_name.setText("METODA QUADRATURE GAUSS-LEGENDRE");
+			} catch (Exception e) {
+				result_window.setVisible(false);
+				properties_window.setVisible(false);
+				return;
+			}
 		}
 
 		// Realizează afișarea graficului pentru metoda folosită
@@ -493,10 +564,16 @@ public class ControllerPrincipal {
 
 		// Calculează eroarea absolută și afișează
 		double absolute_error;
-		if (result > Double.parseDouble(real_integral.getText())) {
-			absolute_error = result - Double.parseDouble(real_integral.getText());
-		} else {
-			absolute_error = Double.parseDouble(real_integral.getText()) - result;
+		try {
+			if (result > Double.parseDouble(real_integral.getText())) {
+				absolute_error = result - Double.parseDouble(real_integral.getText());
+			} else {
+				absolute_error = Double.parseDouble(real_integral.getText()) - result;
+			}
+		} catch (Exception e) {
+			// Afișează o alertă în caz de eroare
+			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea erorii absolute.\n" + e.getMessage());
+			return;
 		}
 		if (absolute_error > Double.parseDouble(abs_err_usr)) {
 			error_div.setStyle("-fx-background-color: #cc2424");
@@ -505,7 +582,13 @@ public class ControllerPrincipal {
 		}
 		abs_err.setText(String.valueOf(absolute_error));
 		// rel_err witrh respect to real integral (treated with absolute value)
-		rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
+		try {
+			rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
+		} catch (Exception e) {
+			// Afișează o alertă în caz de eroare
+			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea erorii relative.\n" + e.getMessage());
+			return;
+		}
 
 		// Activează butonul pentru afișarea rezultatului și a ferestrei de proprietăți
 
