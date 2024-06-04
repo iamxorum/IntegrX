@@ -97,7 +97,7 @@ public class IntegrareRectangulara extends Integrare {
             } else if (type == 0) {
                 // Se calculează integrala folosind metoda dreptunghiulară dreapta
                 integrationScript = "f = @(x) " + integral_expr + "; a = " + min + "; b = " + max + "; n = " + interval + "; h = (b-a)/n;" +
-                        "s = 0; for i = 1:n; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;" +
+                        "s = 0; for i = 1:n-1; xn = a + (i*h); s = s + f(xn); end; integralResult = h * s;" +
                         "x_values = linspace(a, b, 1000); y_values = f(x_values);" + // Generate x and y values for plotting
                         "fig = figure('Visible', 'off');" +
                         "plot(x_values, y_values, 'r', 'LineWidth', 1.5); hold on;" + // Plot the function with a red line
