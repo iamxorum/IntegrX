@@ -2,7 +2,6 @@ package home;
 
 import home.animatii.Incarcator;
 import home.clase.Matlab_MultiThread;
-import home.clase.TratareErori;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -146,16 +145,9 @@ public class IntegrX extends Application {
 					stage.setScene(scene);
 				});
 			} catch (InterruptedException e) {
-				TratareErori tratareErori = TratareErori.getInstance();
-				tratareErori.showAlert("Eroare", "A apărut o eroare la inițializarea motorului MATLAB.\n" + e.getMessage());
-				exitApp();
+				e.printStackTrace();
 			}
 		}).start();
-	}
-
-	private void exitApp() {
-		Platform.exit();
-		System.exit(-1);
 	}
 
 	// Metoda principala a clasei, porneste aplicatia JavaFX

@@ -42,11 +42,7 @@ public class ControllerPrincipal {
 	// Buton pentru selectarea metodei de integrare: Simpson
 	@FXML private ToggleButton simpsonButton;
 
-	// Buton pentru selectarea metodei de integrare: Runge-Kutta
 	@FXML private ToggleButton RK_Button;
-
-	// Buton pentru selectarea metodei de integrare: Quadrature Gauss-Legendre
-	@FXML private ToggleButton QGL_Button;
 
 	// Buton pentru începerea procesului
 	@FXML private ToggleButton get_started_btn;
@@ -141,19 +137,9 @@ public class ControllerPrincipal {
 	// Imagine pentru derivata a doua a funcției în format LaTeX
 	@FXML private ImageView latexFunction_diff2;
 
-	// Imagine pentru reprezentarea polinomului Legendre în format LaTeX
-	@FXML private ImageView latexFunction_legendre;
-
 	// Buton pentru a afisa imaginea cu integrala
 	@FXML private Button zoom;
 
-	// Text pentru afișarea polinomului Legendre
-	@FXML private Text text_legendre;
-
-	// VBox pentru afișarea polinomului Legendre
-	@FXML private VBox vbox_legendre;
-
-	// Buton pentru a afișa dashboard-ul
 	@FXML private VBox sideDash;
 
 	@FXML
@@ -166,7 +152,6 @@ public class ControllerPrincipal {
 		rectangularButton_lft.setToggleGroup(toggleGroup1);
 		rectangularButton_rgt.setToggleGroup(toggleGroup1);
 		RK_Button.setToggleGroup(toggleGroup1);
-		QGL_Button.setToggleGroup(toggleGroup1);
 
 		ToggleGroup toggleGroup2 = new ToggleGroup();
 		get_started_btn.setToggleGroup(toggleGroup2);
@@ -302,18 +287,6 @@ public class ControllerPrincipal {
 		openImage(image);
 	}
 
-	public void showLatexFunctionLegendre() throws ExecutionException, InterruptedException {
-		Matlab_MultiThread multiThread = Matlab_MultiThread.getInstance();
-		MatlabEngine engine = multiThread.getEngine();
-		// Metodă pentru afișarea imaginii polinomului Legendre în format LaTeX
-		Image image = latexFunction_legendre.getImage(); // Presupunând că latexFunction_legendre este accesibil aici
-		openImage(image);
-		// Open file:./src/main/resources/Integrix/plots/legendre_plot.fig
-		engine.eval("openfig('./src/main/resources/Integrix/plots/legendre_plot.fig');");
-		// Bring the figure to the front
-		engine.eval("figure(gcf);");
-	}
-
 	public void showLatexIntegral() {
 		// Metodă pentru afișarea imaginii integralei în format LaTeX
 		Image image = latex_integral.getImage(); // Presupunând că latex_integral este accesibil aici
@@ -379,18 +352,11 @@ public class ControllerPrincipal {
 		conversionMap.put("-Inf", "-Inf");
 
 		// Actualizarea lui min și max dacă sunt egale cu o cheie din map
-		try {
-			if (conversionMap.containsKey(min)) {
-				min = conversionMap.get(min);
-			}
-			if (conversionMap.containsKey(max)) {
-				max = conversionMap.get(max);
-			}
-		} catch (Exception e) {
-			// Afișează o alertă în caz de eroare
-			TratareErori tratareErori = TratareErori.getInstance();
-			tratareErori.showAlert("Eroare la conversia valorilor pentru min și max", e.getMessage());
-			return;
+		if (conversionMap.containsKey(min)) {
+			min = conversionMap.get(min);
+		}
+		if (conversionMap.containsKey(max)) {
+			max = conversionMap.get(max);
 		}
 
 		TratareErori tratareErori = null;
@@ -398,29 +364,22 @@ public class ControllerPrincipal {
 			tratareErori = TratareErori.getInstance();
 		} catch (Exception e) {
 			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare la inițializarea obiectului de tratare a erorilor", e.getMessage());
+			tratareErori.showAlert("Eroare", e.getMessage());
 			return;
 		}
 
 		// Tratează cazurile în care unul dintre câmpuri este gol
 		if (tratareErori.handleEmptyFields(function, min, max, interval, abs_err_usr, plot_interval)) {
-			tratareErori.showAlert("Eroare", "Toate câmpurile trebuie completate.");
 			return;
 		}
 
 		// Verifică dacă intervalul de integrare este valid
 		if (tratareErori.handleRange(min, max)) {
-			tratareErori.showAlert("Eroare", "Intervalul de integrare este invalid.");
-			return;
-		}
-
-		if (tratareErori.handleSingleVariableFunction(function)) {
-			tratareErori.showAlert("Eroare", "Funcția trebuie să conțină o singură variabilă.");
 			return;
 		}
 
 		// Verifică dacă a fost selectată o metodă de integrare
-		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected() && !QGL_Button.isSelected()){
+		if (!rectangularButton.isSelected() && !trapezoidalButton.isSelected() && !simpsonButton.isSelected() && !rectangularButton_lft.isSelected() && !rectangularButton_rgt.isSelected() && !RK_Button.isSelected()){
 			tratareErori.showAlert("Eroare", "Vă rugăm să selectați o metodă.");
 			return;
 		}
@@ -431,8 +390,6 @@ public class ControllerPrincipal {
 		IntegrareTrapezoidala ti = null;
 		IntegrareSimpson si = null;
 		IntegrareRungeKutta rk = null;
-		IntegrareQGL qgl = null;
-		// catch: stop the execution and show an alert with the error message from tratareErori instance if an exception occurs
 		try {
 			// Inițializează obiectele pentru integrare
 			ni = Integrare.getInstance();
@@ -440,22 +397,27 @@ public class ControllerPrincipal {
 			ti = IntegrareTrapezoidala.getInstance();
 			si = IntegrareSimpson.getInstance();
 			rk = IntegrareRungeKutta.getInstance();
-			qgl = IntegrareQGL.getInstance();
 		} catch (Exception e) {
-			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Nu s-a putut inițializa obiectele de integrare", e.getMessage());
-			return;
+			e.printStackTrace();
+		}
+
+		// Verifică dacă funcția este divergentă și actualizează vizibilitatea și stilul corespunzător
+		String isDivergent = ni.isDivergent(function);
+		isDiv_Conv2.setVisible(true);
+		isDiv_Conv2.setDisable(false);
+		isDiv_Conv2.setText(isDivergent);
+		isDiv_Conv3.setText(isDivergent);
+		if (isDivergent.equals("Funcția este divergentă")) {
+			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
+			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
+		} else {
+			isDiv_Conv2.setStyle("-fx-background-color: #315981");
+			isDiv_Conv3.setStyle("-fx-background-color: #315981");
 		}
 
 		// Realizează afișarea graficului și a derivatei funcției
-		try {
-			ni.plotting(function, min, max, plot_interval);
-			ni.diff_latex(function);
-		} catch (Exception e) {
-			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", "A apărut o eroare la generarea graficului/latexului.\n" + e.getMessage());
-			return;
-		}
+		ni.plotting(function, min, max, plot_interval);
+		ni.diff_latex(function);
 		latex_integral.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latex_integral_prop.setImage(new Image("file:./src/main/resources/Integrix/plots/funct_latex.png"));
 		latexFunction_diff1.setImage(new Image("file:./src/main/resources/Integrix/plots/latexExpr_diff1.png"));
@@ -466,34 +428,11 @@ public class ControllerPrincipal {
 			// Calculează integrala
 			result = ni.integrate(function, min, max);
 		} catch (Exception e) {
-			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + e.getMessage());
 			// Tratează cazul în care apare o excepție și ascunde diviziunile
-			result_window.setVisible(false);
-			properties_window.setVisible(false);
+			integral_div.setVisible(false);
+			method_div.setVisible(false);
+			error_div.setVisible(false);
 			return;
-		}
-
-		String isDivergent = "";
-		// Verifică dacă funcția este divergentă și actualizează vizibilitatea și stilul corespunzător
-		try {
-			isDivergent = ni.isDivergent(function);
-		} catch (Exception e) {
-			// Tratează cazul în care apare o excepție și ascunde diviziunile
-			tratareErori.showAlert("Eroare", "A apărut o eroare la verificarea divergenței integralei.\n" + e.getMessage());
-			result_window.setVisible(false);
-			properties_window.setVisible(false);
-			return;
-		}
-		isDiv_Conv2.setVisible(true);
-		isDiv_Conv2.setDisable(false);
-		isDiv_Conv2.setText(isDivergent);
-		isDiv_Conv3.setText(isDivergent);
-		if (isDivergent.equals("Integrala este divergentă")) {
-			isDiv_Conv2.setStyle("-fx-background-color: #cc2424");
-			isDiv_Conv3.setStyle("-fx-background-color: #cc2424");
-		} else {
-			isDiv_Conv2.setStyle("-fx-background-color: #315981");
-			isDiv_Conv3.setStyle("-fx-background-color: #315981");
 		}
 
 		// Afisează diviziunile
@@ -504,7 +443,7 @@ public class ControllerPrincipal {
 		// Afișează rezultatul integralii
 		real_integral.setText(String.valueOf(result));
 
-		int type = 2; // 2 = mijloc, 1 = stanga, 0 = dreapta
+		int type = 0;
 		// Selectează și calculează integrala folosind metoda corespunzătoare
 		if (rectangularButton.isSelected() || rectangularButton_lft.isSelected() || rectangularButton_rgt.isSelected()){
 			if (rectangularButton.isSelected()) {
@@ -514,84 +453,22 @@ public class ControllerPrincipal {
 				type = 1;
 			} else if (rectangularButton_rgt.isSelected()) {
 				method_result_name.setText("METODA DREPTUNGHIULARĂ DREAPTĂ");
-				type = 0;
+				type = 2;
 			}
-			if(type == 2) {
-				try {
-					result = ri.integrate(function, min, max, plot_interval, interval);
-					text_legendre.setVisible(false);
-					vbox_legendre.setVisible(false);
-				} catch (Exception e) {
-					// Tratează cazul în care apare o excepție și ascunde diviziunile
-					result_window.setVisible(false);
-					properties_window.setVisible(false);
-					return;
-				}
-			} else {
-				try {
-					result = ri.integrate(function, min, max, plot_interval, interval, type);
-					text_legendre.setVisible(false);
-					vbox_legendre.setVisible(false);
-				} catch (Exception e) {
-					// Tratează cazul în care apare o excepție și ascunde diviziunile
-					result_window.setVisible(false);
-					properties_window.setVisible(false);
-					return;
-				}
-			}
+			result = ri.calculateRectangular(function, min, max, plot_interval, interval, type);
 			method_integral.setText(String.valueOf(result));
 		} else if (simpsonButton.isSelected()) {
-			try {
-				result = si.integrate(function, min, max, plot_interval, interval);
-				method_integral.setText(String.valueOf(result));
-				method_result_name.setText("METODA SIMPSON");
-				text_legendre.setVisible(false);
-				vbox_legendre.setVisible(false);
-			} catch (Exception e) {
-				// Tratează cazul în care apare o excepție și ascunde diviziunile
-				result_window.setVisible(false);
-				properties_window.setVisible(false);
-				return;
-			}
+			result = si.calculateSimpson(function, min, max, plot_interval, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("METODA SIMPSON");
 		} else if (trapezoidalButton.isSelected()) {
-			try {
-				result = ti.integrate(function, min, max, plot_interval, interval);
-				method_integral.setText(String.valueOf(result));
-				method_result_name.setText("METODA TRAPEZOIDALĂ");
-				text_legendre.setVisible(false);
-				vbox_legendre.setVisible(false);
-			} catch (Exception e) {
-				// Tratează cazul în care apare o excepție și ascunde diviziunile
-				result_window.setVisible(false);
-				properties_window.setVisible(false);
-				return;
-			}
+			result = ti.calculateTrapezoid(function, min, max, plot_interval, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("METODA TRAPEZOID");
 		} else if (RK_Button.isSelected()) {
-			try {
-				result = rk.integrate(function, min, max, plot_interval, interval);
-				method_integral.setText(String.valueOf(result));
-				method_result_name.setText("METODA RUNGE-KUTTA");
-				text_legendre.setVisible(false);
-				vbox_legendre.setVisible(false);
-			} catch (Exception e) {
-				// Tratează cazul în care apare o excepție și ascunde diviziunile
-				result_window.setVisible(false);
-				properties_window.setVisible(false);
-				return;
-			}
-		} else if (QGL_Button.isSelected()) {
-			try {
-				result = qgl.integrate(function, min, max, plot_interval, interval);
-				method_integral.setText(String.valueOf(result));
-				method_result_name.setText("METODA QUADRATURE GAUSS-LEGENDRE");
-				text_legendre.setVisible(true);
-				vbox_legendre.setVisible(true);
-				latexFunction_legendre.setImage(new Image("file:./src/main/resources/Integrix/plots/legendre.png"));
-			} catch (Exception e) {
-				result_window.setVisible(false);
-				properties_window.setVisible(false);
-				return;
-			}
+			result = rk.calculateRK(function, min, max, plot_interval, interval);
+			method_integral.setText(String.valueOf(result));
+			method_result_name.setText("METODA RUNGE-KUTTA");
 		}
 
 		// Realizează afișarea graficului pentru metoda folosită
@@ -599,16 +476,10 @@ public class ControllerPrincipal {
 
 		// Calculează eroarea absolută și afișează
 		double absolute_error;
-		try {
-			if (result > Double.parseDouble(real_integral.getText())) {
-				absolute_error = result - Double.parseDouble(real_integral.getText());
-			} else {
-				absolute_error = Double.parseDouble(real_integral.getText()) - result;
-			}
-		} catch (Exception e) {
-			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea erorii absolute.\n" + e.getMessage());
-			return;
+		if (result > Double.parseDouble(real_integral.getText())) {
+			absolute_error = result - Double.parseDouble(real_integral.getText());
+		} else {
+			absolute_error = Double.parseDouble(real_integral.getText()) - result;
 		}
 		if (absolute_error > Double.parseDouble(abs_err_usr)) {
 			error_div.setStyle("-fx-background-color: #cc2424");
@@ -617,13 +488,7 @@ public class ControllerPrincipal {
 		}
 		abs_err.setText(String.valueOf(absolute_error));
 		// rel_err witrh respect to real integral (treated with absolute value)
-		try {
-			rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
-		} catch (Exception e) {
-			// Afișează o alertă în caz de eroare
-			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea erorii relative.\n" + e.getMessage());
-			return;
-		}
+		rel_err.setText((Math.abs(absolute_error / Double.parseDouble(real_integral.getText())) * 100) + "%");
 
 		// Activează butonul pentru afișarea rezultatului și a ferestrei de proprietăți
 

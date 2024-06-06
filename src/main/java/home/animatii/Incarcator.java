@@ -26,7 +26,7 @@ public class Incarcator extends StackPane {
         StackPane.setMargin(title, new Insets(75, 0, 0, 0)); // Margin top
 
         // Eticheta de încărcare
-        Label loading = new Label("Se Incarca...");
+        Label loading = new Label("Loading...");
         loading.setTextFill(Color.WHITE);
         loading.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         loading.setEffect(new DropShadow(5, Color.BLACK));

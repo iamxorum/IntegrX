@@ -8,17 +8,19 @@ import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class Integrare implements Interfata_Integrare {
 	private static Integrare instance = null;
 
-	// Șablonul pentru graficul MATLAB
+	// Șablonul pentru graficul MATLAB simplu
 	private static String MATLAB_PLOT_SKELETON =
 			"fig = figure('Visible', 'off');\n" +
 					"plot(x,y)\n" +
 					"xlabel('x')\n" +
 					"ylabel('y')\n" +
+					// Change background color to #1f2d40
 					"set(gcf, 'color', [0.1216 0.1765 0.2510]);\n" +
 					"saveas(gcf,'./src/main/resources/Integrix/plots/funct_plot_1s.png')";
 
@@ -37,34 +39,38 @@ public class Integrare implements Interfata_Integrare {
 	}
 
 	@Override
+	public double shrinkDecimal(double value) {
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(6);
+		// Verifică dacă valoarea este sub pragul de precizie
+		if (value < Integrare.THRESHOLD) {
+			df.setGroupingUsed(false);
+		}
+		// Returnează valoarea cu numărul de zecimale redus conform formaterului
+		return Double.parseDouble(df.format(value));
+	}
+
+	@Override
 	public String isDivergent(String function) throws ExecutionException, InterruptedException {
-		try{
-			// Initializează simbolul 'x' în motorul MATLAB
-			engine.eval("syms x");
-
-			// Elimină punctele din funcție pentru a evita erori de sintaxă
-			String cleanedFunction = function.replaceAll("\\.", "");
-
-			// Evaluează funcția în motorul MATLAB
-			engine.eval("f = " + cleanedFunction + ";");
-
-			// Calculează integrala funcției de la -inf la inf
-			engine.eval("result = int(f, x, -inf, inf);");
-
-			// Verifică dacă integrala este divergentă
-			engine.eval("isDivergent = isinf(result);");
-
-			// Obține rezultatul
-			Object isDivergent = engine.getVariable("isDivergent");
-
-			// Returnează rezultatul ca string
-			if (isDivergent.toString().equals("true")) {
-				return "Integrala este divergentă";
-			} else {
-				return "Integrala este convergentă";
-			}
-		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
-			throw new RuntimeException(ex);
+		// Se evaluează simbolul 'x' în motorul MATLAB
+		engine.eval("syms x");
+		// Se elimină punctele din funcție pentru a evita erorile de sintaxă
+		String functionWithoutDots = function.replaceAll("\\.", "");
+		// Se evaluează funcția în motorul MATLAB
+		engine.eval("fct = " + functionWithoutDots + ";");
+		// Se calculează suma simbolică a funcției
+		engine.eval("y = vpa(symsum(fct, x, 1, inf));");
+		// Se verifică dacă rezultatul este infinit
+		engine.eval("check = isinf(y);");
+		// Se obține rezultatul verificării
+		Object check = engine.getVariable("check");
+		// Se afișează rezultatul verificării în consolă (pentru debug)
+		System.out.println(check.toString());
+		// Se returnează mesajul corespunzător în funcție de rezultatul verificării
+		if (check.toString().equals("true")) {
+			return "Funcția este divergentă";
+		} else {
+			return "Funcția este convergentă";
 		}
 	}
 
@@ -79,7 +85,7 @@ public class Integrare implements Interfata_Integrare {
 
 			engine.eval("syms x"); // Definirea lui x ca simbol
 
-			// Convertirea functiei în LaTeX
+			// Convertirea rezultatului în LaTeX
 			String latexScript = "latexFunction = latex(" + function + ");";
 			engine.eval(latexScript);
 
@@ -96,8 +102,7 @@ public class Integrare implements Interfata_Integrare {
 					newBlue,
 					smokeWhite);
 		} catch (MatlabExecutionException | MatlabSyntaxException ex) {
-			TratareErori tratareErori = TratareErori.getInstance();
-			tratareErori.showAlert("Eroare", "A apărut o eroare la calcularea integralei.\n" + ex.getMessage());
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -143,9 +148,6 @@ public class Integrare implements Interfata_Integrare {
 		}
 	}
 
-	// Metodă pentru calculul integralei din clasa Integrare (parinte) implementată din Interfata_Integrare
-	// Metoda este suprascrisă în clasele copil pentru a implementa metode specifice de calcul al integralei
-	@Override
 	public double integrate(String function, String min, String max) throws MatlabExecutionException, MatlabSyntaxException {
 		try {
 			engine.eval("syms x"); // Definirea lui x ca simbol
@@ -155,7 +157,7 @@ public class Integrare implements Interfata_Integrare {
 			engine.eval(integrationScript);
 
 		} catch (InterruptedException | ExecutionException ex) {
-			throw new RuntimeException("Nu s-a reușit calcularea integralei: " + ex.getMessage(), ex);
+			throw new RuntimeException("Eroare în timpul executării MATLAB: " + ex.getMessage(), ex);
 		}
 
 		double integralResult;
