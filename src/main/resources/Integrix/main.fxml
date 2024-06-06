@@ -145,12 +145,12 @@
                                           <Image url="@java.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fitHeight="131.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="104.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@Matlab.png" />
                                        </image>
                                        <HBox.margin>
-                                          <Insets />
+                                          <Insets left="15.0" />
                                        </HBox.margin>
                                     </ImageView>
                                  </children>
@@ -172,7 +172,7 @@
                      <children>
                         <HBox prefHeight="105.0" prefWidth="890.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label prefHeight="102.0" prefWidth="784.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" text="Cu această aplicație, poți calcula integrale numeric și te poți juca cu calcule ca într-un playground interactiv!" textFill="#727272" wrapText="true">
+                              <Label prefHeight="102.0" prefWidth="784.0" styleClass="welcome2" stylesheets="@css/fullstyle.css" text="Această aplicație vă permite să calculați integrale numeric folosind tehnicile dreptunghiului, trapezului, Simpson și Runge-Kutta." textFill="#727272" wrapText="true">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -265,7 +265,7 @@
                <children>
                   <HBox fx:id="integral_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRAL" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="INTEGRALA" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
@@ -278,7 +278,7 @@
                   </HBox>
                   <HBox fx:id="method_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METHOD" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                        <Text fx:id="method_result_name" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="METODA" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
@@ -288,7 +288,7 @@
                   </HBox>
                   <HBox fx:id="error_div" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="ABSOLUTE ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="EROARE ABSOLUTA" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
@@ -301,7 +301,7 @@
                   </HBox>
                   <HBox fx:id="error_div1" prefHeight="59.0" prefWidth="792.0" styleClass="matlab_integral" stylesheets="@css/fullstyle.css">
                      <children>
-                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="RELATIVE ERROR" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
+                        <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="EROARE RELATIVA" wrappingWidth="340.744140625" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets left="50.0" right="170.0" />
                            </HBox.margin>
@@ -312,96 +312,6 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </HBox>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="properties_window" layoutX="330.0" layoutY="52.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
-         <children>
-            <VBox layoutX="70.0" layoutY="50.0" prefHeight="379.0" prefWidth="712.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="40.0">
-               <children>
-                  <VBox minHeight="68.0" prefHeight="68.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="latex_integral_prop" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegralProp" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-                  <VBox minHeight="55.0" prefHeight="55.0" prefWidth="692.0" styleClass="result_div" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <Label fx:id="isDiv_Conv3" prefHeight="44.0" prefWidth="726.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATIVE FUNCTION - 1st ORDER">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Text>
-                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="latexFunction_diff1" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff1" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATIVE FUNCTION - 2st ORDER">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Text>
-                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
-                     <children>
-                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
-                           <children>
-                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ImageView fx:id="latexFunction_diff2" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff2" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
-                                       <HBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </HBox.margin>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
                </children>
             </VBox>
          </children>
@@ -485,6 +395,11 @@
                                     </ToggleButton>
                                     <ToggleButton fx:id="RK_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Runge-Kutta">
                                        <HBox.margin>
+                                          <Insets right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="QGL_Button" maxHeight="35.0" maxWidth="330.0" minHeight="30.0" minWidth="87.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" styleClass="toggle_t" stylesheets="@css/fullstyle.css" text="Gauss-Legendre">
+                                       <HBox.margin>
                                           <Insets top="5.0" />
                                        </HBox.margin>
                                     </ToggleButton>
@@ -504,6 +419,118 @@
                         </VBox>
                      </children>
                   </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="properties_window" layoutX="330.0" layoutY="52.0" maxHeight="690.0" maxWidth="832.0" minHeight="300.0" minWidth="450.0" prefHeight="690.0" prefWidth="832.0" styleClass="calculate_pane" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="42.0">
+         <children>
+            <VBox layoutX="70.0" layoutY="50.0" prefHeight="379.0" prefWidth="712.0" styleClass="title_div" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="40.0">
+               <children>
+                  <VBox minHeight="68.0" prefHeight="68.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latex_integral_prop" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexIntegralProp" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <VBox minHeight="55.0" prefHeight="55.0" prefWidth="692.0" styleClass="result_div" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <Label fx:id="isDiv_Conv3" prefHeight="44.0" prefWidth="726.0" styleClass="isDivergent" stylesheets="@css/fullstyle.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 1">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latexFunction_diff1" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff1" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="DERIVATA - GRAD 2">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <VBox minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latexFunction_diff2" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionDiff2" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <Text fx:id="text_legendre" fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_result" text="POLINOM LEGENDRE" />
+                  <VBox fx:id="vbox_legendre" minHeight="90.0" prefWidth="692.0" styleClass="result_plots" stylesheets="@css/fullstyle.css">
+                     <children>
+                        <AnchorPane prefHeight="42.0" prefWidth="688.0">
+                           <children>
+                              <HBox prefHeight="68.0" prefWidth="688.0" styleClass="div_func" stylesheets="@css/fullstyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fx:id="latexFunction_legendre" fitHeight="63.0" fitWidth="531.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                                    <Button fx:id="zoom" alignment="CENTER" mnemonicParsing="false" onAction="#showLatexFunctionLegendre" prefHeight="52.0" prefWidth="137.0" styleClass="zoom" stylesheets="@css/fullstyle.css" text="SHOW">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>

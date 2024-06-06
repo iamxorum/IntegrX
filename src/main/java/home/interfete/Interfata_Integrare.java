@@ -12,8 +12,7 @@ public interface Interfata_Integrare {
     // Motorul Matlab folosit pentru calcule
     MatlabEngine engine = Matlab_MultiThread.getEngine();
 
-    // Metoda pentru reducerea valorii la un numar cu mai putine zecimale
-    double shrinkDecimal(double value);
+    public double integrate(String function, String min, String max) throws ExecutionException, InterruptedException;
 
     // Metoda pentru determinarea daca o functie este divergenta
     String isDivergent(String function) throws ExecutionException, InterruptedException;

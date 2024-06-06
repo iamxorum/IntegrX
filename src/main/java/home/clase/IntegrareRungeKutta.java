@@ -23,6 +23,7 @@ public class IntegrareRungeKutta extends Integrare {
     }
 
     // Metodă pentru calculul integralei folosind metoda trapezelor
+    //catch: afiseaza eroarea cu show alert de la tratare erori
     public double integrate(String function, String min, String max, String plot_interval, String segments) {
         try {
             // Se evaluează simbolul 'x' în motorul MATLAB
